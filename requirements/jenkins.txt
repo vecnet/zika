@@ -1,0 +1,5 @@
+-r base.txt
+django-jenkins==0.18.1  # Support for Jenkins continuous integration system (testing on push)
+coverage==4.0.3
+pep8==1.7.0
+pyflakes==1.1.0

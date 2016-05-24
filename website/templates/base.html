@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{% block page_title %}Welcome to OpenMalaria Basic User Interface{% endblock %}</title>
+    <link href="{{ STATIC_URL }}bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}ts2.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            </div>
+            <div class="collapse navbar-collapse">
+                {% block navbar_inner %}{% endblock %}
+
+                <ul class="nav navbar-nav">
+                    {% block navbar_inner_right_pre %}{% endblock %}
+                    <li><a class="brand" href="https://www.vecnet.org">&nbsp;&nbsp;VecNet</a></li>
+                </ul>
+                 <ul class="nav navbar-nav navbar-right">
+                                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Our Work<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://www.vecnet.org/index.php/about-vecnet">About VecNet</a></li>
+                                <li><a href="https://www.vecnet.org/index.php/about-vecnet/collaborations">Collaborations</a></li>
+                                <li><a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a></li>
+                                <li><a href="https://www.vecnet.org/index.php/about-vecnet/vecnet-how-to">VecNet How To</a></li>
+                            </ul>
+                        </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://dl.vecnet.org/">Digital Library</a></li>
+                            <li><a href="https://dw.vecnet.org/">Data Warehouse Browser</a></li>
+                            <li><a href="https://om.vecnet.org/">OpenMalaria Portal</a></li>                                                 <li><a href="https://ci.vecnet.org/ts_emod/">EMOD Basic User Interface</a></li>
+                            <li><a href="/">Zika Portal</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="https://www.vecnet.org/index.php/contact-us">Contact Us</a></li>
+
+                    {% block navbar_inner_right_post %}{% endblock %}
+
+                {% if user.username %}
+                     <li> <a href="{{ LOGOUT_URL }}"> Logout ({{ user.username }}) </a> </li>
+                {% else %}
+                     <li> <a href="{{ LOGIN_URL }}?{{ REDIRECT_FIELD_NAME }}={{ request.build_absolute_uri }}"> Log in </a></li>
+
+                {% endif %}
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block jumbotron %}
+        <div class="jumbotron subhead">
+            <div class="container ">
+                {% block jumbotron_content %}
+                    <h1>Zika Portal</h1>
+                    <p class="lead">Zika virus outbreak forecast</p>
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block main_content %}
+    {% endblock %}
+
+    <footer class="footer">
+        <hr>
+        <img style="margin: 0 10px 0 0; float: right;" src="{{ STATIC_URL }}img/vecnet-logo.jpg" alt="VecNet Logo" width="35" />
+        <p class="text-center"> <a href="https://www.vecnet.org/index.php/contact-us/">Contact us</a> | <a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a> | <a href="https://www.vecnet.org/index.php/user-privacy-policy">User Privacy Policy</a> | <a href="https://www.vecnet.org/index.php/terms-of-use">Terms of Use</a></p>
+        <p class="fine-print text-center"> Copyright &copy; 2013-2016 <a href="https://www.vecnet.org/">Vector-Borne Disease Network (VecNet)</a></p>
+    </footer>
+
+
+    <script src="{{ STATIC_URL }}js/jquery-2.1.4.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

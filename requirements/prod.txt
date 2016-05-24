@@ -1,0 +1,2 @@
+-r base.txt
+Fabric==1.10.2  # Library used to update project folder on server
