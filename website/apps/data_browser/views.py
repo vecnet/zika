@@ -16,6 +16,7 @@ def hello(request):
         value=1,
     )
 
+    ZikaCasesColumbia.objects.delete()
     for case in ZikaCasesColumbia.objects.all():
         if case.report_date is None:
             case.report_date = "2006-04-05"
