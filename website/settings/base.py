@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'bootstrap3',
     'website',
-    'website.apps.map'
+    'website.apps.map',
+    'website.apps.data_browser'
 )
 
 MIDDLEWARE_CLASSES = (
