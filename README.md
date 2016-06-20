@@ -21,6 +21,14 @@ This Django project has been tested on Windows 10 x64, MAC OS 10.7 and CentOS 7
 3. Create an admin user
    `./manage.py createsuperuser`
 
+# Using docker-compose
+Run `docker-compose` up in the project's root
+directory to quickly start development without having to setup a 
+specific dev environment first.
+
+By default, the web interface is reachable at 'http://127.0.0.1:8001',
+while the database is listening on port 5433.
+
 
 #Using Vagrant
 
