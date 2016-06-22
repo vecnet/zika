@@ -14,3 +14,7 @@ from django.views.generic.base import TemplateView
 
 class MapView(TemplateView):
     template_name = "map/map.html"
+
+    def get_context_data(self, **kwargs):
+        context = {"Data": "Hi99999"}
+        return context
