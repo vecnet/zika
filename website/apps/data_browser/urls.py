@@ -11,7 +11,6 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import url
-
 from website.apps.data_browser.views import hello
 from website.apps.data_browser.views import stable
 from website.apps.map.views import MapView
