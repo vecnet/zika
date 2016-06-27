@@ -1,0 +1,24 @@
+{% if query_results %}
+    <table>
+        <tr>
+            <th>report_date</th>
+            <th>location</th>
+            <th>data_type</th>
+            <th>value</th>
+        </tr>
+
+        {% for item in query_results %}
+        <tr>
+            <th>{{ item.report_date }}</th>
+            <th>{{ item.location }}</th>
+            <th>{{ item.data_type }}</th>
+            <th>{{ item.value }}</th>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+{% else %}
+    <p> No data is available.</p>
+{% endif %}
