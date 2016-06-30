@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'website',
     'website.apps.map',
     'website.apps.data_browser',
-    'csvimport.app.CSVImportConf'
+    # 'csvimport.app.CSVImportConf'
 )
 
 MIDDLEWARE_CLASSES = (

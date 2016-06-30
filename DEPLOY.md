@@ -3,11 +3,14 @@
 1. Provision server
 
 ```bash
-sudo mkdir -p /opt/portal/zika.vecnet.org
-sudo chown $USER /opt/portal/zika.vecnet.org
-cd /opt/portal/zika.vecnet.org
+$SITE=/opt/portal/zika.vecnet.org
+$WORKON_HOME=/opt/portal/venv
+sudo mkdir -p "$WORKON_HOME"
+sudo mkdir -p "$SITE"
+sudo chown $USER "$SITE"
+cd "$SITE"
 git clone https://github.com/vecnet/zika.git .
-bash sysadmin/server_provisioning.sh
+bash server/server_provisioning.sh
 ```
 
 2. Deploy source code
@@ -94,7 +97,7 @@ Example apache virtual host configuration is below. Replace "wellbeing.crc.nd.ed
 Use sed command to generate new virtual host config file
 
 ```bash
-cat wellbeing.crc.nd.edu.conf | sed s/wellbeing/<hostname>/
+cat zika.vecnet.org.conf | sed s/wellbeing.crc.nd.edu/zika.vecnet.org/
 ```
 
 

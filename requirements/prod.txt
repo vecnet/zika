@@ -1,3 +1,4 @@
 -r base.txt
+pycrypto==2.6.1
 Fabric==1.10.2  # Library used to update project folder on server
 psycopg2>=2.5.4  # django.contrib.postgres.fields.JSONField requires PostgreSQL 9.4 and Psycopg2 2.5.4.
