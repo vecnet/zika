@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'bootstrap3',
     'website',
     'website.apps.map',
-    'website.apps.data_browser'
+    'website.apps.data_browser',
+    'csvimport.app.CSVImportConf'
 )
 
 MIDDLEWARE_CLASSES = (

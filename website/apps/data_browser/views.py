@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
-
+import csv
 
 # Create your views here.
 from website.apps.data_browser.models import ZikaCasesColumbia
@@ -26,5 +26,7 @@ def hello(request):
         print "report_date: %s" % case.report_date
         print "location: " + case.location
         print "value: %s " % case.value
+
+
 
     return HttpResponse(content="hello")
