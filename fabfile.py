@@ -1,4 +1,4 @@
-# This file is part of the OpenMalaria Basic Usert Interface project.
+# This file is part of the VecNet Zika modeling interface.
 #
 # For copyright and licensing information about this package, see the
 # NOTICE.txt and LICENSE.txt files in its top-level directory; they are
