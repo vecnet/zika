@@ -83,7 +83,7 @@ Vagrant.configure(2) do |config|
      sudo sh -c "echo listen_addresses = \\'*\\' >> /var/lib/pgsql/data/postgresql.conf"
      sudo systemctl start postgresql.service
      sudo -u postgres sh -c 'createdb zika'
-     sudo -u postgres psql -c "CREATE USER om WITH PASSWORD 'zika'"
+     sudo -u postgres psql -c "CREATE USER zika WITH PASSWORD 'zika'"
      sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE "zika" to zika;"
      sudo systemctl restart postgresql.service
    SHELL
