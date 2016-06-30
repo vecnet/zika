@@ -11,7 +11,7 @@ def update():
     # local("sudo chown -R $USER:apache website/media")
     # local("chmod 775 -R website/media")
     local('git pull')
-    local('pip install -r requirements.txt')
+    local('pip install -r requirements/prod.txt')
     local('python manage.py migrate')
     local('python manage.py collectstatic --noinput')
     local('touch wsgi.py')
