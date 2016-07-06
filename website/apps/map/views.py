@@ -18,3 +18,7 @@ class MapView(TemplateView):
     def get_context_data(self, **kwargs):
         context = {"Data": "Hi99999"}
         return context
+
+
+
+

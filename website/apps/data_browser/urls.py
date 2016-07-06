@@ -12,9 +12,14 @@
 
 from django.conf.urls import url
 from website.apps.data_browser.views import hello
-from website.apps.data_browser.views import stable
+from website.apps.data_browser.views import location_list
 from website.apps.map.views import MapView
+from website.apps.data_browser.views import location_info
+from website.apps.data_browser.views import location_info_chart
+
 
 urlpatterns = [
-    url(r'^$', stable, name='index'),
+    url(r'^$', location_list, name='index'),
+    url(r'^(?P<query_location>[A-Z, a-z, -]+)/$', location_info),
+    url(r'^chart/(?P<chart_location>[A-Z, a-z, -]+)/$', location_info_chart),
 ]
