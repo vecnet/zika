@@ -19,7 +19,7 @@ from website.apps.data_browser.views import location_info_chart
 
 
 urlpatterns = [
-    url(r'^$', location_list, name='index'),
+    url(r'^$', location_list),
     url(r'^(?P<query_location>[A-Z, a-z, -]+)/$', location_info),
     url(r'^chart/(?P<chart_location>[A-Z, a-z, -]+)/$', location_info_chart),
 ]
