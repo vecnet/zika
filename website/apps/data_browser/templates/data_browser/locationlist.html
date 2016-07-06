@@ -1,0 +1,35 @@
+<!--link href=" /zikacolumbia/templates/main.css" type="text/css" rel="stylesheet"-->
+
+<style type="text/css">
+    th{
+        padding: 7px 0px 10px 0px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-bottom: 2px solid #111111;
+        border-top: 1px solid #999;
+        text-align: left;
+    }
+    tr:nth-child(even){
+        background-color: #efefef;
+    }
+    tr:hover{
+        background-color: #c3e6e5;
+    }
+</style>
+
+{% if all_locations %}
+    <table>
+        <tr>
+            <th><strong>Locations in Colombia</strong></th>
+        </tr>
+        {% for item in all_locations %}
+        <tr>
+            <td><a href="/data_browser/{{ item.location}}/">{{ item.location }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p> No data is available. </p>
+{% endif %}
+
+
