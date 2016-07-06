@@ -2,8 +2,9 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
-# Create your views here.
 from website.apps.data_browser.models import ZikaCasesColumbia
+
+# Create your views here.
 
 
 def hello(request):
