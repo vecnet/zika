@@ -12,20 +12,20 @@
 			"id": "UUID",
 			"attributes": [
 		  		{"name": "forecasting_date", "type": "date", "value": "2016-08-23"},
-		    	{"name": "model", "type": "string", "value": "zika01"},
+		    	{"name": "model", "type": "string", "value": "zika01"},//model version?
                 {"name": "population", "type": "boolean", "value": "true"},
                 {"name": "pregnant", "type": "boolean", "value": "false"},
-                {"name": "district", "type": "string", "value": "Colombia"}, //discribtive country, admin 0
+                {"name": "district", "type": "string", "value": "Colombia"}, //descriptive country, admin 0
 
-              //some key simulation variables
-                {"name": "temperature", "type": "number", "value": "38", "units":"deg C"},
+              	//some key simulation variables
+                {"name": "temperature", "type": "number", "value": "38", "units":"degC"},
                 {"name": "mosquito", "type": "string", "value": "Ae. aegypti "}
 			],
 		  	"events":[
 				{
 			    	"id": 1,
 			      	"name": "Colombia-Antioquia-Abejorral", //location name or municipality code
-			      	"date": "", //not necessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicate in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":6, "units":"cases"},
@@ -36,7 +36,7 @@
 		    	{
 			    	"id": 2,
 			      	"name": "Colombia-Antioquia-Angostura", //location name or municipality code
-			      	"date": "", //not necessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicate in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":7, "units":"cases"},
@@ -47,7 +47,7 @@
 		    	{
 			    	"id": 3,
 			      	"name": "Colombia-Antioquia-Dabeiba", //location name or municipality code
-			      	"date": "", //not necessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicate in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
