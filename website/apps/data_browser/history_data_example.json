@@ -1,4 +1,4 @@
-//simulation data
+//history data
 {
 	"metadata": [
 	    {"name": "history", "type": "boolean", "value": "true"},
@@ -15,9 +15,9 @@
 		    	//{"name": "model", "type": "string", "value": "zika01"},
                 {"name": "population", "type": "boolean", "value": "true"},
                 {"name": "pregnant", "type": "boolean", "value": "false"},
-                {"name": "district", "type": "string", "value": "Colombia"}, //discribtive country, admin 0
+                {"name": "district", "type": "string", "value": "Colombia"}, //descriptive country, admin 0
 
-              //some key simulation variables
+              	//some key simulation variables
                 {"name": "temperature", "type": "number", "value": "38", "units":"deg C"},
                 {"name": "mosquito", "type": "string", "value": "Ae. aegypti "}
 			],
@@ -25,7 +25,7 @@
 				{
 			    	"id": 1,
 			      	"name": "Colombia-Antioquia-Abejorral", //location name or municipality code
-			      	"date": "", //not necessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicate in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"CO0001", "type":"number", "value":6, "units":"cases"},
@@ -36,7 +36,7 @@
 		    	{
 			    	"id": 2,
 			      	"name": "Colombia-Antioquia-Angostura", //location name or municipality code
-			      	"date": "", //not necessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicate in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"CO0001", "type":"number", "value":7, "units":"cases"},
@@ -47,7 +47,7 @@
 		    	{
 			    	"id": 3,
 			      	"name": "Colombia-Antioquia-Dabeiba", //location name or municipality code
-			      	"date": "", //not necessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicate in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"CO0001", "type":"number", "value":8, "units":"cases"},
@@ -57,5 +57,7 @@
 			    }
 		    ]
 		}
+
+		//can have another record of different date or generate another dataset
 	]
 }
