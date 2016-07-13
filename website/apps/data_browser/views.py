@@ -45,17 +45,8 @@ def location_info(request, query_location):
                                             location=query_location)
     value_list_across_time_c3 = ZikaCasesColumbia.objects.filter(data_field_code='CO0003',
                                             location=query_location)
-    #duplicatetest = []
 
     tabledata = {'dates': [], 'valuec1': [], 'valuec2': [], 'valuec3': []}
-
-    #for case in value_list_across_time_c1:
-        #if case.report_date not in duplicatetest:
-            #duplicatetest.append(case.report_date)
-        #else:
-            #ZikaCasesColumbia.objects.filter(id=case.id).delete()
-
-    #value_list_across_time_c1_new = ZikaCasesColumbia.objects.filter(data_field_code='CO0001', location=query_location)
 
     for case in value_list_across_time_c1:
         tabledata['dates'].append(case.report_date.strftime('%y/%m/%d'))
