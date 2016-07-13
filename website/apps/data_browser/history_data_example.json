@@ -1,4 +1,4 @@
-//simulation data
+//history data
 {
 	"metadata": [
 	    {"name": "history", "type": "boolean", "value": "true"},
@@ -17,7 +17,7 @@
                 {"name": "pregnant", "type": "boolean", "value": "false"},
                 {"name": "district", "type": "string", "value": "Colombia"}, //discribtive country, admin 0
 
-              //some key simulation variables
+              //some key simulation variables, might be important features of history data as well
                 {"name": "temperature", "type": "number", "value": "38", "units":"deg C"},
                 {"name": "mosquito", "type": "string", "value": "Ae. aegypti "}
 			],
