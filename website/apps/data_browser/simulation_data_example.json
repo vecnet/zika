@@ -2,30 +2,31 @@
 {
 	"metadata": [
 	    {"name": "history", "type": "boolean", "value": "false"},
-	    {"name": "simulation", "type": "boolean", "value": "true"},
+	    {"name": "simulation", "type": "boolean", "value": "true"},//To be discussed whether use the same structure
+                                                                    //for both history and simulation output or not.
+        {"name": "model_name", "type": "string", "value": "zika01"},
+        {"name": "version", "type": "number", "value": 1},
         {"name": "data_source", "type": "string", "value": "Prof_Perkins_lab"},
-        {"name": "date", "type": "date", "value": "2016-08-09"}, //date when this dataset generated
+        {"name": "file_generate_date", "type": "date", "value": "2016-08-09T00:00:00Z"}, //Date when this dataset generated, RFC3339
         {"name": "disease", "type": "string", "value": "zika"}
+
 	],
 	"records": [
 		{
-			"id": "UUID",
+			"id": "UUID STRING",//RFC4122
 			"attributes": [
-		  		{"name": "forecasting_date", "type": "date", "value": "2016-08-23"},
-		    	{"name": "model", "type": "string", "value": "zika01"},//model version?
-                {"name": "population", "type": "boolean", "value": "true"},
-                {"name": "pregnant", "type": "boolean", "value": "false"},
-                {"name": "district", "type": "string", "value": "Colombia"}, //descriptive country, admin 0
-
-              	//some key simulation variables
+		  		{"name": "forecasting_date", "type": "date", "value": "2016-08-16T00:00:00Z"}, //Date this forecase apply to, RFC3339
+                {"name": "population", "type": "string", "value": "all or pregnant women"},
+                {"name": "country", "type": "string", "value": "Colombia"}, //descriptive country, admin 0
+              	//may include some key simulation variables
                 {"name": "temperature", "type": "number", "value": "38", "units":"degC"},
                 {"name": "mosquito", "type": "string", "value": "Ae. aegypti "}
 			],
 		  	"events":[
 				{
-			    	"id": 1,
+			    	"id": "UUID STRING",//RFC4122
 			      	"name": "Colombia-Antioquia-Abejorral", //location name or municipality code
-			      	"date": "", //unnecessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicated in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":6, "units":"cases"},
@@ -34,9 +35,9 @@
                     ]
 			    },
 		    	{
-			    	"id": 2,
+			    	"id": "UUID STRING",//RFC4122
 			      	"name": "Colombia-Antioquia-Angostura", //location name or municipality code
-			      	"date": "", //unnecessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicated in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":7, "units":"cases"},
@@ -45,9 +46,9 @@
                     ]
 			    },
 		    	{
-			    	"id": 3,
+			    	"id": "UUID STRING",//RFC4122
 			      	"name": "Colombia-Antioquia-Dabeiba", //location name or municipality code
-			      	"date": "", //unnecessary? since already indicate in records
+			      	"date": "", //unnecessary? since already indicated in records
                     "location": "GeoJSON", //geoJSON according to municipalities
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
@@ -57,6 +58,6 @@
 			    }
 		    ]
 		}
-    //can have another record of different date or generate another dataset
+    //can have another record of forecast on a different date, population or country using the same model
 	]
 }
