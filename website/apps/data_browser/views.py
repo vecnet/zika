@@ -3,11 +3,12 @@ from django.shortcuts import render
 from django.template import loader
 
 from website.apps.data_browser.models import ZikaCasesColumbia
-
+from website.apps.data_browser.models import MunicipalityCodes
+import csv
 # Create your views here.
 
 
-def hello(request):
+def hello(request, helloid):
 
     '''new_case = ZikaCasesColumbia.objects.create(
         report_date="1990-01-01",
@@ -28,6 +29,17 @@ def hello(request):
         print "location: " + case.location
         print "value: %s " % case.value'''
 
+    csvpath = "/Users/bingyushen/Downloads/municipality_codes.csv"
+    codereader = csv.reader(open(csvpath), delimiter=',', quotechar='"')
+
+    for row in codereader:
+        if row[0]!='NOM_DEPART':
+            mcode = MunicipalityCodes()
+            mcode.NOM_DEPART = row[0]
+            mcode.COD_DEPTO = row[1]
+            mcode.NOM_MUNICI = row[2]
+            mcode.ID_ESPACIA = row[3]
+            mcode.save()
     return HttpResponse(content="hello")
 
 
