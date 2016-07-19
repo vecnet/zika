@@ -1,13 +1,43 @@
 {% block extrahead %}
     <!-- Load in jQuery and HighCharts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/templates/data_browser/lib/binaryajax.js"></script>
+    <script type="text/javascript" src="/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/templates/data_browser/src/binarywrapper.js"></script>
+    <script type="text/javascript" src="/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/templates/data_browser/src/shapefile.js"></script>
+    <script type="text/javascript" src="/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/templates/data_browser/src/dbf.js"></script>
+    <script type="text/javascript" src="/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/templates/data_browser/src/map.js"></script>
+    <script type="text/javascript" src="/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/templates/data_browser/src/layer.js"></script>
 {% endblock %}
+
+<style type="text/css">
+    body {
+        background-color: #eee;
+        color: #000;
+        font: 12px sans-serif;
+        margin: 20px;
+    }
+    #map {
+        width: 1024px;
+        height: 512px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-color: #9dc3e0;
+    }
+    canvas {
+        margin: 0;
+        padding: 0;
+    }
+    a img {
+    border: 0;
+    }
+</style>
 
 {% block content %}
     <h2 align="center">Zika information of {{ print_locations }}</h2>
-
     <div id={{ chartID|safe }} class="chart" style="height:100px; width:100%"></div>
+    <div id="map"></div>
 {% endblock %}
 
 {% block extrajs %}
@@ -31,5 +61,13 @@
                 series: series
             });
         });
+    </script>
+    <!-- Colombia Map goes here -->
+    <script type="text/javascript">
+            window.onload = function () {
+                var map = new Map('map',[
+                        new Layer('shape_files', {fillStyle: '#fadfa8', strokeStyle: '#5c3d1f', lineWidth: '0.5' })
+                ])
+            }
     </script>
 {% endblock %}

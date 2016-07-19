@@ -1,5 +1,12 @@
 <!--link href=" /zikacolumbia/templates/main.css" type="text/css" rel="stylesheet"-->
 
+<script type="text/javascript" src="https://github.com/RandomEtc/shapefile-js/blob/master/lib/binaryajax.js"></script>
+<script type="text/javascript" src="https://github.com/RandomEtc/shapefile-js/blob/master/src/binarywrapper.js"></script>
+<script type="text/javascript" src="https://github.com/RandomEtc/shapefile-js/blob/master/src/shapefile.js"></script>
+<script type="text/javascript" src="https://github.com/RandomEtc/shapefile-js/blob/master/src/dbf.js"></script>
+<script type="text/javascript" src="https://github.com/RandomEtc/shapefile-js/blob/master/src/map.js"></script>
+<script type="text/javascript" src="https://github.com/RandomEtc/shapefile-js/blob/master/src/layer.js"></script>
+
 <style type="text/css">
     th{
         padding: 7px 0px 10px 0px;
@@ -15,7 +22,34 @@
     tr:hover{
         background-color: #c3e6e5;
     }
+    #map {
+        width: 1024px;
+        height: 512px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-color: #9dc3e0;
+    }
+    canvas {
+        margin: 0;
+        padding: 0;
+    }
+    a img {
+        border: 0;
+    }
 </style>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var map = new Map('map',[
+            new Layer('naturalearthdata/cultural/110m-admin-0-countries', { fillStyle: '#fadfa8', strokeStyle: '#5c3d1f', lineWidth: '0.5' }),
+        // dots for cities
+            new Layer('naturalearthdata/cultural/110m-populated-places', { fillStyle: '#800000', /*textHalo: '3', textStroke: 'white',*/ textFill: 'rgba(0,0,0,1)', textProp: 'Name_Town', font: 'bold 11px sans-serif' })
+        ])
+    }
+</script>
+
+<div id="map"></div>
 
 {% if all_locations %}
     <table>
@@ -31,3 +65,4 @@
 {% else %}
     <p> No data is available. </p>
 {% endif %}
+
