@@ -1,28 +1,31 @@
 //simulation data
 {
 	"metadata": [
-        {"name": "model_name", "type": "string", "value": "zika01"},
-        {"name": "output_format_version", "type": "number", "value": 1},
+        {"name": "model_name", "type": "string", "value": "zika_01"}, //model version indicated in the name
+        {"name": "output_format_version", "type": "number", "value": 1}, //data of the same timestep may change
         {"name": "data_source", "type": "string", "value": "Prof_Perkins_lab"},
         {"name": "output_generate_date", "type": "date", "value": "2016-08-09T00:00:00Z"}, //Date when this dataset generated, RFC3339
-        {"name": "disease", "type": "string", "value": "zika"}
+        {"name": "disease", "type": "string", "value": "zika"} //zika, dengue or chikungunya
 
 	],
 	"records": [
 		{
-			"id": "UUID STRING",//RFC4122
+			"id": "123e4567-e89b-12d3-a456-426655440000",//UUID string conforms to RFC4122
 			"attributes": [
-                {"name": "population", "type": "string", "value": "all or pregnant women"},
-                {"name": "location", "type": "string", "value": "Colombia-Antioquia-Dabeiba"}, //descriptive country, admin 0
+                {"name": "population", "type": "string", "value": "all"}, //all, pregnant women or births
+                {"name": "department", "type": "string", "value": "Antioquia"}, //describe department, admin 1
+				{"name": "department_code", "type": "number", "value": "50"}, //department code which is COD_DEPTO
+				{"name": "municipality", "type": "string", "value": "Dabeiba"},//describe municipality, admin2
+				{"name": "municipality_code", "type": "number", "value": "50421"}, // municipality code which is ID_ESPICIA
               	//may include some key simulation variables
                 {"name": "temperature", "type": "number", "value": "38", "units":"degC"},
                 {"name": "mosquitos", "type": "string", "value": "Ae. aegypti "}
 			],
 		  	"events":[
 				{
-			    	"id": "UUID STRING",//RFC4122
-			      	"name": "Confirmed cases", //location name or municipality code
-			      	"date": "2016-08-16T00:00:00Z", //unnecessary? since already indicated in records
+			    	"id": "123e4567-e89b-12d3-a456-426655440000",//UUID string conforms to RFC4122
+			      	"name": "Confirmed cases",
+			      	"date": "2016-08-16T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":6, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":10, "units":"cases"},
@@ -30,9 +33,9 @@
                     ]
 			    },
 		    	{
-			    	"id": "UUID STRING",//RFC4122
-			      	"name": "Confirmed cases", //location name or municipality code
-			      	"date": "2016-08-23T00:00:00Z", //unnecessary? since already indicated in records
+			    	"id": "123e4567-e89b-12d3-a456-426655440000",//UUID string conforms to RFC4122
+			      	"name": "Suspected cases",
+			      	"date": "2016-08-23T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":7, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":9, "units":"cases"},
@@ -40,9 +43,9 @@
                     ]
 			    },
 		    	{
-			    	"id": "UUID STRING",//RFC4122
-			      	"date": "2016-08-30T00:00:00Z", //unnecessary? since already indicated in records
-                    "location": "GeoJSON", //geoJSON according to municipalities
+			    	"id": "123e4567-e89b-12d3-a456-426655440000",//UUID string conforms to RFC4122
+					"name": "Confirmed cases",
+			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":10, "units":"cases"},
