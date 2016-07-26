@@ -1,0 +1,56 @@
+{
+	"metadata": [
+        {"name": "model_name", "type": "string", "value": "zika_01"},
+        {"name": "output_format_version", "type": "number", "value": 1},
+        {"name": "data_source", "type": "string", "value": "Prof_Perkins_lab"},
+        {"name": "output_generate_date", "type": "date", "value": "2016-08-09T00:00:00Z"},
+        {"name": "disease", "type": "string", "value": "zika"}
+
+	],
+	"records": [
+		{
+			"id": "123e4567-e89b-12d3-a456-426655440000",
+			"attributes": [
+                {"name": "population", "type": "string", "value": "all"},
+                {"name": "department", "type": "string", "value": "Antioquia"},
+				{"name": "department_code", "type": "number", "value": 50},
+				{"name": "municipality", "type": "string", "value": "Dabeiba"},
+				{"name": "municipality_code", "type": "number", "value": 50421},
+                {"name": "temperature", "type": "number", "value": 38, "units":"degC"},
+                {"name": "mosquitos", "type": "string", "value": "Ae. aegypti "}
+			],
+		  	"events":[
+				{
+			    	"id": "123e4567-e89b-12d3-a456-426655440000",
+			      	"name": "Confirmed cases",
+			      	"date": "2016-08-16T00:00:00Z",
+			      	"attributes": [
+                        {"name":"prediction_low", "type":"number", "value":6, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":10, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":12, "units":"cases"}
+                    ]
+			    },
+		    	{
+			    	"id": "123e4567-e89b-12d3-a456-426655440000",
+			      	"name": "Suspected cases",
+			      	"date": "2016-08-23T00:00:00Z",
+			      	"attributes": [
+                        {"name":"prediction_low", "type":"number", "value":7, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":9, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":14, "units":"cases"}
+                    ]
+			    },
+		    	{
+			    	"id": "123e4567-e89b-12d3-a456-426655440000",
+					"name": "Confirmed cases",
+			      	"date": "2016-08-30T00:00:00Z",
+			      	"attributes": [
+                        {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":10, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":17, "units":"cases"}
+                    ]
+			    }
+		    ]
+		}
+	]
+}

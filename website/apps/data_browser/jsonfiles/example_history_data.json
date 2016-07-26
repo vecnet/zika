@@ -1,0 +1,61 @@
+//history data
+{
+	"metadata": [
+	    {"name": "history", "type": "boolean", "value": "true"},
+	    {"name": "simulation", "type": "boolean", "value": "false"},//To be discussed whether use the same structure
+																	//for both history and simulation output or not.
+        {"name": "data_source", "type": "string", "value": "Instituto Nacional de Salud - Conteo Casos Zika Municipios"},
+        {"name": "file_generated_date", "type": "date", "value": "2014-12-12T00:00:00Z"}, //date when this file is generated, RFC3339
+        {"name": "disease", "type": "string", "value": "zika"}
+	],
+	"records": [
+		{
+			"id": "UUID STRING",//RFC4122
+			"attributes": [
+		  		{"name": "report_date", "type": "date", "value": "2014-12-12T00:00:00Z"},//report date of the data in the file, RFC3339
+                {"name": "population", "type": "string", "value": "all or pregnant women"},
+                {"name": "country", "type": "string", "value": "Colombia"}, //descriptive country, admin 0
+              	//some key variables interested
+                {"name": "temperature", "type": "number", "value": "38", "units":"degC"},
+                {"name": "mosquito", "type": "string", "value": "Ae. aegypti "}
+			],
+		  	"events":[
+				{
+			    	"id": "UUID STRING",//RFC4122
+			      	"name": "Colombia-Antioquia-Abejorral", //location name or municipality code
+			      	"date": "", //unnecessary? since already indicate in records
+                    "location": "GeoJSON", //geoJSON according to municipalities
+			      	"attributes": [
+                        {"name":"CO0001", "type":"number", "value":6, "units":"cases"},
+                        {"name":"CO0002", "type":"number", "value":10, "units":"cases"},
+                        {"name":"CO0003", "type":"number", "value":12, "units":"cases"}
+                    ]
+			    },
+		    	{
+			    	"id": "UUID STRING",//RFC4122
+			      	"name": "Colombia-Antioquia-Angostura", //location name or municipality code
+			      	"date": "", //unnecessary? since already indicate in records
+                    "location": "GeoJSON", //geoJSON according to municipalities
+			      	"attributes": [
+                        {"name":"CO0001", "type":"number", "value":7, "units":"cases"},
+                        {"name":"CO0002", "type":"number", "value":9, "units":"cases"},
+                        {"name":"CO0003", "type":"number", "value":14, "units":"cases"}
+                    ]
+			    },
+		    	{
+			    	"id": "UUID STRING",//RFC4122
+			      	"name": "Colombia-Antioquia-Dabeiba", //location name or municipality code
+			      	"date": "", //unnecessary? since already indicate in records
+                    "location": "GeoJSON", //geoJSON according to municipalities
+			      	"attributes": [
+                        {"name":"CO0001", "type":"number", "value":8, "units":"cases"},
+                        {"name":"CO0002", "type":"number", "value":10, "units":"cases"},
+                        {"name":"CO0003", "type":"number", "value":17, "units":"cases"}
+                    ]
+			    }
+		    ]
+		}
+
+		//can include another record of a different report date
+	]
+}
