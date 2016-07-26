@@ -5,6 +5,7 @@ from django.template import loader
 from website.apps.data_browser.models import ZikaCasesColumbia
 from website.apps.data_browser.models import MunicipalityCodes
 import csv
+import json
 # Create your views here.
 
 
@@ -114,3 +115,11 @@ def location_info_chart(request, chart_location, chartID='chart_ID', chart_type=
     return render(request, 'data_browser/chart.html', {'chartID': chartID, 'chart': chart, 'series': series,
                                                        'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
                                                        'print_locations': chart_location})
+
+
+def testchart(request):
+    json_data = open('/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/jsonfiles/valid_test.json')
+    data = json.dumps(json_data, separators=(',',':'))
+    #modelname = data['metadata'][0]['model_name']
+    #return HttpResponse(modelname)
+    return HttpResponse(data)
