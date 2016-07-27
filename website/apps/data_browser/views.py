@@ -118,67 +118,40 @@ def location_info_chart(request, chart_location, chartID='chart_ID', chart_type=
 
 
 def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
-    #json_data = open('/Users/bingyushen/Documents/zika/zika/pycharmz/website/apps/data_browser/jsonfiles/valid_test.json')
-    #metadata = json_data['metadata']
-    #records = json_data['records']
-    #modelname = data['metadata'][0]['model_name']
-    #return HttpResponse(modelname)
-
-    with open('/Users/bingyushen/Documents/zika/zika/pycharmz/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
+    with open('/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
         testdata = json.load(json_data)
-    #print testdata["metadata"]
-    #print "===="
-    #print testdata["records"][0]["events"][1]["attributes"][0]["value"]
 
-    dataseries1 = {'dates': [], 'value': [], }
-    dataseries2 = {'dates': [], 'value': [], }
-    dataseries3 = {'dates': [], 'value': [], }
-    dataseries4 = {'dates': [], 'value': [], }
-
-    for x in range(0, 3):
-        dataseries1['dates'].append(testdata["records"][0]["events"][x]["date"])
-        dataseries1['value'].append(testdata["records"][0]["events"][x]["attributes"][1]["value"])
-
-    for x in range(0, 3):
-        dataseries2['dates'].append(testdata["records"][1]["events"][x]["date"])
-        dataseries2['value'].append(testdata["records"][1]["events"][x]["attributes"][1]["value"])
-
-    for x in range(0, 3):
-        dataseries3['dates'].append(testdata["records"][2]["events"][x]["date"])
-        dataseries3['value'].append(testdata["records"][2]["events"][x]["attributes"][1]["value"])
-
-    for x in range(0, 3):
-        dataseries4['dates'].append(testdata["records"][3]["events"][x]["date"])
-        dataseries4['value'].append(testdata["records"][3]["events"][x]["attributes"][1]["value"])
-
-    locationname11 = testdata["records"][0]["attributes"][1]["value"]
-    locationname12 = testdata["records"][0]["attributes"][3]["value"]
-
-    locationname21 = testdata["records"][1]["attributes"][1]["value"]
-    locationname22 = testdata["records"][1]["attributes"][3]["value"]
-
-    locationname31 = testdata["records"][2]["attributes"][1]["value"]
-    locationname32 = testdata["records"][2]["attributes"][3]["value"]
-
-    locationname41 = testdata["records"][3]["attributes"][1]["value"]
-    locationname42 = testdata["records"][3]["attributes"][3]["value"]
-
-    location1 = locationname11 + locationname12
-    location2 = locationname21 + locationname22
-    location3 = locationname31 + locationname32
-    location4 = locationname41 + locationname42
-
-    chartinfo = "working with data in EpiJson format"
-    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
-    title = {"text": 'info of 4 locations, 3 prediction dates'}
-    xAxis = {"title": {"text": 'Dates'}, "categories": ['2016-08-16T00:00:00Z', '2016-08-23T00:00:00Z', '2016-08-30T00:00:00Z']}
-    yAxis = {"title": {"text": 'Cases'}}
-    series = [
-        {"name": 'location1', "data": dataseries1['value']},
-        {"name": 'location2', "data": dataseries2['value']},
-        {"name": 'location3', "data": dataseries3['value']},
-        {"name": 'location4', "data": dataseries4['value']},
+    dataseries = [
+        {'dates': [], 'value': []},
+        {'dates': [], 'value': []},
+        {'dates': [], 'value': []},
+        {'dates': [], 'value': []},
     ]
+
+    locationname = []
+
+    for item in dataseries:
+        y = dataseries.index(item)
+        locationname1 = testdata["records"][y]["attributes"][1]["value"]
+        locationname2 = testdata["records"][y]["attributes"][3]["value"]
+        locationname.append(locationname1+locationname2)
+        for x in range(0, 3):
+            item['dates'].append(str(testdata["records"][y]["events"][x]["date"]))
+            item['value'].append(testdata["records"][y]["events"][x]["attributes"][1]["value"])
+
+    chartinfo = "working with data in EpiJSON format"
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    title = {"text": 'Data of 4 locations, 3 prediction dates'}
+    xAxis = {"title": {"text": 'Dates'}, "categories": dataseries[0]['dates']}
+    yAxis = {"title": {"text": 'Cases'}}
+
+    series = [
+    {"name": str(locationname[0]), "data": dataseries[0]['value']},
+    {"name": str(locationname[1]), "data": dataseries[1]['value']},
+    {"name": str(locationname[2]), "data": dataseries[2]['value']},
+    {"name": str(locationname[3]), "data": dataseries[3]['value']},
+    ]
+
     return render(request, 'data_browser/chart.html', {'chartID': chartID, 'chart': chart, 'series': series,
                                                        'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
                                                        'print_locations': chartinfo})
