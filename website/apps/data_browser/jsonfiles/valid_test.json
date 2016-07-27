@@ -12,9 +12,9 @@
 			"id": "12345678-e89b-12d3-a456-426655440000",
 			"attributes": [
                 {"name": "population", "type": "string", "value": "all"},
-                {"name": "department", "type": "string", "value": "Antioquia"},
+                {"name": "department", "type": "string", "value": "ANTIOQUIA"},
 				{"name": "department_code", "type": "number", "value": 50},
-				{"name": "municipality", "type": "string", "value": "Dabeiba"},
+				{"name": "municipality", "type": "string", "value": "DABEIBA"},
 				{"name": "municipality_code", "type": "number", "value": 50421},
                 {"name": "temperature", "type": "number", "value": 38, "units":"degC"},
                 {"name": "mosquitos", "type": "string", "value": "Ae. aegypti "}
@@ -36,7 +36,7 @@
 			      	"date": "2016-08-23T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":1, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":2, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":5, "units":"cases"},
                         {"name":"prediction_high", "type":"number", "value":1, "units":"cases"}
                     ]
 			    },
@@ -136,7 +136,7 @@
 			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":4, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":12, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":11, "units":"cases"},
                         {"name":"prediction_high", "type":"number", "value":4, "units":"cases"}
                     ]
 			    }
@@ -171,7 +171,7 @@
 			      	"date": "2016-08-23T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":16, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":12, "units":"cases"},
                         {"name":"prediction_high", "type":"number", "value":8, "units":"cases"}
                     ]
 			    },
@@ -181,7 +181,7 @@
 			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":24, "units":"cases"},
+                        {"name":"prediction_mid", "type":"number", "value":19, "units":"cases"},
                         {"name":"prediction_high", "type":"number", "value":8, "units":"cases"}
                     ]
 			    }

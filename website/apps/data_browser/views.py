@@ -134,7 +134,7 @@ def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
         y = dataseries.index(item)
         locationname1 = testdata["records"][y]["attributes"][1]["value"]
         locationname2 = testdata["records"][y]["attributes"][3]["value"]
-        locationname.append(locationname1+locationname2)
+        locationname.append(locationname1+"_"+locationname2)
         for x in range(0, 3):
             item['dates'].append(str(testdata["records"][y]["events"][x]["date"]))
             item['value'].append(testdata["records"][y]["events"][x]["attributes"][1]["value"])
