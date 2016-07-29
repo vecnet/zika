@@ -4,11 +4,7 @@ from django.views.generic.base import TemplateView
 
 
 class IndexView(TemplateView):
-    template_name = "home\index.html"
-
-
-class Locations(TemplateView):
-    template_name = "home\locations.html"
+    template_name = "home/index.html"
 
 
 def load_locations(request):
