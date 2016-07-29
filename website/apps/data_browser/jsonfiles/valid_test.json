@@ -22,12 +22,12 @@
 		  	"events":[
 				{
 			    	"id": "12349876-e89b-12d3-a456-426655440000",
-			      	"name": "Confirmed cases",
+			      	"name": "Suspected cases",
 			      	"date": "2016-08-16T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":1, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":1, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":1, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":2, "units":"cases"}
                     ]
 			    },
 		    	{
@@ -36,18 +36,18 @@
 			      	"date": "2016-08-23T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":1, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":5, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":1, "units":"cases"}
+                        {"name":"prediction_mid", "type":"number", "value":4, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":5, "units":"cases"}
                     ]
 			    },
 		    	{
 			    	"id": "12347654-e89b-12d3-a456-426655440000",
-					"name": "Confirmed cases",
+					"name": "Suspected cases",
 			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":1, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":3, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":1, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":6, "units":"cases"}
                     ]
 			    }
 		    ]
@@ -58,21 +58,21 @@
 			"attributes": [
                 {"name": "population", "type": "string", "value": "all"},
                 {"name": "department", "type": "string", "value": "BOLIVAR"},
-				{"name": "department_code", "type": "number", "value": 50},
+				{"name": "department_code", "type": "number", "value": 17},
 				{"name": "municipality", "type": "string", "value": "ACHI"},
-				{"name": "municipality_code", "type": "number", "value": 50421},
+				{"name": "municipality_code", "type": "number", "value": 17421},
                 {"name": "temperature", "type": "number", "value": 38, "units":"degC"},
                 {"name": "mosquitos", "type": "string", "value": "Ae. aegypti "}
 			],
 		  	"events":[
 				{
 			    	"id": "23459876-e89b-12d3-a456-426655440000",
-			      	"name": "Confirmed cases",
+			      	"name": "Suspected cases",
 			      	"date": "2016-08-16T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":2, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":2, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":2, "units":"cases"}
+                        {"name":"prediction_mid", "type":"number", "value":3, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":6, "units":"cases"}
                     ]
 			    },
 		    	{
@@ -82,17 +82,17 @@
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":2, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":4, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":2, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":7, "units":"cases"}
                     ]
 			    },
 		    	{
 			    	"id": "23457654-e89b-12d3-a456-426655440000",
-					"name": "Confirmed cases",
+					"name": "Suspected cases",
 			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":2, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":6, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":2, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":9, "units":"cases"}
                     ]
 			    }
 		    ]
@@ -103,21 +103,21 @@
 			"attributes": [
                 {"name": "population", "type": "string", "value": "all"},
                 {"name": "department", "type": "string", "value": "CALDAS"},
-				{"name": "department_code", "type": "number", "value": 50},
+				{"name": "department_code", "type": "number", "value": 93},
 				{"name": "municipality", "type": "string", "value": "FILADELFIA"},
-				{"name": "municipality_code", "type": "number", "value": 50421},
+				{"name": "municipality_code", "type": "number", "value": 93421},
                 {"name": "temperature", "type": "number", "value": 38, "units":"degC"},
                 {"name": "mosquitos", "type": "string", "value": "Ae. aegypti "}
 			],
 		  	"events":[
 				{
 			    	"id": "34569876-e89b-12d3-a456-426655440000",
-			      	"name": "Confirmed cases",
+			      	"name": "Suspected cases",
 			      	"date": "2016-08-16T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":4, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":4, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":4, "units":"cases"}
+                        {"name":"prediction_mid", "type":"number", "value":6, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":7, "units":"cases"}
                     ]
 			    },
 		    	{
@@ -127,17 +127,17 @@
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":4, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":8, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":4, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":9, "units":"cases"}
                     ]
 			    },
 		    	{
 			    	"id": "34567654-e89b-12d3-a456-426655440000",
-					"name": "Confirmed cases",
+					"name": "Suspected cases",
 			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":4, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":11, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":4, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":13, "units":"cases"}
                     ]
 			    }
 		    ]
@@ -148,21 +148,21 @@
 			"attributes": [
                 {"name": "population", "type": "string", "value": "all"},
                 {"name": "department", "type": "string", "value": "HUILA"},
-				{"name": "department_code", "type": "number", "value": 50},
+				{"name": "department_code", "type": "number", "value": 46},
 				{"name": "municipality", "type": "string", "value": "GARZON"},
-				{"name": "municipality_code", "type": "number", "value": 50421},
+				{"name": "municipality_code", "type": "number", "value": 46421},
                 {"name": "temperature", "type": "number", "value": 38, "units":"degC"},
                 {"name": "mosquitos", "type": "string", "value": "Ae. aegypti "}
 			],
 		  	"events":[
 				{
 			    	"id": "45679876-e89b-12d3-a456-426655440000",
-			      	"name": "Confirmed cases",
+			      	"name": "Suspected cases",
 			      	"date": "2016-08-16T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
-                        {"name":"prediction_mid", "type":"number", "value":8, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":8, "units":"cases"}
+                        {"name":"prediction_mid", "type":"number", "value":9, "units":"cases"},
+                        {"name":"prediction_high", "type":"number", "value":12, "units":"cases"}
                     ]
 			    },
 		    	{
@@ -172,17 +172,17 @@
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":12, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":8, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":14, "units":"cases"}
                     ]
 			    },
 		    	{
 			    	"id": "45677654-e89b-12d3-a456-426655440000",
-					"name": "Confirmed cases",
+					"name": "Suspected cases",
 			      	"date": "2016-08-30T00:00:00Z",
 			      	"attributes": [
                         {"name":"prediction_low", "type":"number", "value":8, "units":"cases"},
                         {"name":"prediction_mid", "type":"number", "value":19, "units":"cases"},
-                        {"name":"prediction_high", "type":"number", "value":8, "units":"cases"}
+                        {"name":"prediction_high", "type":"number", "value":20, "units":"cases"}
                     ]
 			    }
 		    ]

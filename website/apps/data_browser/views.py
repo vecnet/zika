@@ -118,9 +118,11 @@ def location_info_chart(request, chart_location, chartID='chart_ID', chart_type=
 
 
 def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
+    #load json data into python dictionary
     with open('/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
         testdata = json.load(json_data)
 
+    #define a local python dictionary to extract dates and value
     dataseries = [
         {'dates': [], 'value': []},
         {'dates': [], 'value': []},
@@ -128,8 +130,10 @@ def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
         {'dates': [], 'value': []},
     ]
 
+    #defina a local python dictionary to extract location name
     locationname = []
 
+    #extract dates, value and location name into particular dictionaries
     for item in dataseries:
         y = dataseries.index(item)
         locationname1 = testdata["records"][y]["attributes"][1]["value"]
@@ -139,6 +143,7 @@ def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
             item['dates'].append(str(testdata["records"][y]["events"][x]["date"]))
             item['value'].append(testdata["records"][y]["events"][x]["attributes"][1]["value"])
 
+    #chart information and passing data to plot
     chartinfo = "working with data in EpiJSON format"
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
     title = {"text": 'Data of 4 locations, 3 prediction dates'}
