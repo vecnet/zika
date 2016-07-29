@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView, RedirectView
-
+from website.apps.home.views import IndexView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', RedirectView.as_view(url='/map'), name="index"),
+    url(r'^$', IndexView.as_view(), name="index"),
     # robots.txt is implemented as a template because Django can't seem to serve a static file from urls.py
     url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt")),
     # Please refer to https://docs.djangoproject.com/en/1.8/topics/auth/default/#using-the-views

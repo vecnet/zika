@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'bootstrap3',
     'website',
+    'website.apps.home',
     'website.apps.map',
     'website.apps.data_browser',
     # 'csvimport.app.CSVImportConf'
