@@ -11,42 +11,43 @@
         font: 12px sans-serif;
         margin: 20px;
     }
+
     .dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
 
     /* Dropdown button on hover & focus */
     .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
-}
+        background-color: #3e8e41;
+    }
 
     /* The container <div> - needed to position the dropdown content */
     .dropdown {
-    position: relative;
-    display: inline-block;
-}
+        position: relative;
+        display: inline-block;
+    }
 
     /* Dropdown Content (Hidden by Default) */
     .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
 
     /* Links inside the dropdown */
     .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
     /* Change color of dropdown links on hover */
     .dropdown-content a:hover {background-color: #f1f1f1}
@@ -57,19 +58,15 @@
 
 {% block content %}
     <h2 align="center">Zika information {{ print_locations }}</h2>
-    <!--div id={{ chartID|safe }} class="chart" style="height:100px; width:100%"></div -->
     {{ locationinfo }}
     <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+        <button onclick="myFunction()" class="dropbtn">Locations</button>
         <div id="myDropdown" class="dropdown-content">
             {% for item in municipality_code %}
                 <a href="/data_browser/detail/{{ item.municipality_code}}/">{{ item.locationname}}</a></td>
             {% endfor %}
-        <!--a href="#">Chart 1</a>
-        <a href="#">Chart 2</a>
-        <a href="#">Chart 3</a-->
         </div>
-</div>
+    </div>
 {% endblock %}
 
 {% block extrajs %}
@@ -77,7 +74,7 @@
     <script>
         var chart_id = {{ chartID|safe }}
         var chart = {{ chart|safe }}
-        var title = {{ title|safe }}
+        var title = {{ print_locations }}
         var xAxis = {{ xAxis|safe }}
         var yAxis = {{ yAxis|safe }}
         var series = {{ series|safe }}
