@@ -9,7 +9,8 @@ import json
 # Create your views here.
 
 
-def hello(request, helloid):
+# test function
+def hello(request, hello_id):
 
     '''new_case = ZikaCasesColumbia.objects.create(
         report_date="1990-01-01",
@@ -28,7 +29,7 @@ def hello(request, helloid):
         print "id: %s" % case.pk
         print "report_date: %s" % case.report_date
         print "location: " + case.location
-        print "value: %s " % case.value'''
+        print "value: %s " % case.value
 
     csvpath = "/Users/bingyushen/Downloads/municipality_codes.csv"
     codereader = csv.reader(open(csvpath), delimiter=',', quotechar='"')
@@ -40,10 +41,11 @@ def hello(request, helloid):
             mcode.COD_DEPTO = row[1]
             mcode.NOM_MUNICI = row[2]
             mcode.ID_ESPACIA = row[3]
-            mcode.save()
-    return HttpResponse(content="hello")
+            mcode.save()'''
+    return HttpResponse(content=hello_id)
 
 
+# get all the locations from database
 def location_list(request):
     locationlist = ZikaCasesColumbia.objects.filter(data_field_code='CO0003', report_date='2016-01-09')
     template = loader.get_template('data_browser/locationlist.html')
@@ -51,6 +53,7 @@ def location_list(request):
     return HttpResponse(template.render(context, request))
 
 
+# get info of location from database
 def location_info(request, query_location):
     value_list_across_time_c1 = ZikaCasesColumbia.objects.filter(data_field_code='CO0001',
                                             location=query_location)
@@ -80,6 +83,7 @@ def location_info(request, query_location):
     return HttpResponse(template.render(context, request))
 
 
+# put detail info of specific location into highchart
 def location_info_chart(request, chart_location, chartID='chart_ID', chart_type='line', chart_height=500):
     value_list_across_time_c1 = ZikaCasesColumbia.objects.filter(data_field_code='CO0001',
                                                                  location=chart_location)
@@ -117,9 +121,10 @@ def location_info_chart(request, chart_location, chartID='chart_ID', chart_type=
                                                        'print_locations': chart_location})
 
 
-def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
+# test function of put info of locations in EpiJSON file into highchart
+def testchart(request, chartID='chartID', chart_type='line', chart_height=500):
     #load json data into python dictionary
-    with open('/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
+    with open('/Users/bingyushen/Documents/zika/zika/pycharmz/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
         testdata = json.load(json_data)
 
     #define a local python dictionary to extract dates and value
@@ -131,14 +136,25 @@ def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
     ]
 
     #defina a local python dictionary to extract location name
+    locationinfo = [
+        {'locationname': (), 'municipality_code': ()},
+        {'locationname': (), 'municipality_code': ()},
+        {'locationname': (), 'municipality_code': ()},
+        {'locationname': (), 'municipality_code': ()},
+    ]
+
     locationname = []
+    #municipality_code = []
 
     #extract dates, value and location name into particular dictionaries
     for item in dataseries:
         y = dataseries.index(item)
         locationname1 = testdata["records"][y]["attributes"][1]["value"]
         locationname2 = testdata["records"][y]["attributes"][3]["value"]
+        locationinfo[y]['locationname'] = str(locationname1+"_"+locationname2)
         locationname.append(locationname1+"_"+locationname2)
+        #municipality_code.append(testdata["records"][y]["attributes"][4]["value"])
+        locationinfo[y]['municipality_code'] = str(testdata["records"][y]["attributes"][4]["value"])
         for x in range(0, 3):
             item['dates'].append(str(testdata["records"][y]["events"][x]["date"]))
             item['value'].append(testdata["records"][y]["events"][x]["attributes"][1]["value"])
@@ -159,4 +175,52 @@ def testchart(request, chartID='chart_ID', chart_type='line', chart_height=500):
 
     return render(request, 'data_browser/chart.html', {'chartID': chartID, 'chart': chart, 'series': series,
                                                        'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
-                                                       'print_locations': chartinfo})
+                                                       'print_locations': chartinfo, 'locationname': locationname,
+                                                       'municipality_code': locationinfo
+                                                       },)
+
+
+# get info of location from EpiJSON file and put into highchart
+def getlocationinfo(request, municipality_code, chartID='chartID', chart_type='line', chart_height=500):
+    # load json data into python dictionary
+    with open(
+            '/Users/bingyushen/Documents/zika/zika/pycharmz/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
+        testdata = json.load(json_data)
+
+    # define a local python dictionary to extract dates and value
+    dataseries = [
+        {'dates': [], 'value': []},
+        {'dates': [], 'value': []},
+        {'dates': [], 'value': []},
+    ]
+
+    # extract dates, value and location name into particular dictionaries
+    for x in range(0,4):
+        print municipality_code
+        print testdata["records"][x]["attributes"][4]["value"]
+        print "====="
+        if str(municipality_code) == str(testdata["records"][x]["attributes"][4]["value"]):
+            print "hello"
+            for y in range(0,3):
+                for z in range(0,3):
+                    dataseries[z]['dates'].append(str(testdata["records"][x]["events"][y]["date"]))
+                    dataseries[z]['value'].append(testdata["records"][x]["events"][y]["attributes"][z]["value"])
+
+
+    # chart information and passing data to plot
+    chartinfo = "working with data in EpiJSON format"
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    title = {"text": 'Data of 4 locations, 3 prediction dates'}
+    xAxis = {"title": {"text": 'Dates'}, "categories": dataseries[0]['dates']}
+    yAxis = {"title": {"text": 'Cases'}}
+
+    series = [
+        {"name": 'low', "data": dataseries[0]['value']},
+        {"name": 'mid', "data": dataseries[1]['value']},
+        {"name": 'high', "data": dataseries[2]['value']},
+    ]
+    print dataseries
+    return render(request, 'data_browser/detail.html', {'chartID': chartID, 'chart': chart, 'series': series,
+                                                       'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
+                                                       'print_locations': chartinfo, })
+

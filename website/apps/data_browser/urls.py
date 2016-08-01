@@ -17,12 +17,13 @@ from website.apps.data_browser.views import location_list
 from website.apps.data_browser.views import location_info
 from website.apps.data_browser.views import location_info_chart
 from website.apps.data_browser.views import testchart
-
+from website.apps.data_browser.views import getlocationinfo
 
 urlpatterns = [
     url(r'^$', location_list),
     url(r'^test/', testchart),
-    url(r'^(?P<helloid>[0-9])/$', hello),
+    url(r'^detail/(?P<municipality_code>[0-9]+)/$', getlocationinfo),
+    url(r'^(?P<hello_id>[0-9]+)/$', hello),
     url(r'^(?P<query_location>[A-Z, a-z, -]+)/$', location_info),
     url(r'^chart/(?P<chart_location>[A-Z, a-z, -]+)/$', location_info_chart),
 ]

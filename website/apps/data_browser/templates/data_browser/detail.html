@@ -57,19 +57,7 @@
 
 {% block content %}
     <h2 align="center">Zika information {{ print_locations }}</h2>
-    <!--div id={{ chartID|safe }} class="chart" style="height:100px; width:100%"></div -->
-    {{ locationinfo }}
-    <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-        <div id="myDropdown" class="dropdown-content">
-            {% for item in municipality_code %}
-                <a href="/data_browser/detail/{{ item.municipality_code}}/">{{ item.locationname}}</a></td>
-            {% endfor %}
-        <!--a href="#">Chart 1</a>
-        <a href="#">Chart 2</a>
-        <a href="#">Chart 3</a-->
-        </div>
-</div>
+    <div id={{ chartID|safe }} class="chart" style="height:100px; width:100%"></div>
 {% endblock %}
 
 {% block extrajs %}
