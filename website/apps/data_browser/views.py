@@ -1,3 +1,5 @@
+import os
+
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
@@ -124,7 +126,11 @@ def location_info_chart(request, chart_location, chartID='chart_ID', chart_type=
 # test function of put info of locations in EpiJSON file into highchart
 def testchart(request):
     #load json data into python dictionary
-    with open('/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    valid_json_filename = os.path.join(base_dir, "jsonfiles", "valid_test.json")
+
+    with open(valid_json_filename) as json_data:
         testdata = json.load(json_data)
 
     #defina a local python dictionary to extract location name
@@ -148,8 +154,10 @@ def testchart(request):
 # get info of location from EpiJSON file and put into highchart
 def getlocationinfo(request, municipality_code, chartID='chartID', chart_type='line', chart_height=500):
     # load json data into python dictionary
-    with open(
-            '/Users/bingyushen/PycharmProjects/pycharmzika/zika/website/apps/data_browser/jsonfiles/valid_test.json') as json_data:
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    valid_json_filename = os.path.join(base_dir, "jsonfiles", "valid_test.json")
+
+    with open(valid_json_filename) as json_data:
         testdata = json.load(json_data)
 
     # define a local python dictionary to extract dates and value
@@ -174,13 +182,13 @@ def getlocationinfo(request, municipality_code, chartID='chartID', chart_type='l
                     dataseries[z]['dates'].append(str(testdata["records"][x]["events"][y]["date"]))
                     dataseries[z]['value'].append(testdata["records"][x]["events"][y]["attributes"][z]["value"])
 
-    chart_title = "Data of "+locationname
+    chart_title = "Data of " + locationname
     print "*********"
     print chart_title
 
     # chart information and passing data to plot
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
-    title = {"text": " "}
+    title = {"text": str(chart_title)}
     xAxis = {"title": {"text": 'Dates'}, "categories": dataseries[0]['dates']}
     yAxis = {"title": {"text": 'Cases'}}
 
