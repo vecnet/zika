@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^auth/', include('django.contrib.auth.urls')),
     url(r'^map/', include('website.apps.map.urls')),
     url(r'^data_browser/', include('website.apps.data_browser.urls')),
+    url(r'^home/', include('website.apps.home.urls')),
 ]
 
 
