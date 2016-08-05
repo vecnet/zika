@@ -70,12 +70,12 @@ def load_locations(request, department_name, chartID='chartID', chart_type='line
                         x += int(row[7])
                     elif row[4].decode('utf-8').find("CO0003") == 0:
                         y += int(row[7])
-                    elif row[4].decode('utf-8').find("CO0004") == 0:
-                        z += int(row[7])
+                    #elif row[4].decode('utf-8').find("CO0004") == 0:
+                        #z += int(row[7])
         count1.append(w)
         count2.append(x)
         count3.append(y)
-        count4.append(z)
+        #count4.append(z)
 
     chart_title = "data from online csv"
 
