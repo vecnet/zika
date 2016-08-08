@@ -40,8 +40,6 @@ def testview(request):
 
     for item in filename:
         webpage = urlopen(item)
-        #csvpath = "https://raw.githubusercontent.com/cdcepi/zika/master/Colombia/Municipality_Zika/data/Municipality_Zika_2016-01-09.csv"
-        #webpage = urlopen(csvpath)
         codereader = csv.reader(webpage, delimiter=',', quotechar='"')
 
         for row in codereader:
@@ -117,7 +115,7 @@ def load_locations(request, department_name, chartID='chartID', chart_type='line
     series = [
         {"name": 'zika_confirmed_laboratory', "data": countc1, "dashStyle": 'longdash', "color": '#FF0000'},
         #{"name": 'zika_confirmed_clinic', "data": countc2},
-        {"name": 'zika_suspected', "data": countc3, "dashStyle": 'shortdot', "color": '#FF0000'},
+        {"name": 'zika_suspected', "data": countc3, "zoneAxis": 'x', "zones": [{"value": 8}, {"dashStyle": 'dot'}]},
         #{"name": 'zika_suspected_clinic', "data": countc4},
     ]
 
