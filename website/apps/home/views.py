@@ -8,14 +8,58 @@ import csv
 import io
 from urllib2 import urlopen
 
+from website.apps.home.models import Location
 
 class IndexView(TemplateView):
     template_name = "home/index.html"
 
 
 def testview(request):
-    print "test"
-    return HttpResponse(content="hello")
+    allfile = [
+        "Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
+        "Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
+        "Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
+        "Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
+        "Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
+        "Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
+        "Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
+        "Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
+        "Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
+        "Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
+        "Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
+        "Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
+        "Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
+        "Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
+    ]
+
+    filename = []
+
+    for item in allfile:
+        csvpath = "https://raw.githubusercontent.com/cdcepi/zika/master/Colombia/Municipality_Zika/data/" + item
+        filename.append(csvpath)
+
+    for item in filename:
+        webpage = urlopen(item)
+        #csvpath = "https://raw.githubusercontent.com/cdcepi/zika/master/Colombia/Municipality_Zika/data/Municipality_Zika_2016-01-09.csv"
+        #webpage = urlopen(csvpath)
+        codereader = csv.reader(webpage, delimiter=',', quotechar='"')
+
+        for row in codereader:
+            if row[0] != 'report_date':
+                locationitem = Location()
+                locationitem.report_date = row[0]
+                locationitem.location = row[1]
+                locationitem.department = row[1].split('-')[1]
+                locationitem.municipality = row[1].split('-')[2]
+                locationitem.data_type = row[3]
+                locationitem.data_field_code = row[4]
+                if row[7] == 'NA':
+                    locationitem.value = 0
+                else:
+                    locationitem.value = row[7]
+                locationitem.save()
+
+    return HttpResponse(content="success")
 
 
 def load_locations(request, department_name, chartID='chartID', chart_type='line', chart_height=500):
@@ -23,76 +67,60 @@ def load_locations(request, department_name, chartID='chartID', chart_type='line
     department_name = department_name[:-11]
     print department_name
 
-    allfile = [
-            "Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
-            "Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
-            "Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
-            "Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
-            "Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
-            "Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
-            "Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
-            "Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
-            "Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
-            "Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
-            "Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
-            "Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
-            "Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
-            "Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
-            ]
-    filename = []
     dateseries = []
+    dateseries1 = {'dates':[], }
+    datac1 = Location.objects.filter(data_field_code='CO0001', department=department_name)
+    countc1 = []
+    countc2 = []
+    countc3 = []
+    countc4 = []
 
-    for item in allfile:
-        csvpath = "https://raw.githubusercontent.com/cdcepi/zika/master/Colombia/Municipality_Zika/data/"+item
-        filename.append(csvpath)
-        dateseries.append(item[18:-4])
-    count1 = []
-    count2 = []
-    count3 = []
-    count4 = []
-    #csvpath = "https://raw.githubusercontent.com/cdcepi/zika/master/Colombia/Municipality_Zika/data/Municipality_Zika_2016-07-16.csv"
-    #csvpath = "https://github.com/cdcepi/zika/blob/master/Colombia/Municipality_Zika/data/Municipality_Zika_2016-01-09.csv"
-    for item in filename:
-        webpage = urlopen(item)
-        codereader = csv.reader(webpage)
-        w = 0
-        x = 0
-        y = 0
-        z = 0
-        for row in codereader:
-            if row[0] != 'report_date':
-                if row[1].decode('utf-8').find(department_name) == -1:
-                    continue
-                else:
-                    if row[4].decode('utf-8').find("CO0001") == 0:
-                        w += int(row[7])
-                    elif row[4].decode('utf-8').find("CO0002") == 0:
-                        x += int(row[7])
-                    elif row[4].decode('utf-8').find("CO0003") == 0:
-                        y += int(row[7])
-                    #elif row[4].decode('utf-8').find("CO0004") == 0:
-                        #z += int(row[7])
-        count1.append(w)
-        count2.append(x)
-        count3.append(y)
-        #count4.append(z)
+    for item in datac1:
+        if item.report_date not in dateseries:
+            dateseries.append(item.report_date)
+    print dateseries
+
+    for item in dateseries:
+        datac1 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0001')
+        datac2 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0002')
+        datac3 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0003')
+        datac4 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0004')
+        countco001 = 0
+        countco002 = 0
+        countco003 = 0
+        countco004 = 0
+        for item in datac1:
+            countco001 += item.value
+        countc1.append(countco001)
+        for item in datac2:
+            countco002 += item.value
+        countc2.append(countco002)
+        for item in datac3:
+            countco003 += item.value
+        countc3.append(countco003)
+        for item in datac4:
+            countco004 += item.value
+        countc4.append(countco004)
+    print countc1
+
+    for item in dateseries:
+        dateseries1['dates'].append(item.strftime('%y/%m/%d'))
+    print dateseries1
 
     chart_title = "data from online csv"
 
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
     title = {"text": str(chart_title)}
-    xAxis = {"title": {"text": 'Dates'}, "categories": dateseries}
+    xAxis = {"title": {"text": 'Dates'}, "categories": dateseries1['dates']}
     yAxis = {"title": {"text": 'Cases'}}
 
     series = [
-        {"name": 'zika_confirmed_laboratory', "data": count1},
-        #{"name": 'zika_confirmed_clinic', "data": count2},
-        {"name": 'zika_suspected', "data": count3},
-        #{"name": 'zika_suspected_clinic', "data": count4},
+        {"name": 'zika_confirmed_laboratory', "data": countc1, "dashStyle": 'longdash', "color": '#FF0000'},
+        #{"name": 'zika_confirmed_clinic', "data": countc2},
+        {"name": 'zika_suspected', "data": countc3, "dashStyle": 'shortdot', "color": '#FF0000'},
+        #{"name": 'zika_suspected_clinic', "data": countc4},
     ]
 
     return render(request, 'home/departmentchart.html', {'chartID': chartID, 'chart': chart, 'series': series,
                                                         'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
                                                         'chart_title': chart_title, 'department_name': chart_department})
-
-
