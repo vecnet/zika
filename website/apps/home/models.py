@@ -4,10 +4,10 @@ from django.db import models
 
 
 class Location(models.Model):
-    report_date = models.DateField()
-    location = models.TextField()
-    department = models.TextField()
-    municipality = models.TextField()
-    data_type = models.TextField()
-    data_field_code = models.TextField()
-    value = models.IntegerField()
+    report_date = models.DateField(default='1999-01-01')
+    location = models.TextField(default='')
+    department = models.TextField(default='')
+    municipality = models.TextField(default='')
+    data_type = models.TextField(default='')
+    data_field_code = models.TextField(default='')
+    value = models.IntegerField(default=0)
