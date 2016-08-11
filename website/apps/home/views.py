@@ -122,3 +122,7 @@ def load_locations(request, department_name, chartID='chartID'):
     return render(request, 'home/departmentchart.html', {'chartID': chartID, 'chart': chart, 'series': series,
                                                         'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
                                                         'chart_title': chart_title, 'department_name': chart_department})
+
+
+def testmap(request):
+    return render(request, 'home/testmap.html')

@@ -4,8 +4,7 @@ from website.apps.home.views import testview
 from website.apps.home.views import testmap
 
 urlpatterns = [
-    url(r'^$', testview),
-    url(r'^test/$', testmap),
+    #url(r'^$', testview),
+    url(r'^$', testmap),
     url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
-
 ]
