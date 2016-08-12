@@ -4,8 +4,7 @@ import csv
 from website.apps.simulation.models import Location, Simulation, Data
 
 
-def load_simulation_file(filename, simulation_name):
-    fp = open(filename, 'rU')
+def load_simulation_file(fp, simulation_name):
     dictreader = csv.DictReader(fp)
 
     simulation = Simulation.objects.create(name=simulation_name)
