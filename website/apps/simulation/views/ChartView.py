@@ -10,7 +10,7 @@ from website.apps.simulation.models import Location, Data
 from website.apps.simulation.models import Simulation
 
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class ChartView(TemplateView):
     template_name = "simulation/chart.html"
 

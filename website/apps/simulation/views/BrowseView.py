@@ -8,7 +8,7 @@ from website.apps.simulation.models import Location
 from website.apps.simulation.models import Simulation
 
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class BrowseView(TemplateView):
     template_name = "simulation/browse.html"
 
