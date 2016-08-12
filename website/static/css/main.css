@@ -11,7 +11,7 @@
 /* CSS for the entire site. All pages import this. */
 
 /* Body needs 40px padding at top to account for menubar */
-body { padding-top:40px; font-size:14px;}
+body { padding: 0 20px; font-size:14px;}
 
 /* Default jumbotron styles. Apps should override some of these colors appropriately */
 .jumbotron { 
