@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+    <h1>Simulation</h1>
+    <select id="simulation" class="form-control" style="width:350px;" >
+    {% for simulation in simulations %}
+    <option value="{{ simulation.id }}">{{ simulation.name }}</option>
+    {% endfor %}
+    </select>
+
+    <h1>Location</h1>
+    <select id="location" class="form-control" style="width:350px;" >
+    {% for location in locations %}
+    <option value="{{ location.id }}">{{ location.department }} - {{ location.municipality }}</option>
+    {% endfor %}
+    </select>
+    <a id="plot_button" class="btn btn-success">Plot</a>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+
+        $('#plot_button').click(function () {
+           window.location.href = "/simulation/chart/" + $('#simulation').val() + "/" +  $('#location').val()
+        })
+
+    </script>
+{% endblock %}

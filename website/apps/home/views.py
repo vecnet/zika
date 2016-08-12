@@ -16,20 +16,20 @@ class IndexView(TemplateView):
 
 def testview(request):
     allfile = [
-        #"Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
-        #"Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
-        #"Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
-        #"Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
-        #"Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
-        #"Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
-        #"Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
-        #"Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
-        #"Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
-        #"Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
-        #"Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
-        #"Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
-        #"Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
-        #"Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
+        "Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
+        "Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
+        "Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
+        "Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
+        "Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
+        "Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
+        "Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
+        "Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
+        "Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
+        "Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
+        "Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
+        "Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
+        "Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
+        "Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
     ]
 
     filename = []
@@ -105,17 +105,17 @@ def load_locations(request, department_name, chartID='chartID'):
         dateseries1['dates'].append(item.strftime('%y/%m/%d'))
     print dateseries1
 
-    chart_title = "data from local database"
+    chart_title = "customized line style with data from local database"
 
-    chart = {"renderTo": chartID, "type": 'spline', "height": 500}
+    chart = {"renderTo": chartID, "type": 'spline', "height": '500',}
     title = {"text": str(chart_title)}
     xAxis = {"title": {"text": 'Dates'}, "categories": dateseries1['dates']}
     yAxis = {"title": {"text": 'Cases'}}
 
     series = [
-        {"name": 'zika_confirmed_laboratory', "data": countc1},#"dashStyle": 'longdash', "color": '#FF0000'
+        {"name": 'zika_confirmed_laboratory', "data": countc1, },
         #{"name": 'zika_confirmed_clinic', "data": countc2},
-        {"name": 'zika_suspected', "data": countc3, "zoneAxis": 'x', "zones": [{"value": 5}, {"dashStyle": 'dot'}]},
+        {"name": 'zika_suspected', "data": countc3, "zoneAxis": 'x', "zones": [{"value": 8}, {"dashStyle": 'dot'}]},
         #{"name": 'zika_suspected_clinic', "data": countc4},
     ]
 
@@ -123,5 +123,6 @@ def load_locations(request, department_name, chartID='chartID'):
                                                         'title': title, 'xAxis': xAxis, 'yAxis': yAxis,
                                                         'chart_title': chart_title, 'department_name': chart_department})
 
+
 def testmap(request):
-    return render(request,'home/testmap.html')
+    return render(request, 'home/testmap.html')

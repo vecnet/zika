@@ -10,6 +10,7 @@
 ######################################################################################################################*/
 
 /* CSS applied to all of the ts_emod app */
+body { padding: 0 20px;}
 
 /* Set up main header "jumbotron" band across the top */
 .jumbotron {
