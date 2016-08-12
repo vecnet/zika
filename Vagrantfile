@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 8000, host: 8001
-  config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 5432, host: 5432
+  config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 5432, host: 5433
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -71,7 +71,8 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
      pwd
-     sudo yum -y install vim python postgresql-server postgresql-client
+     sudo yum -y install vim python postgresql-server postgresql-client postgresql-libs postgresql-devel
+     sudo yum -y install gcc python-devel openssl-devel libffi-devel
      sudo curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
      sudo python get-pip.py
      sudo rm get-pip.py

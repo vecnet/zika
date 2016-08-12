@@ -1,2 +1,3 @@
 Django==1.10
 django-bootstrap3==7.0.1
+psycopg2>=2.5.4  # django.contrib.postgres.fields.JSONField requires PostgreSQL 9.4 and Psycopg2 2.5.4.

@@ -31,10 +31,11 @@ urlpatterns = [
     url(r'^simulation/', include('website.apps.simulation.urls')),
 ]
 
-
 try:
-    from .settings_local import SSO_URLS
-    urlpatterns += SSO_URLS
+    # If django_auth_pubtkt is available, add redirect_to_sso to urlpattens
+    # In production, this URL will be used as login view (LOGIN_URL)
+    from django_auth_pubtkt.views import redirect_to_sso
+    urlpatterns += [url(r'^sso/', redirect_to_sso),]
 except ImportError:
     pass
 

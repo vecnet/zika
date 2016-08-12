@@ -58,7 +58,7 @@ coverage.xml
 *.pot
 website/media/*
 !website/media/README.txt
-website/settings_local.py
+website/settings/settings_local.py
 
 # Apache static folder
 apache/static/*

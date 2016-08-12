@@ -39,6 +39,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # XSS filtering and help prevent XSS attacks
 SECURE_BROWSER_XSS_FILTER = True
 
+# VecNet Single Sign On integration
+LOGIN_URL = '/sso/'
+TKT_AUTH_LOGIN_URL = 'https://www.vecnet.org/index.php/sso-login'
+TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
+
+MIDDLEWARE_CLASSES += ('django_auth_pubtkt.DjangoAuthPubtkt',)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -88,12 +95,12 @@ LOGGING = {
             'propagate': True,
         },
     },
-    "formatters": {
-        "simple": {
-           "format": "%(levelname)s: [%(name)s:%(lineno)s] %(message)s"
+    'formatters': {
+        'simple': {
+           'format': '%(levelname)s: [%(name)s:%(lineno)s] %(message)s'
         },
-        "withtimestamp": {
-           "format": "%(levelname)s:[%(asctime)s] [%(name)s:%(lineno)s] %(message)s"
+        'withtimestamp': {
+           'format': '%(levelname)s:[%(asctime)s] [%(name)s:%(lineno)s] %(message)s'
         }
     }
 }
