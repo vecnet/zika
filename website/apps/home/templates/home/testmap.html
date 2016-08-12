@@ -1,12 +1,12 @@
 <html>
 <head>
 <title>Natural Earth - Javascript Shapefile and DBF Loader</title>
-<script type="text/javascript" src="lib/binaryajax.js"></script>
-<script type="text/javascript" src="src/binarywrapper.js"></script>
-<script type="text/javascript" src="src/shapefile.js"></script>
-<script type="text/javascript" src="src/dbf.js"></script>
-<script type="text/javascript" src="src/map.js"></script>
-<script type="text/javascript" src="src/layer.js"></script>
+<script type="text/javascript" src="/static/lib/binaryajax.js"></script>
+<script type="text/javascript" src="/static/src/binarywrapper.js"></script>
+<script type="text/javascript" src="/static/src/shapefile.js"></script>
+<script type="text/javascript" src="/static/src/dbf.js"></script>
+<script type="text/javascript" src="/static/src/map.js"></script>
+<script type="text/javascript" src="/static/src/layer.js"></script>
 <!--[if IE]><script src="lib/excanvas.js"></script><![endif]-->
 <script type="text/javascript">
 
@@ -14,9 +14,9 @@ window.onload = function() {
 
   var map = new Map('map', [
     // country shapes
-    new Layer('naturalearthdata/cultural/110m-admin-0-countries', { fillStyle: '#fadfa8', strokeStyle: '#5c3d1f', lineWidth: '0.5' }),
+    new Layer('/static/naturalearthdata/cultural/110m-admin-0-countries', { fillStyle: '#fadfa8', strokeStyle: '#5c3d1f', lineWidth: '0.5' }),
     // dots for cities
-    new Layer('naturalearthdata/cultural/110m-populated-places', { fillStyle: '#800000', /*textHalo: '3', textStroke: 'white',*/ textFill: 'rgba(0,0,0,1)', textProp: 'Name_Town', font: 'bold 11px sans-serif' })
+    new Layer('/static/naturalearthdata/cultural/110m-populated-places', { fillStyle: '#800000', /*textHalo: '3', textStroke: 'white',*/ textFill: 'rgba(0,0,0,1)', textProp: 'Name_Town', font: 'bold 11px sans-serif' })
   ]);
 
 }
