@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-    <h1>Simulation</h1>
+    <h1>Model</h1>
     <select id="simulation" class="form-control" style="width:350px;" >
     {% for simulation in simulations %}
     <option value="{{ simulation.id }}">{{ simulation.name }}</option>
@@ -14,7 +14,7 @@
     <option value="{{ location.id }}">{{ location.department }} - {{ location.municipality }}</option>
     {% endfor %}
     </select>
-    <a id="plot_button" class="btn btn-success">Plot</a>
+    <a id="plot_button" class="btn btn-success" target="_blank">Generate Chart</a>
 {% endblock %}
 
 {% block extra_js %}
