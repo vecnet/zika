@@ -71,13 +71,13 @@ def testview(request):
 
 
 def load_locations(request, department_name, chartID='chartID'):
-    chart_department =  department_name
-    department_name = department_name[:-11]
-    print department_name
+    chart_department = department_name[0]+department_name[1:].lower()
+    #department_name = department_name[:-11]
+    print chart_department
 
     dateseries = []
     dateseries1 = {'dates':[], }
-    datac1 = Location.objects.filter(data_field_code='CO0001', department=department_name)
+    datac1 = Location.objects.filter(data_field_code='CO0001', department=chart_department)
     countc1 = []
     countc2 = []
     countc3 = []
@@ -89,10 +89,10 @@ def load_locations(request, department_name, chartID='chartID'):
     print dateseries
 
     for item in dateseries:
-        datac1 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0001')
-        datac2 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0002')
-        datac3 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0003')
-        datac4 = Location.objects.filter(report_date=item, department=department_name, data_field_code='CO0004')
+        datac1 = Location.objects.filter(report_date=item, department=chart_department, data_field_code='CO0001')
+        datac2 = Location.objects.filter(report_date=item, department=chart_department, data_field_code='CO0002')
+        datac3 = Location.objects.filter(report_date=item, department=chart_department, data_field_code='CO0003')
+        datac4 = Location.objects.filter(report_date=item, department=chart_department, data_field_code='CO0004')
         countco001 = 0
         countco002 = 0
         countco003 = 0
@@ -135,4 +135,4 @@ def load_locations(request, department_name, chartID='chartID'):
 
 
 def testmap(request):
-    return render(request, 'home/testmap.html')
+    return render(request, 'home/ol_simple.html')
