@@ -16,10 +16,10 @@ from django.db import transaction
 
 import logging
 
-from website.apps.simulation.models import Simulation
 from website.apps.simulation.utils import load_simulation_file
 
 logger = logging.getLogger(__name__)
+
 
 class UploadView(TemplateView):
     template_name = "simulation/upload.html"
@@ -28,7 +28,7 @@ class UploadView(TemplateView):
     def post(self, request, *args, **kwargs):
         uploaded_file = self.request.FILES.get(u"output_file", None)
         if not uploaded_file:
-            return HttpResponseBadRequest("Not file[] file is provided")
+            return HttpResponseBadRequest("Not 'output_file' file is provided")
         simulation_name = self.request.POST.get(u"name", None)
         logger.info("Filename: %s" % uploaded_file.name)
 
