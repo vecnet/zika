@@ -11,7 +11,7 @@
     <h1>Location</h1>
     <select id="location" class="form-control" style="width:350px;" >
     {% for location in locations %}
-    <option value="{{ location.id }}">{{ location.department }} - {{ location.municipality }}</option>
+    <option value="{{ location.municipality_code }}">{{ location.department }} - {{ location.municipality }}</option>
     {% endfor %}
     </select>
     <a id="plot_button" class="btn btn-success" target="_blank">Generate Chart</a>

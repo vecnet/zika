@@ -23,9 +23,9 @@ from website.apps.simulation.models import Simulation
 class ChartView(TemplateView):
     template_name = "simulation/chart.html"
 
-    def get_context_data(self, simulation_id, location_id, **kwargs):
+    def get_context_data(self, simulation_id, municipality_code, **kwargs):
         simulation = get_object_or_404(Simulation, id=simulation_id)
-        location = get_object_or_404(Location, id=location_id)
+        location = get_object_or_404(Location, municipality_code=municipality_code)
         data = Data.objects.filter(simulation=simulation, location=location)
         context = {
             "location": location,
