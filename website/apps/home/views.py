@@ -135,4 +135,4 @@ def load_locations(request, department_name, chartID='chartID'):
 
 
 def testmap(request):
-    return render(request, 'home/ol_simple.html')
+    return render(request, 'home/05_choropleth.html')
