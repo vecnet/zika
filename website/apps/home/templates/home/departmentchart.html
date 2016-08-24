@@ -22,12 +22,11 @@
         color: #a6e1ec;
         font-size: 60%;
     }
-
 </style>
 
 {% block content %}
     <h1 align="center">Zika information of {{ department_name }}
-    <a id = "returnbtn" href = '/'> Home</a>
+    <a id = "returnbtn" href = '/home'> Home</a>
     </h1>
     <div id={{ chartID|safe }} class="chart" ></div>
 {% endblock %}
@@ -55,5 +54,4 @@
             });
         });
     </script>
-
 {% endblock %}

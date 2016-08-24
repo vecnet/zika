@@ -5,9 +5,12 @@ window.onload = function () {
     map = new OpenLayers.Map('map', {sphericalMercator: true});
     var osm = new OpenLayers.Layer.OSM({sphericalMercator: true});
 
-    var shpLayer = new OpenLayers.Layer.Vector({projection: new OpenLayers.Projection('EPSG:4326')});
+    var shpLayer = new OpenLayers.Layer.Vector({projection: new OpenLayers.Projection("EPSG:900913"),
+    displayProjection: new OpenLayers.Projection("EPSG: 4326")});
     map.addLayers([osm, shpLayer]);
-    map.setCenter(new OpenLayers.LonLat(0, 0), 1);
+    map.setCenter(new OpenLayers.LonLat(74, 4),3);
+    //map.zoomToExtent(bounds);
+
 
     // Interaction; not needed for initial display.
     selectControl = new OpenLayers.Control.SelectFeature(shpLayer);
@@ -54,12 +57,20 @@ function onFeatureSelect(evt) {
         table += '<tr><td>' + attr + '</td><td>' + feature.attributes.values[attr] + '</td></tr>';
         if (attr == "NOM_DEPART" ){
             var clickurl="/home/"+feature.attributes.values[attr];
-            //clickurl = clickurl.replace(/ /g, '')
             clickurl=$.trim(clickurl);
-            clickurl = clickurl+"_Department";
-            table += '<tr><td>' + attr + '</td><td>' + '<a href="'+clickurl+'">click</a>' + '</td></tr>' //clickurl.link(passurl)
+            //clickurl = clickurl+"_Department";
+            table += '<tr><td>' + 'DEPARTMENT_INFO ' + '</td><td>' + '<a href="'+clickurl+'">CLICK</a>' + '</td></tr>' //clickurl.link(passurl)
         }
-
+        else if (attr == "NOM_MUNICI" ){
+            var municod =feature.attributes.values['ID_ESPACIA'];
+            //municod = municod.substr(municod.length - 3);
+            municod = $.trim(municod);
+            var clickurl="/simulation/chart/1/" + municod;
+            clickurl=$.trim(clickurl);
+            //clickurl = clickurl+"/"+feature.attributes.values['NOM_MUNICI'];
+            //clickurl=$.trim(clickurl);
+            table += '<tr><td>' + 'MUNICIPALITY_INFO ' + '</td><td>' + '<a href="'+clickurl+'">CLICK</a>' + '</td></tr>' //clickurl.link(passurl)
+        }
     }
     table += '</table>';
     popup = new OpenLayers.Popup.FramedCloud("featurePopup",

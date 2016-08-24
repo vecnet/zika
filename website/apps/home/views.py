@@ -13,12 +13,14 @@
 from django.views.generic.base import TemplateView
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from django.template import loader
 
 import csv
 import io
 from urllib2 import urlopen
 
 from website.apps.home.models import Location
+#from website.apps.simulation.models import Location
 
 class IndexView(TemplateView):
     template_name = "home/index.html"
@@ -26,20 +28,20 @@ class IndexView(TemplateView):
 
 def testview(request):
     allfile = [
-        "Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
-        "Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
-        "Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
-        "Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
-        "Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
-        "Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
-        "Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
-        "Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
-        "Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
-        "Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
-        "Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
-        "Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
-        "Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
-        "Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
+        #"Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
+        #"Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
+        #"Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
+        #"Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
+        #"Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
+        #"Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
+        #"Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
+        #"Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
+        #"Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
+        #"Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
+        #"Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
+        #"Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
+        #"Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
+        #"Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
     ]
 
     filename = []
@@ -72,7 +74,7 @@ def testview(request):
 
 def load_locations(request, department_name, chartID='chartID'):
     chart_department = department_name[0]+department_name[1:].lower()
-    #department_name = department_name[:-11]
+    department_name = department_name[:-11]
     print chart_department
 
     dateseries = []
@@ -123,7 +125,7 @@ def load_locations(request, department_name, chartID='chartID'):
     yAxis = {"title": {"text": 'Cases'}}
 
     series = [
-        {"name": 'zika_confirmed_laboratory', "data": countc1, },
+        {"name": 'zika_confirmed_laboratory', "data": countc1, "zoneAxis": 'x', "zones": [{"value": 8}, {"dashStyle": 'dot'}]},
         #{"name": 'zika_confirmed_clinic', "data": countc2},
         {"name": 'zika_suspected', "data": countc3, "zoneAxis": 'x', "zones": [{"value": 8}, {"dashStyle": 'dot'}]},
         #{"name": 'zika_suspected_clinic', "data": countc4},
@@ -135,4 +137,20 @@ def load_locations(request, department_name, chartID='chartID'):
 
 
 def testmap(request):
+    return render(request, 'home/ol_simple.html')
+
+
+def testchoropleth(request):
     return render(request, 'home/05_choropleth.html')
+
+
+def load_municipality(request, department_name, municipality_name):
+    locationinfo = Location.objects.filter(department=department_name, municipality=municipality_name)
+    locationid = locationinfo.id
+    print locationinfo
+    simulationid = 1
+    template = loader.get_template('home/testsimulation.html')
+    context = {'simulationid': simulationid,
+               'locationid': locationid,
+    }
+    return HttpResponse(template.render(context, request))
