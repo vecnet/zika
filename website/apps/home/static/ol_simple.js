@@ -3,13 +3,14 @@
 
 window.onload = function () {
     map = new OpenLayers.Map('map', {sphericalMercator: true});
+
     var osm = new OpenLayers.Layer.OSM({sphericalMercator: true});
 
-    var shpLayer = new OpenLayers.Layer.Vector({projection: new OpenLayers.Projection("EPSG:900913"),
+    var shpLayer = new OpenLayers.Layer.Vector({projection: new OpenLayers.Projection("EPSG: 4326"),
     displayProjection: new OpenLayers.Projection("EPSG: 4326")});
     map.addLayers([osm, shpLayer]);
-    map.setCenter(new OpenLayers.LonLat(74, 4),3);
     //map.zoomToExtent(bounds);
+    map.setCenter(new OpenLayers.LonLat(12.0, 14.0), 3);
 
 
     // Interaction; not needed for initial display.
