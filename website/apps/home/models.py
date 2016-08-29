@@ -21,3 +21,11 @@ class Location(models.Model):
     data_type = models.TextField(default='')
     data_field_code = models.TextField(default='')
     value = models.IntegerField(default=0)
+
+class examplefile(models.Model):
+    value_mid = models.IntegerField(default=0)
+    date = models.DateField()
+    department = models.TextField(default='')
+    department_code = models.TextField(default='')
+    municipality = models.TextField(default='')
+    municipality_code = models.TextField(default='')

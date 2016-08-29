@@ -16,11 +16,17 @@ from website.apps.home.views import load_municipality
 from website.apps.home.views import testview
 from website.apps.home.views import testmap
 from website.apps.home.views import testchoropleth
+from website.apps.home.views import load_examplecsv
+from website.apps.home.views import dropdown_menu
+from website.apps.home.views import detailchoropleth
 
 urlpatterns = [
     #url(r'^$', testview),
     url(r'^$', testmap, name="home.map"),
     url(r'^testchoropleth/$', testchoropleth, name='choropleth_map'),
-    url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
+    url(r'^loadexamplecsv/$', load_examplecsv),
     url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
+    url(r'^dropdnegcsv/$', dropdown_menu),
+    url(r'^choroplethdetail/(?P<inquery_date>[0-9, -]+)/$', detailchoropleth),
+    url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
 ]

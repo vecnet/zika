@@ -35,7 +35,10 @@
             {#                height = h;#}
 
             //Load in agriculture data
-            d3.csv("/static/examples/testvalue.csv", function (data) {
+            var csvpath = "{{ generatefilepath }}"
+            //d3.csv(csvpath, function (data) {
+            d3.csv(csvpath, function (data) {
+
 
                 //Set input domain for color scale
                 color.domain([
@@ -103,6 +106,6 @@
 
 {% block main_content %}
     <a href="{% url 'index' %}">Home</a>
-    <h1> Zika cases distributions on 08/06/2015</h1>
+    <h1> Zika cases distributions on {{ generatefilepath }}</h1>
         <svg width="1000" height="600"></svg>
 {% endblock %}
