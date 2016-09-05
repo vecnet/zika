@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
 {% block extra_js %}
-<script type="text/javascript" src="/static/examples/d3.v3.js"></script>
-
-         <script type="text/javascript">
+    <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
+    <script type="text/javascript">
 		$(document).ready(function() {
 
             //Width and height
@@ -25,21 +24,14 @@
             //Colors taken from colorbrewer.js, included in the D3 download
 
             //Create SVG element
-            {#			var svg = d3.select("body")#}
-            {#						.append("svg")#}
-            {#						.attr("width", w)#}
-            {#						.attr("height", h);#}
-
-            var svg = d3.select("svg");
-            {#                width = w,#}
-            {#                height = h;#}
+            var div = d3.select("body").append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0);
+            var svg = d3.select("body").select("svg");
 
             //Load in agriculture data
             var csvpath = "{{ generatefilepath }}"
-            //d3.csv(csvpath, function (data) {
             d3.csv(csvpath, function (data) {
-
-
                 //Set input domain for color scale
                 color.domain([
                     d3.min(data, function (d) {
@@ -66,10 +58,8 @@
                             var jsonState = json.features[j].properties.ID_ESPACIA;
 
                             if (dataState == jsonState) {
-
                                 //Copy the data value into the JSON
                                 json.features[j].properties.value = dataValue;
-
                                 //Stop looking through the JSON
                                 break;
 
@@ -86,7 +76,6 @@
                             .style("fill", function (d) {
                                 //Get data value
                                 var value = d.properties.value;
-
                                 if (value) {
                                     //If value exists…
                                     return color(value);
@@ -94,18 +83,36 @@
                                     //If value is undefined…
                                     return "#ccc";
                                 }
-                            });
-
+                            })
+                            .on("click", function(d){
+                                var url = "http://127.0.0.1:8000/simulation/chart/1/";
+                                url += d.properties.ID_ESPACIA;
+                                $(location).attr('href', url);
+                                //window.location = "/home/123";
+                            })
+                            .on("mouseover", function(d) {
+                                d3.select(this).transition().duration(300).style("opacity", 1);
+                                div.transition().duration(300)
+                                        .style("opacity", 1)
+                                div.text(d.properties.value)
+                                        .style("left", (d3.event.pageX) + "px")
+                                        .style("top", (d3.event.pageY -30) + "px")
+                            })
+                            .on("mouseout", function() {
+                                d3.select(this)
+                                        .transition().duration(300)
+                                        .style("opacity", 0.8);
+                                div.transition().duration(300)
+                                        .style("opacity", 0);
+                            })
                 });
-
             });
         });
-		</script>
-
+    </script>
 {% endblock %}
 
 {% block main_content %}
     <a href="{% url 'index' %}">Home</a>
-    <h1> Zika cases distributions on {{ generatefilepath }}</h1>
+    <h1>Zika cases distributions on {{ inquery_date }}</h1>
         <svg width="1000" height="600"></svg>
 {% endblock %}

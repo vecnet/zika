@@ -19,6 +19,7 @@ from website.apps.home.views import testchoropleth
 from website.apps.home.views import load_examplecsv
 from website.apps.home.views import dropdown_menu
 from website.apps.home.views import detailchoropleth
+from website.apps.home.views import csvfake
 
 urlpatterns = [
     #url(r'^$', testview),
@@ -28,5 +29,6 @@ urlpatterns = [
     url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
     url(r'^dropdnegcsv/$', dropdown_menu),
     url(r'^choroplethdetail/(?P<inquery_date>[0-9, -]+)/$', detailchoropleth),
+    url(r'^csvfake/(?P<inquery_date>[0-9, -]+)/$', csvfake, name='csvfake'),
     url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
 ]
