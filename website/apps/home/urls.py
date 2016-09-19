@@ -21,6 +21,7 @@ from website.apps.home.views import dropdown_menu
 from website.apps.home.views import detailchoropleth
 from website.apps.home.views import csvfake
 
+
 urlpatterns = [
     #url(r'^$', testview),
     url(r'^$', testmap, name="home.map"),
