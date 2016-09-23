@@ -34,6 +34,7 @@
 
             //Load in agriculture data
             var csvpath = "{{ generatefilepath }}"
+
             d3.csv(csvpath, function (data) {
                 //Set input domain for color scale
                 color.domain([
@@ -90,7 +91,8 @@
                             .on("click", function(d){
                                 var url = "http://127.0.0.1:8000/simulation/chart/1/";
                                 url += d.properties.ID_ESPACIA;
-                                $(location).attr('href', url);
+                                document.getElementById('iframe2').src = url;//'data:text/html;charset=utf-8,'+encodeURI(url);
+                                //$(location).attr('href', url);
                                 //window.location = "/home/123";
                             })
                             .on("mouseover", function(d) {
@@ -115,7 +117,9 @@
 </head>
 
 <body>
-<svg width="1000" height="600"></svg>
+<p float="left" clear="left">
+<svg width="45%" height="600"></svg>
+<iframe id="iframe2" align="right" width="54%" height="600" frameborder="none"></iframe></p>
 </body>
 
 </html>

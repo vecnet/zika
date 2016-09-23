@@ -87,7 +87,10 @@
                             .on("click", function(d){
                                 var url = "http://127.0.0.1:8000/simulation/chart/1/";
                                 url += d.properties.ID_ESPACIA;
-                                $(location).attr('href', url);
+                                var iframe = document.createElement('iframe');
+                                iframe.src = url
+                                document.body.appendChild(iframe);
+                                //$(location).attr('href', url);
                                 //window.location = "/home/123";
                             })
                             .on("mouseover", function(d) {
