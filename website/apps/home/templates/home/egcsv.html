@@ -1,13 +1,11 @@
+{% extends "base.html" %}
 
-
-{% block extrahead %}
-    <!-- Load in jQuery and HighCharts -->
+{% block extra_css %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
     <script src="{{ STATIC_URL }}js/jquery-2.1.4.min.js"></script>
     <script src="{{ STATIC_URL }}js/jquery-migrate-1.2.1.min.js"></script>
     <script src="{{ STATIC_URL }}bootstrap-3.3.5/js/bootstrap.min.js"></script>
-{% endblock %}
 
 <style type="text/css">
     body {
@@ -60,8 +58,8 @@
     /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
     .show {display:block;}
 </style>
-
-{% block content %}
+{% endblock %}
+{% block main_content %}
     <div class="dropdown">
         <button onclick="myFunction()" class="dropbtn">Forcasting Dates</button>
         <div id="myDropdown" class="dropdown-content">
@@ -75,7 +73,7 @@
     </div>
 {% endblock %}
 
-{% block extrajs %}
+{% block extra_js %}
     <!-- Dropdown js.  -->
     <script>
         /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
@@ -83,7 +81,8 @@
             document.getElementById("myDropdown").classList.toggle("show");
         }
         // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function(event) {
+        $(document).ready(function(){
+                    window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
                 var i;
@@ -95,6 +94,8 @@
             }
         }
     }
-    </script>
+        })
 
+
+    </script>
 {% endblock %}
