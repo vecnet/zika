@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^testchoropleth/$', testchoropleth, name='choropleth_map'),
     url(r'^loadexamplecsv/$', load_examplecsv),
     url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
-    url(r'^dropdnegcsv/$', dropdown_menu),
+    url(r'^dropdnegcsv/$', dropdown_menu, name='home.dropdown'),
     url(r'^choroplethdetail/(?P<inquery_date>[0-9, -]+)/$', detailchoropleth),
     url(r'^csvfake/(?P<inquery_date>[0-9, -]+)/$', csvfake, name='csvfake'),
     url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
