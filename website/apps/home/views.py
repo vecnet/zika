@@ -17,12 +17,15 @@ from django.template import loader
 from django.http import StreamingHttpResponse
 from django.core.urlresolvers import reverse
 import csv
+import os
 from urllib2 import urlopen
 import StringIO
 
 from website.apps.home.models import Location
-from website.apps.home.models import examplefile
+from website.apps.home.models import Examplefile
 
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 class IndexView(TemplateView):
     template_name = "home/index.html"
@@ -159,10 +162,14 @@ def load_municipality(request, department_name, municipality_name):
 
 
 def load_examplecsv(request):
-    examplecsv = csv.reader(open("/Users/bingyushen/Desktop/data_cases_combo_20160810.csv"), delimiter=',', quotechar='"')
+    filename = os.path.join(os.path.dirname(base_dir), "simulation", "data", "data_cases_combo_20160810.csv")
+    examplecsv = csv.reader(open(filename), delimiter=',', quotechar='"')
+
+    # Skip header
+    header = examplecsv.next()
 
     for row in examplecsv:
-        exampleitem = examplefile()
+        exampleitem = Examplefile()
         exampleitem.value_mid = row[7]
         exampleitem.date = (row[9])[:10]
         exampleitem.department = row[10]
@@ -175,7 +182,7 @@ def load_examplecsv(request):
 
 
 def dropdown_menu(request):
-    allinfo = examplefile.objects.filter(municipality_code='05001')
+    allinfo = Examplefile.objects.filter(municipality_code='05001')
     dateinfo = []
     for item in allinfo:
         dateinfo.append(str(item.date))
@@ -191,7 +198,7 @@ def detailchoropleth(request, inquery_date):
 
 
 def csvfake(request, inquery_date):
-    allinfo = examplefile.objects.filter(date=inquery_date)
+    allinfo = Examplefile.objects.filter(date=inquery_date)
     output = StringIO.StringIO()
 
     tricky_codes = ['05001', '05002', '05004', '05021', '05030', '05031', '05034', '05036', '05038', '05040', '05042',

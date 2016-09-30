@@ -22,7 +22,8 @@ class Location(models.Model):
     data_field_code = models.TextField(default='')
     value = models.IntegerField(default=0)
 
-class examplefile(models.Model):
+
+class Examplefile(models.Model):
     value_mid = models.IntegerField(default=0)
     date = models.DateField()
     department = models.TextField(default='')
