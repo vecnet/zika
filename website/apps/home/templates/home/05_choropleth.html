@@ -89,7 +89,10 @@
                                 }
                             })
                             .on("click", function(d){
-                                var url = "http://127.0.0.1:8000/simulation/chart/1/";
+                                var simulationumber1 = document.getElementById("simulation_number").value;
+                                var url = "http://127.0.0.1:8000/simulation/chart/";
+                                url += simulationumber1;
+                                url += "/";
                                 url += d.properties.ID_ESPACIA;
                                 document.getElementById('iframe2').src = url;//'data:text/html;charset=utf-8,'+encodeURI(url);
                                 //$(location).attr('href', url);
@@ -114,9 +117,18 @@
             });
         });
     </script>
+    <!--script>
+        function mysimulation() {
+            var simulationumber2 = document.getElementById("simulation_number").value;
+            document.getElementById("demo").innerHTML = simulationumber2;
+        }
+    </script-->
 </head>
 
 <body>
+simulation number: <input type="text" id="simulation_number" value="1">
+<!--button onclick="mysimulation()">simulation number</--button>
+<p id="demo"></p-->
 <p float="left" clear="left">
 <svg width="45%" height="600"></svg>
 <iframe id="iframe2" align="right" width="54%" height="600" frameborder="none"></iframe></p>
