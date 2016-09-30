@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'bootstrap3',
     'website',
     'website.apps.home',
-    'website.apps.map',
     'website.apps.data_browser',
     'website.apps.simulation',
     # 'csvimport.app.CSVImportConf'
