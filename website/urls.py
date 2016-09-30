@@ -25,7 +25,6 @@ urlpatterns = [
     # Please refer to https://docs.djangoproject.com/en/1.8/topics/auth/default/#using-the-views
     # for additional information about using django.contrib.auth.urls
     url(r'^auth/', include('django.contrib.auth.urls')),
-    url(r'^data_browser/', include('website.apps.data_browser.urls')),
     url(r'^home/', include('website.apps.home.urls')),
     url(r'^simulation/', include('website.apps.simulation.urls')),
 ]
