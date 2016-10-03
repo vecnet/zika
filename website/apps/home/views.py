@@ -14,7 +14,6 @@ from django.views.generic.base import TemplateView
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.template import loader
-from django.http import StreamingHttpResponse
 from django.core.urlresolvers import reverse
 import csv
 import os
@@ -22,8 +21,7 @@ from urllib2 import urlopen
 import StringIO
 
 from website.apps.home.models import Location
-from website.apps.home.models import Examplefile
-
+from website.apps.simulation.models import Data
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -158,33 +156,13 @@ def load_municipality(request, department_name, municipality_name):
     }
     return HttpResponse(template.render(context, request))
 
-
-def load_examplecsv(request):
-    filename = os.path.join(os.path.dirname(base_dir), "simulation", "data", "data_cases_combo_20160810.csv")
-    examplecsv = csv.reader(open(filename), delimiter=',', quotechar='"')
-
-    # Skip header
-    header = examplecsv.next()
-
-    for row in examplecsv:
-        exampleitem = Examplefile()
-        exampleitem.value_mid = row[7]
-        exampleitem.date = (row[9])[:10]
-        exampleitem.department = row[10]
-        exampleitem.department_code = row[11]
-        exampleitem.municipality = row[12]
-        exampleitem.municipality_code = row[13]
-        exampleitem.save()
-
-    return HttpResponse(content="successfully loaded example csv file into database!")
-
-
 def dropdown_menu(request):
-    allinfo = Examplefile.objects.filter(municipality_code='05001')
+    allinfo = Data.objects.filter(location__municipality_code='05001', simulation_id=1)
     dateinfo = []
     for item in allinfo:
         dateinfo.append(str(item.date))
     print dateinfo
+
     return render(request, 'home/egcsv.html', {'municipality_code': dateinfo},)
 
 
@@ -196,7 +174,7 @@ def detailchoropleth(request, inquery_date):
 
 
 def csvfake(request, inquery_date):
-    allinfo = Examplefile.objects.filter(date=inquery_date)
+    allinfo = Data.objects.filter(date=inquery_date, simulation_id=1)
     output = StringIO.StringIO()
 
     tricky_codes = ['05001', '05002', '05004', '05021', '05030', '05031', '05034', '05036', '05038', '05040', '05042',
@@ -227,11 +205,11 @@ def csvfake(request, inquery_date):
 
     writer = csv.writer(output)
     writer.writerow(['ID_ESPACIA','value'])
-    for item in allinfo:
-        if item.municipality_code in tricky_codes:
-            item.municipality_code = item.municipality_code[1:]
-            writer.writerow([item.municipality_code, item.value_mid])
+    for data_point in allinfo:
+        if data_point.location.municipality_code in tricky_codes:
+            data_point.location.municipality_code = data_point.location.municipality_code[1:]
+            writer.writerow([data_point.location.municipality_code, data_point.value_mid])
         else:
-            writer.writerow([item.municipality_code, item.value_mid])
+            writer.writerow([data_point.location.municipality_code, data_point.value_mid])
 
     return HttpResponse(output.getvalue())
