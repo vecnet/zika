@@ -141,8 +141,6 @@ def load_locations(request, department_name, chartID='chartID'):
                                                         'chart_title': chart_title, 'department_name': chart_department})
 
 
-def testmap(request):
-    return render(request, 'home/ol_simple.html')
 
 
 def testchoropleth(request):

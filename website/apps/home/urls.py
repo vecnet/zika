@@ -13,7 +13,7 @@
 from django.conf.urls import url
 from website.apps.home.views import load_locations
 from website.apps.home.views import load_municipality
-from website.apps.home.views import testmap
+
 from website.apps.home.views import testchoropleth
 from website.apps.home.views import load_examplecsv
 from website.apps.home.views import dropdown_menu
@@ -22,7 +22,7 @@ from website.apps.home.views import csvfake
 
 
 urlpatterns = [
-    url(r'^$', testmap, name="home.map"),
+
     url(r'^testchoropleth/$', testchoropleth, name='choropleth_map'),
     url(r'^loadexamplecsv/$', load_examplecsv),
 
