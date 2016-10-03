@@ -22,6 +22,7 @@ from website.apps.home.views import csvfake
 
 
 urlpatterns = [
+    url(r'^$', dropdown_menu, name='home.dropdown'),
 
     url(r'^testchoropleth/$', testchoropleth, name='choropleth_map'),
     url(r'^loadexamplecsv/$', load_examplecsv),
@@ -29,7 +30,7 @@ urlpatterns = [
     # hard to get to this page
     url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
 
-    url(r'^dropdnegcsv/$', dropdown_menu, name='home.dropdown'),
+
 
     # just choropleth map and highchart
     url(r'^choroplethdetail/(?P<inquery_date>[0-9, -]+)/$', detailchoropleth),
