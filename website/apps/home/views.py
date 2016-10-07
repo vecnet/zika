@@ -140,10 +140,6 @@ def load_locations(request, department_name, chartID='chartID'):
                                                         'chart_title': chart_title, 'department_name': chart_department})
 
 
-def testchoropleth(request):
-    return render(request, 'home/05_choropleth.html')
-
-
 def dropdown_menu(request):
     allinfo = Data.objects.filter(location__municipality_code='05001', simulation_id=1)
     dateinfo = []
@@ -155,13 +151,13 @@ def dropdown_menu(request):
 
 
 def detailchoropleth(request, inquery_date):
-    passjspath = reverse('csvfake', kwargs={"inquery_date": inquery_date})
+    passjspath = reverse('csv_for_map', kwargs={"inquery_date": inquery_date})
     template = loader.get_template('home/05_choropleth.html')
     context = {'generatefilepath': passjspath,'inquery_date':inquery_date,}
     return HttpResponse(template.render(context, request))
 
 
-def csvfake(request, inquery_date):
+def csv_for_map_view(request, inquery_date):
     allinfo = Data.objects.filter(date=inquery_date, simulation_id=1)
     output = StringIO.StringIO()
 
