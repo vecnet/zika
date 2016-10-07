@@ -12,7 +12,7 @@
 
 from django.conf.urls import url
 from website.apps.home.views import load_locations
-from website.apps.home.views import load_municipality
+#from website.apps.home.views import load_municipality
 
 from website.apps.home.views import testchoropleth
 from website.apps.home.views import dropdown_menu
@@ -26,9 +26,7 @@ urlpatterns = [
     url(r'^testchoropleth/$', testchoropleth, name='choropleth_map'),
 
     # hard to get to this page
-    url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
-
-
+    # url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
 
     # just choropleth map and highchart
     url(r'^choroplethdetail/(?P<inquery_date>[0-9, -]+)/$', detailchoropleth),

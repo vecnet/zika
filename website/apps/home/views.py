@@ -25,6 +25,7 @@ from website.apps.simulation.models import Data
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
+
 class IndexView(TemplateView):
     template_name = "home/index.html"
 
@@ -139,22 +140,9 @@ def load_locations(request, department_name, chartID='chartID'):
                                                         'chart_title': chart_title, 'department_name': chart_department})
 
 
-
-
 def testchoropleth(request):
     return render(request, 'home/05_choropleth.html')
 
-
-def load_municipality(request, department_name, municipality_name):
-    locationinfo = Location.objects.filter(department=department_name, municipality=municipality_name)
-    locationid = locationinfo.id
-    print locationinfo
-    simulationid = 1
-    template = loader.get_template('home/testsimulation.html')
-    context = {'simulationid': simulationid,
-               'locationid': locationid,
-    }
-    return HttpResponse(template.render(context, request))
 
 def dropdown_menu(request):
     allinfo = Data.objects.filter(location__municipality_code='05001', simulation_id=1)
