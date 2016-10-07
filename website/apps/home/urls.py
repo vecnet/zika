@@ -15,7 +15,7 @@ from website.apps.home.views import load_locations
 #from website.apps.home.views import load_municipality
 
 from website.apps.home.views import dropdown_menu
-from website.apps.home.views import detailchoropleth
+from website.apps.home.views import choropleth_map_view
 from website.apps.home.views import csv_for_map_view
 
 
@@ -26,7 +26,7 @@ urlpatterns = [
     # url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
 
     # just choropleth map and highchart
-    url(r'^choroplethdetail/(?P<inquery_date>[0-9, -]+)/$', detailchoropleth),
+    url(r'^choropleth_map/(?P<inquery_date>[0-9, -]+)/$', choropleth_map_view, name="choropleth_map"),
 
     url(r'^csv_for_map/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='csv_for_map'),
 

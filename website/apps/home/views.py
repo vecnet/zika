@@ -150,9 +150,9 @@ def dropdown_menu(request):
     return render(request, 'home/egcsv.html', {'municipality_code': dateinfo},)
 
 
-def detailchoropleth(request, inquery_date):
+def choropleth_map_view(request, inquery_date):
     passjspath = reverse('csv_for_map', kwargs={"inquery_date": inquery_date})
-    template = loader.get_template('home/05_choropleth.html')
+    template = loader.get_template('home/choropleth_map.html')
     context = {'generatefilepath': passjspath,'inquery_date':inquery_date,}
     return HttpResponse(template.render(context, request))
 

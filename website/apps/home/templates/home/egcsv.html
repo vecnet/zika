@@ -64,7 +64,7 @@
         <button onclick="myFunction()" class="dropbtn">Forcasting Dates</button>
         <div id="myDropdown" class="dropdown-content">
             {% for item in municipality_code %}
-                <a href="/home/choroplethdetail/{{ item }}/" target="iframe1">{{ item }}</a></td>
+                <a href="{% url 'choropleth_map' item %}" target="iframe1">{{ item }}</a></td>
             {% endfor %}
         </div>
     </div>
