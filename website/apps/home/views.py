@@ -22,7 +22,7 @@ import StringIO
 
 from website.apps.home.models import Location
 from website.apps.simulation.models import Data
-
+from website.apps.simulation.models import Simulation
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -140,25 +140,25 @@ def load_locations(request, department_name, chartID='chartID'):
                                                         'chart_title': chart_title, 'department_name': chart_department})
 
 
-def dropdown_menu(request):
-    allinfo = Data.objects.filter(location__municipality_code='05001', simulation_id=1)
+def dropdown_menu(request, sim_id):
+    allinfo = Data.objects.filter(location__municipality_code='05001', simulation_id=sim_id)
     dateinfo = []
     for item in allinfo:
         dateinfo.append(str(item.date))
     print dateinfo
 
-    return render(request, 'home/egcsv.html', {'municipality_code': dateinfo},)
+    return render(request, 'home/egcsv.html', {'municipality_code': dateinfo, 'sim_id': sim_id},)
 
 
-def choropleth_map_view(request, inquery_date):
-    passjspath = reverse('csv_for_map', kwargs={"inquery_date": inquery_date})
+def choropleth_map_view(request, inquery_date, sim_id):
+    passjspath = reverse('csv_for_map', kwargs={"inquery_date": inquery_date, "sim_id": sim_id,})
     template = loader.get_template('home/choropleth_map.html')
-    context = {'generatefilepath': passjspath,'inquery_date':inquery_date,}
+    context = {'generatefilepath': passjspath,'inquery_date':inquery_date, 'sim_id': sim_id}
     return HttpResponse(template.render(context, request))
 
 
-def csv_for_map_view(request, inquery_date):
-    allinfo = Data.objects.filter(date=inquery_date, simulation_id=1)
+def csv_for_map_view(request, inquery_date, sim_id):
+    allinfo = Data.objects.filter(date=inquery_date, simulation_id=sim_id)
     output = StringIO.StringIO()
 
     tricky_codes = ['05001', '05002', '05004', '05021', '05030', '05031', '05034', '05036', '05038', '05040', '05042',
@@ -197,3 +197,20 @@ def csv_for_map_view(request, inquery_date):
             writer.writerow([data_point.location.municipality_code, data_point.value_mid])
 
     return HttpResponse(output.getvalue())
+
+
+def display_simulations(request):
+    simulationinfo = Simulation.objects.all()
+
+    simulationlist = {}
+
+    for entry in simulationinfo:
+        simulationlist[entry.id] = entry.model_name
+
+    # for test
+    simulationlist[2]="test_model2"
+
+    print simulationlist
+    template = loader.get_template('home/simulation.html')
+    context = {'simulationlist': simulationlist,}
+    return HttpResponse(template.render(context, request))

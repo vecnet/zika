@@ -32,9 +32,9 @@
                     .style("opacity", 0);
             var svg = d3.select("body").select("svg");
 
-            //Load in agriculture data
+            //Load in zika choropleth map data
             var csvpath = "{{ generatefilepath }}"
-
+            
             d3.csv(csvpath, function (data) {
                 //Set input domain for color scale
                 color.domain([
@@ -89,14 +89,12 @@
                                 }
                             })
                             .on("click", function(d){
-                                var simulationumber1 = document.getElementById("simulation_number").value;
+                                var simulationumber = "{{ sim_id }}";
                                 var url = "http://127.0.0.1:8000/simulation/chart/";
-                                url += simulationumber1;
+                                url += simulationumber;
                                 url += "/";
                                 url += d.properties.ID_ESPACIA;
-                                document.getElementById('iframe2').src = url;//'data:text/html;charset=utf-8,'+encodeURI(url);
-                                //$(location).attr('href', url);
-                                //window.location = "/home/123";
+                                document.getElementById('iframe2').src = url;
                             })
                             .on("mouseover", function(d) {
                                 d3.select(this).transition().duration(300).style("opacity", 1);
@@ -117,18 +115,10 @@
             });
         });
     </script>
-    <!--script>
-        function mysimulation() {
-            var simulationumber2 = document.getElementById("simulation_number").value;
-            document.getElementById("demo").innerHTML = simulationumber2;
-        }
-    </script-->
+
 </head>
 
 <body>
-simulation number: <input type="text" id="simulation_number" value="1">
-<!--button onclick="mysimulation()">simulation number</--button>
-<p id="demo"></p-->
 <p float="left" clear="left">
 <svg width="45%" height="600"></svg>
 <iframe id="iframe2" align="right" width="54%" height="600" frameborder="none"></iframe></p>

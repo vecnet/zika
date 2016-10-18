@@ -12,23 +12,23 @@
 
 from django.conf.urls import url
 from website.apps.home.views import load_locations
-#from website.apps.home.views import load_municipality
-
 from website.apps.home.views import dropdown_menu
 from website.apps.home.views import choropleth_map_view
 from website.apps.home.views import csv_for_map_view
-
+from website.apps.home.views import display_simulations
 
 urlpatterns = [
-    url(r'^$', dropdown_menu, name='home.dropdown'),
+    # the list of simulations
+    url(r'^$', display_simulations),
 
-    # hard to get to this page
-    # url(r'^municipality/(?P<department_name>[A-Z, a-z, _]+)/(?P<municipality_name>[A-Z, a-z, _]+)/$', load_municipality),
+    # forcasting dates in specific simulation
+    url(r'^dropdown/(?P<sim_id>[0-9]+)/$', dropdown_menu, name='home.dropdown'),
 
-    # just choropleth map and highchart
-    url(r'^choropleth_map/(?P<inquery_date>[0-9, -]+)/$', choropleth_map_view, name="choropleth_map"),
+    # choropleth map and highchart
+    url(r'^choropleth_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', choropleth_map_view, name="choropleth_map"),
 
-    url(r'^csv_for_map/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='csv_for_map'),
+    # get csv data for rendering choropleth map
+    url(r'^csv_for_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', csv_for_map_view, name='csv_for_map'),
 
     # department infor using highchart, example: http://127.0.0.1:8000/home/CESAR/
     url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
