@@ -19,7 +19,7 @@ from website.apps.home.views import display_simulations
 
 urlpatterns = [
     # the list of simulations
-    url(r'^$', display_simulations),
+    url(r'^$', display_simulations, name='simulation.list'),
 
     # forcasting dates in specific simulation
     url(r'^dropdown/(?P<sim_id>[0-9]+)/$', dropdown_menu, name='home.dropdown'),
