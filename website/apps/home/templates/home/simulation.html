@@ -1,18 +1,5 @@
 {% extends 'base.html' %}
 
-{% block main_content %}
-    <table>
-        <th>Simulation_id</th>
-        <th>Model_name</th>
-        {% for id, model_name in simulationlist.iteritems %}
-            <tr>
-                <td> {{ id }} </td>
-                <td><a href="{% url 'home.dropdown' sim_id=id %}">{{ model_name }}</a></td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endblock %}
-
 {% block extra_css %}
     <style type="text/css">
     th, td{
@@ -28,3 +15,42 @@
     }
     </style>
 {% endblock %}
+
+{% block main_content %}
+    <table>
+        <th>Simulation_id</th>
+        <th>Model_name</th>
+        {% for id, model_name in simulationlist.iteritems %}
+            <tr>
+                <td> {{ id }} </td>
+                <td><a href="{% url 'home.dropdown' sim_id=id %}">{{ model_name }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p> ===== </p>
+
+    <table>
+        <tr>
+            {% for test in tests %}
+                <th>{{ test }}</th>
+            {% endfor %}
+        </tr>
+
+    {% for row in simulationlist2 %}
+        <tr>
+            {% for val in row %}
+                {% if forloop.first %}
+                    <td><a href="{% url 'home.dropdown' sim_id=val %}"> {{ val }} </a></td>
+                {% else %}
+                    <td>{{ val }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+
+    <p> ===== </p>
+
+{% endblock %}
+

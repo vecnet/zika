@@ -204,13 +204,24 @@ def display_simulations(request):
 
     simulationlist = {}
 
+    simulationlist2 = {'simulation_id': [], 'model_name': [], 'create_time': []}
+
     for entry in simulationinfo:
         simulationlist[entry.id] = entry.model_name
+        simulationlist2['simulation_id'].append(str(entry.id))
+        simulationlist2['model_name'].append(entry.model_name)
+        simulationlist2['create_time'].append(entry.creation_timestamp)
 
-    # for test
-    simulationlist[2]="test_model2"
+    tests = ["simulation_id", "model_name", "create_time"]
+    columns = [simulationlist2[test] for test in tests]
+    max_len = len(max(columns, key=len))
+    for col in columns:
+        col +=[None,]*(max_len-len(col))
 
-    print simulationlist
+    rows = [[col[i] for col in columns] for i in range(max_len)]
+
+    #print rows
+
     template = loader.get_template('home/simulation.html')
-    context = {'simulationlist': simulationlist,}
+    context = {'simulationlist': simulationlist, 'simulationlist2': rows, 'tests': tests, }
     return HttpResponse(template.render(context, request))
