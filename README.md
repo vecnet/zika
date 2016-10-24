@@ -29,6 +29,10 @@ specific dev environment first.
 By default, the web interface is reachable at 'http://127.0.0.1:8001',
 while the database is listening on port 5433.
 
+4. Upload simulation data
+   Click the 'Upload Simulation' link.
+   Select this file: website/apps/simulation/data/data_cases_combo_new.csv
+   Click Upload. There will now be data to visualize in charts and maps.
 
 #Using Vagrant
 
