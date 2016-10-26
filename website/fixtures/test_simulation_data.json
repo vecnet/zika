@@ -1,0 +1,58 @@
+[
+  {
+    "model": "simulation.data",
+    "pk": 1,
+    "fields": {
+      "uuid": "",
+      "location": 1,
+      "value_low": 0,
+      "value_mid": 0,
+      "value_high": 1.935439721198175,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-10-24T15:24:20.106Z"
+    }
+  },
+  {
+    "model": "simulation.data",
+    "pk": 2,
+    "fields": {
+      "uuid": "",
+      "location": 2,
+      "value_low": 0,
+      "value_mid": 0,
+      "value_high": 2.457243469936799,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-10-24T15:24:20.109Z"
+    }
+  },
+  {
+    "model": "simulation.data",
+    "pk": 3,
+    "fields": {
+      "uuid": "",
+      "location": 3,
+      "value_low": 0,
+      "value_mid": 0,
+      "value_high": 1.9519024193810004,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-10-24T15:24:20.112Z"
+    }
+  },
+  {
+    "model": "simulation.data",
+    "pk": 4,
+    "fields": {
+      "uuid": "",
+      "location": 4,
+      "value_low": 0,
+      "value_mid": 0,
+      "value_high": 0.02928810159701123,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-10-24T15:24:20.113Z"
+    }
+  }
+]
