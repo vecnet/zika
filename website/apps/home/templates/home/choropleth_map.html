@@ -90,7 +90,7 @@
                             })
                             .on("click", function(d){
                                 var simulationumber = "{{ sim_id }}";
-                                var url = "http://127.0.0.1:8000/simulation/chart/";
+                                var url = $("#url").attr("data-url");
                                 url += simulationumber;
                                 url += "/";
                                 url += d.properties.ID_ESPACIA;
@@ -119,6 +119,8 @@
 </head>
 
 <body>
+    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/simulation/chart/"></div>
+
 <p>Click on a map to see chart</p>
 <p float="left" clear="left">
 <svg width="45%" height="600"></svg>
