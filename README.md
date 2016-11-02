@@ -1,12 +1,28 @@
 # Overview
 
+New research from the University of Notre Dame will be used to generate maps that provide time-sensitive estimates of 
+mosquito densities, human birth rates and Zika transmission activity across Latin America and the Caribbean. 
+The model outputs will be available online to provide users with the ability to find reported cases and estimated 
+incidences by location to improve disease transmission and prevalence forecasts, which is critical to making 
+accurate predictions and translating results into effective public health strategies.
 
+The study is being conducted by Alex Perkins, Eck Family Assistant Professor of Biological Sciences 
+and Eck Institute for Global Health affiliated faculty member, who received a rapid response grant (RAPID) 
+from the National Science Foundation’s (NSF) Division of Environmental Biology’s Ecology and Evolution of 
+Infectious Diseases Program for his research proposal that focuses on enabling estimation and 
+forecasting of Zika virus transmission. NSF created these RAPID awards in order to specifically understand 
+the rate of spread, number of infected people and the likely persistence of Zika as a public health threat, 
+and to help prepare for the next outbreak.
+
+Results from the project will benefit the Zika public health emergency response, as researchers will have 
+tools in place to share quality data and forecasts both during the study and after the project concludes. 
+This will be a valuable asset for policymakers as they continue to make decisions surrounding this disease.
 
 #System requirements
 
 This Django project has been tested on Windows 10 x64, MAC OS 10.7 and CentOS 7
 
-* Django 1.9
+* Django 1.10
 * Python 2.7
 * PostgreSQL 9.4
 * Apache 2.4
@@ -21,6 +37,11 @@ This Django project has been tested on Windows 10 x64, MAC OS 10.7 and CentOS 7
 3. Create an admin user
    `./manage.py createsuperuser`
 
+4. Upload simulation data
+   Click the 'Upload Simulation' link.
+   Select this file: website/apps/simulation/data/data_cases_combo_new.csv
+   Click Upload. There will now be data to visualize in charts and maps.
+
 # Using docker-compose
 Run `docker-compose` up in the project's root
 directory to quickly start development without having to setup a 
@@ -29,10 +50,6 @@ specific dev environment first.
 By default, the web interface is reachable at 'http://127.0.0.1:8001',
 while the database is listening on port 5433.
 
-4. Upload simulation data
-   Click the 'Upload Simulation' link.
-   Select this file: website/apps/simulation/data/data_cases_combo_new.csv
-   Click Upload. There will now be data to visualize in charts and maps.
 
 #Using Vagrant
 

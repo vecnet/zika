@@ -28,29 +28,6 @@
         {% endfor %}
     </table>
 
-    <p> ===== </p>
-
-    <table>
-        <tr>
-            {% for test in tests %}
-                <th>{{ test }}</th>
-            {% endfor %}
-        </tr>
-
-    {% for row in simulationlist2 %}
-        <tr>
-            {% for val in row %}
-                {% if forloop.first %}
-                    <td><a href="{% url 'home.dropdown' sim_id=val %}"> {{ val }} </a></td>
-                {% else %}
-                    <td>{{ val }}</td>
-                {% endif %}
-            {% endfor %}
-        </tr>
-    {% endfor %}
-    </table>
-
-    <p> ===== </p>
 
 {% endblock %}
 
