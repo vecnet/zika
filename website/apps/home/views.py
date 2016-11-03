@@ -82,7 +82,7 @@ def load_locations(request, department_name, chartID='chartID'):
     print chart_department
 
     dateseries = []
-    dateseries1 = {'dates':[], }
+    dateseries1 = {'dates': []}
     datac1 = Location.objects.filter(data_field_code='CO0001', department=chart_department)
     countc1 = []
     countc2 = []
@@ -123,7 +123,7 @@ def load_locations(request, department_name, chartID='chartID'):
 
     chart_title = "customized line style with data from local database"
 
-    chart = {"renderTo": chartID, "type": 'spline', "height": '500',}
+    chart = {"renderTo": chartID, "type": 'spline', "height": '500'}
     title = {"text": str(chart_title)}
     xAxis = {"title": {"text": 'Dates'}, "categories": dateseries1['dates']}
     yAxis = {"title": {"text": 'Cases'}}
@@ -153,7 +153,7 @@ def dropdown_menu(request, sim_id):
 def choropleth_map_view(request, inquery_date, sim_id):
     passjspath = reverse('csv_for_map', kwargs={"inquery_date": inquery_date, "sim_id": sim_id,})
     template = loader.get_template('home/choropleth_map.html')
-    context = {'generatefilepath': passjspath,'inquery_date':inquery_date, 'sim_id': sim_id}
+    context = {'generatefilepath': passjspath, 'inquery_date': inquery_date, 'sim_id': sim_id}
     return HttpResponse(template.render(context, request))
 
 
@@ -191,7 +191,7 @@ def csv_for_map_view(request, inquery_date, sim_id):
                         '08758', '08770', '08832', '08849']
 
         writer = csv.writer(output)
-        writer.writerow(['ID_ESPACIA','value'])
+        writer.writerow(['ID_ESPACIA', 'value'])
         for data_point in allinfo:
             if data_point.location.municipality_code in tricky_codes:
                 data_point.location.municipality_code = data_point.location.municipality_code[1:]
@@ -219,7 +219,7 @@ def display_simulations(request):
     columns = [simulationlist2[test] for test in tests]
     max_len = len(max(columns, key=len))
     for col in columns:
-        col +=[None,]*(max_len-len(col))
+        col += [None]*(max_len-len(col))
 
     rows = [[col[i] for col in columns] for i in range(max_len)]
 
