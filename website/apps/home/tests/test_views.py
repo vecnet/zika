@@ -11,7 +11,7 @@ class Home(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def test_choropleth(self):
+    def test_choropleth_pass(self):
         inquery_date = date(2015, 8, 6)
         sim_id = 1
 
