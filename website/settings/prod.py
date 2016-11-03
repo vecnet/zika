@@ -20,9 +20,6 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
 
-# The default is 'SAMEORIGIN', but unless there is a good reason for your site to serve other parts
-# of itself in a frame, you should change it to 'DENY'.
-X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Unless your site should be available over both SSL and non-SSL connections, you may want to either
 # set this setting True or configure a load balancer or reverse-proxy server to redirect all connections to HTTPS.
