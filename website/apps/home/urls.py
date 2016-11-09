@@ -11,7 +11,7 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import url
-from website.apps.home.views import load_locations
+# from website.apps.home.views import load_locations
 from website.apps.home.views import dropdown_menu
 from website.apps.home.views import choropleth_map_view
 from website.apps.home.views import csv_for_map_view
@@ -19,17 +19,17 @@ from website.apps.home.views import display_simulations
 
 urlpatterns = [
     # the list of simulations
-    url(r'^$', display_simulations, name='simulation.list'),
+    url(r'^$', display_simulations, name='home.display_simulations'),
 
     # forcasting dates in specific simulation
     url(r'^dropdown/(?P<sim_id>[0-9]+)/$', dropdown_menu, name='home.dropdown'),
 
     # choropleth map and highchart
-    url(r'^choropleth_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', choropleth_map_view, name="choropleth_map"),
+    url(r'^choropleth_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', choropleth_map_view, name="home.choropleth_map"),
 
     # get csv data for rendering choropleth map
-    url(r'^csv_for_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', csv_for_map_view, name='csv_for_map'),
+    url(r'^csv_for_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', csv_for_map_view, name='home.csv_for_map'),
 
     # department infor using highchart, example: http://127.0.0.1:8000/home/CESAR/
-    url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
+    # url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
 ]
