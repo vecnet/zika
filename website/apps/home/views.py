@@ -17,8 +17,8 @@ from django.template import loader
 from django.core.urlresolvers import reverse
 import csv
 import os
-from urllib2 import urlopen
-import StringIO
+from urllib.request import urlopen
+import io
 
 from website.apps.home.models import Location
 from website.apps.simulation.models import Data
@@ -79,7 +79,7 @@ def testview(request):
 def load_locations(request, department_name, chartID='chartID'):
     chart_department = department_name[0]+department_name[1:].lower()
     department_name = department_name[:-11]
-    print chart_department
+    print(chart_department)
 
     dateseries = []
     dateseries1 = {'dates': []}
@@ -92,7 +92,7 @@ def load_locations(request, department_name, chartID='chartID'):
     for item in datac1:
         if item.report_date not in dateseries:
             dateseries.append(item.report_date)
-    print dateseries
+    print(dateseries)
 
     for item in dateseries:
         datac1 = Location.objects.filter(report_date=item, department=chart_department, data_field_code='CO0001')
@@ -115,11 +115,11 @@ def load_locations(request, department_name, chartID='chartID'):
         for item in datac4:
             countco004 += item.value
         countc4.append(countco004)
-    print countc1
+    print(countc1)
 
     for item in dateseries:
         dateseries1['dates'].append(item.strftime('%y/%m/%d'))
-    print dateseries1
+    print(dateseries1)
 
     chart_title = "customized line style with data from local database"
 
@@ -145,7 +145,7 @@ def dropdown_menu(request, sim_id):
     dateinfo = []
     for item in allinfo:
         dateinfo.append(str(item.date))
-    print dateinfo
+    print(dateinfo)
 
     return render(request, 'home/egcsv.html', {'municipality_code': dateinfo, 'sim_id': sim_id},)
 
@@ -162,7 +162,7 @@ def csv_for_map_view(request, inquery_date, sim_id):
     if not allinfo:
         return HttpResponseBadRequest()
     else:
-        output = StringIO.StringIO()
+        output = io.StringIO()
 
         tricky_codes = ['05001', '05002', '05004', '05021', '05030', '05031', '05034', '05036', '05038', '05040', '05042',
                         '05044',
@@ -223,7 +223,7 @@ def display_simulations(request):
 
     rows = [[col[i] for col in columns] for i in range(max_len)]
 
-    #print rows
+    #print(rows)
 
     template = loader.get_template('home/simulation.html')
     context = {'simulationlist': simulationlist, 'simulationlist2': rows, 'tests': tests, }
