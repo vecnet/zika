@@ -59,7 +59,7 @@ class Home(TestCase):
     def test_display_simulations(self):
 
         url = reverse(
-            "simulation.list"
+            "home.display_simulations"
         )
         response = self.client.get(url)
 

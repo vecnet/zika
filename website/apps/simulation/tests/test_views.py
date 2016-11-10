@@ -16,7 +16,6 @@ class Simulation(TestCase):
             "simulation.browse"
         )
         response = self.client.get(url)
-        print response.context['simulations']
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['locations']), 1122)
         self.assertEqual(response.context['simulations'].count(), 1)

@@ -61,13 +61,13 @@
 {% endblock %}
 
 {% block main_content %}
-    <p><a href="{% url 'simulation.list' %}">Back</a></p>
+    <p><a href="{% url 'home.display_simulations' %}">Back</a></p>
     <p>Select a date to see the map</p>
     <div class="dropdown">
         <button onclick="myFunction()" class="dropbtn">Forcasting Dates</button>
         <div id="myDropdown" class="dropdown-content">
             {% for item in municipality_code %}
-                <a href="{% url 'choropleth_map' inquery_date=item sim_id=sim_id %}" target="iframe1">{{ item }}</a></td>
+                <a href="{% url 'home.choropleth_map' inquery_date=item sim_id=sim_id %}" target="iframe1">{{ item }}</a></td>
             {% endfor %}
         </div>
     </div>
