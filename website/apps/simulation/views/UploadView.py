@@ -10,11 +10,12 @@
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import logging
+
+from django.core.urlresolvers import reverse
+from django.db import transaction
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.views.generic.base import TemplateView
-from django.db import transaction
-
-import logging
 
 from website.apps.simulation.utils import load_simulation_file
 
@@ -26,12 +27,13 @@ class UploadView(TemplateView):
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
-        uploaded_file = self.request.FILES.get(u"output_file", None)
-        if not uploaded_file:
-            return HttpResponseBadRequest("Not 'output_file' file is provided")
-        simulation_name = self.request.POST.get(u"name", None)
-        logger.info("Filename: %s" % uploaded_file.name)
+        if request.method == 'POST':
+            if not request.FILES['output_file']:
+                return HttpResponseBadRequest("No 'output_file' is provided")
+            else:
+                sim_name = self.request.POST.get(u"name", None)
+                load_simulation_file(request.FILES['output_file'], simulation_name=sim_name)
 
-        load_simulation_file(uploaded_file, simulation_name=simulation_name)
-
-        return HttpResponseRedirect("")
+                return HttpResponseRedirect(reverse('home.display_simulations'))
+        else:
+            return HttpResponseRedirect("")

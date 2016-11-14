@@ -10,70 +10,25 @@
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from django.views.generic.base import TemplateView
+import csv
+import io
+import os
+
+from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.template import loader
-from django.core.urlresolvers import reverse
-import csv
-import os
-from urllib.request import urlopen
-import io
+from django.views.generic.base import TemplateView
 
 from website.apps.home.models import Location
 from website.apps.simulation.models import Data
 from website.apps.simulation.models import Simulation
+
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 class IndexView(TemplateView):
     template_name = "home/index.html"
-
-
-def testview(request):
-    allfile = [
-        #"Municipality_Zika_2016-01-09.csv", "Municipality_Zika_2016-01-16.csv",
-        #"Municipality_Zika_2016-01-23.csv", "Municipality_Zika_2016-01-30.csv",
-        #"Municipality_Zika_2016-02-06.csv", "Municipality_Zika_2016-02-13.csv",
-        #"Municipality_Zika_2016-02-20.csv", "Municipality_Zika_2016-02-27.csv",
-        #"Municipality_Zika_2016-03-05.csv", "Municipality_Zika_2016-03-12.csv",
-        #"Municipality_Zika_2016-03-19.csv", "Municipality_Zika_2016-03-26.csv",
-        #"Municipality_Zika_2016-04-02.csv", "Municipality_Zika_2016-04-09.csv",
-        #"Municipality_Zika_2016-04-16.csv", "Municipality_Zika_2016-04-23.csv",
-        #"Municipality_Zika_2016-04-30.csv", "Municipality_Zika_2016-05-07.csv",
-        #"Municipality_Zika_2016-05-14.csv", "Municipality_Zika_2016-05-21.csv",
-        #"Municipality_Zika_2016-05-28.csv", "Municipality_Zika_2016-06-04.csv",
-        #"Municipality_Zika_2016-06-11.csv", "Municipality_Zika_2016-06-18.csv",
-        #"Municipality_Zika_2016-06-25.csv", "Municipality_Zika_2016-07-02.csv",
-        #"Municipality_Zika_2016-07-09.csv", "Municipality_Zika_2016-07-16.csv"
-    ]
-
-    filename = []
-
-    for item in allfile:
-        csvpath = "https://raw.githubusercontent.com/cdcepi/zika/master/Colombia/Municipality_Zika/data/" + item
-        filename.append(csvpath)
-
-    for item in filename:
-        webpage = urlopen(item)
-        codereader = csv.reader(webpage, delimiter=',', quotechar='"')
-
-        for row in codereader:
-            if row[0] != 'report_date':
-                locationitem = Location()
-                locationitem.report_date = row[0]
-                locationitem.location = row[1]
-                locationitem.department = row[1].split('-')[1]
-                locationitem.municipality = row[1].split('-')[2]
-                locationitem.data_type = row[3]
-                locationitem.data_field_code = row[4]
-                if row[7] == 'NA':
-                    locationitem.value = 0
-                else:
-                    locationitem.value = row[7]
-                locationitem.save()
-
-    return HttpResponse(content="success")
 
 
 def load_locations(request, department_name, chartID='chartID'):
@@ -149,11 +104,13 @@ def dropdown_menu(request, sim_id):
 
     return render(request, 'home/egcsv.html', {'municipality_code': dateinfo, 'sim_id': sim_id})
 
+
 def choropleth_map_view(request, inquery_date, sim_id):
     passjspath = reverse('home.csv_for_map', kwargs={"inquery_date": inquery_date, "sim_id": sim_id})
     template = loader.get_template('home/choropleth_map.html')
     context = {'generatefilepath': passjspath, 'inquery_date': inquery_date, 'sim_id': sim_id}
     return HttpResponse(template.render(context, request))
+
 
 def csv_for_map_view(request, inquery_date, sim_id):
     allinfo = Data.objects.filter(date=inquery_date, simulation_id=sim_id)

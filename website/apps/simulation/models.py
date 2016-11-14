@@ -58,6 +58,9 @@ class Simulation(models.Model):
     def __str__(self):
         return "%s" % self.name
 
+    def getfilename(self):
+        return "%s" % self.data_file
+
 
 class Data(models.Model):
     """ Simulation data """

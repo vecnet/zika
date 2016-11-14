@@ -11,8 +11,9 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import csv
-
 import logging
+
+from django.core.files.storage import default_storage
 
 from website.apps.simulation.models import Location, Simulation, Data
 
@@ -20,16 +21,19 @@ logger = logging.getLogger(__name__)
 
 
 def load_simulation_file(fp, simulation_name):
-    dictreader = csv.DictReader(fp)
 
-    simulation = Simulation.objects.create(name=simulation_name)
+    # Save the simulation object, with the data_file
+    simulation = Simulation.objects.create(name=simulation_name, data_file=fp)
+    simulation.save()
+
+    # Since the file is stored on the system, we can open and read it
+    # Note: got default_storage idea from here:
+    # http://stackoverflow.com/questions/27573124/opening-a-data-file-from-the-media-directory-in-django
+    file_obj = default_storage.open(str(simulation.getfilename()), "r")
+    dictreader = csv.DictReader(file_obj)
     line = None
 
-    print("-------------------- IN LOAD SIM FILE! --------------------")
-
     for line in dictreader:
-        print(line)
-        print("!!!!!!!!!!!!!!!")
         location = Location.objects.filter(
             department_code=line['department_code'],
             municipality_code=line['municipality_code'],
