@@ -11,15 +11,26 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import csv
+
+import logging
+
 from website.apps.simulation.models import Location, Simulation, Data
+
+logger = logging.getLogger(__name__)
 
 
 def load_simulation_file(fp, simulation_name):
-    dictreader = csv.DictReader(fp)
+    read_file = open(fp.file.name, 'r')
+    dictreader = csv.DictReader(read_file)
 
     simulation = Simulation.objects.create(name=simulation_name)
     line = None
+
+    print("-------------------- IN LOAD SIM FILE! --------------------")
+
     for line in dictreader:
+        print(line)
+        print("!!!!!!!!!!!!!!!")
         location = Location.objects.filter(
             department_code=line['department_code'],
             municipality_code=line['municipality_code'],

@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls.base import reverse
 from datetime import date
-import StringIO
+import io
 
 # FUNCTIONS TO TEST
 class Simulation(TestCase):
@@ -48,6 +48,6 @@ class Simulation(TestCase):
         url = reverse(
             "simulation.upload",
         )
-        response = self.client.post(url, data={'name': 'test', 'output_file': StringIO.StringIO("put_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population")})
+        response = self.client.post(url, data={'name': 'test', 'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population")})
 
         self.assertEqual(response.status_code, 302)

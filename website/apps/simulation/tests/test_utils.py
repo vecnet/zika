@@ -1,7 +1,7 @@
 from django.test import TestCase
 from website.apps.simulation.utils import load_simulation_file
 from website.apps.simulation.models import Simulation
-import StringIO
+import io
 
 
 # FUNCTIONS TO TEST
@@ -11,7 +11,7 @@ class Utils(TestCase):
 
     # Test that load simulation file passes with both parameters
     def test_load_simulation_file_pass(self):
-        myfile = StringIO.StringIO('name,output_generate_date,value_mid,value_high,disease,model_name,department, municipality_code,municipality,department_code,date,value_low,id,population')
+        myfile = io.StringIO('name,output_generate_date,value_mid,value_high,disease,model_name,department, municipality_code,municipality,department_code,date,value_low,id,population')
         simulation_name = 'test simulation'
 
         load_simulation_file(myfile, simulation_name)
@@ -23,14 +23,14 @@ class Utils(TestCase):
 
     # Test if simulation name is None
     def test_load_simulation_file_fail_none_sim_name(self):
-        myfile = StringIO.StringIO('name,output_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population')
+        myfile = io.StringIO('name,output_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population')
         simulation_name = None
 
         self.assertRaises(TypeError, load_simulation_file, (myfile, simulation_name))
 
     # Test if no simulation name provided
     def test_load_simulation_file_fail_no_sim_name(self):
-        myfile = StringIO.StringIO(
+        myfile = io.StringIO(
             'name,output_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population')
 
         self.assertRaises(TypeError, load_simulation_file, myfile)

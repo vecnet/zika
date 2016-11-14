@@ -32,6 +32,6 @@ class UploadView(TemplateView):
         simulation_name = self.request.POST.get(u"name", None)
         logger.info("Filename: %s" % uploaded_file.name)
 
-        load_simulation_file(uploaded_file.file, simulation_name=simulation_name)
+        load_simulation_file(uploaded_file, simulation_name=simulation_name)
 
         return HttpResponseRedirect("")

@@ -1,6 +1,6 @@
 # Copyright (C) 2016, University of Notre Dame
 # All rights reserved
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 
 
 class FindHTMLElementById(HTMLParser):

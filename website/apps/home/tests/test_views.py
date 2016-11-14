@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.urls.base import reverse
 from datetime import date
 
-from utils.find_html_element_by_id import FindHTMLElementById
+from .utils.find_html_element_by_id import FindHTMLElementById
 
 
 class Home(TestCase):
@@ -16,7 +16,7 @@ class Home(TestCase):
         sim_id = 1
 
         url = reverse(
-            "choropleth_map",
+            "home.choropleth_map",
             kwargs={"inquery_date": inquery_date, "sim_id": sim_id}
         )
 
@@ -35,7 +35,7 @@ class Home(TestCase):
         sim_id = 1
 
         url = reverse(
-            "csv_for_map",
+            "home.csv_for_map",
             kwargs={"inquery_date": inquery_date, "sim_id": sim_id}
         )
 
@@ -49,7 +49,7 @@ class Home(TestCase):
         sim_id = 1
 
         url = reverse(
-            "csv_for_map",
+            "home.csv_for_map",
             kwargs={"inquery_date": inquery_date, "sim_id": sim_id}
         )
 
