@@ -43,11 +43,16 @@ class Simulation(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-
     def test_upload_view_post(self):
         url = reverse(
             "simulation.upload",
         )
-        response = self.client.post(url, data={'name': 'test', 'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population")})
+        response = self.client.post(
+            url,
+            data={
+                'name': 'test',
+                'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population")
+            }
+        )
 
         self.assertEqual(response.status_code, 302)

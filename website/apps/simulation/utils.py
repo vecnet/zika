@@ -20,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 def load_simulation_file(fp, simulation_name):
-    read_file = open(fp.file.name, 'r')
-    dictreader = csv.DictReader(read_file)
+    dictreader = csv.DictReader(fp)
 
     simulation = Simulation.objects.create(name=simulation_name)
     line = None
