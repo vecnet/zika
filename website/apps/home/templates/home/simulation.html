@@ -1,33 +1,25 @@
 {% extends 'base.html' %}
 
-{% block extra_css %}
-    <style type="text/css">
-    th, td{
-        padding: 7px 10px 10px 10px;
-    }
-    th{
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        font-size: 90%;
-        border-bottom: 2px solid #111111;
-        border-top: 1px solid #999;
-        text-align: left;
-    }
-    </style>
-{% endblock %}
-
 {% block main_content %}
-    <table>
-        <th>Simulation_id</th>
-        <th>Model_name</th>
-        {% for id, model_name in simulationlist.iteritems %}
-            <tr>
-                <td> {{ id }} </td>
-                <td><a href="{% url 'home.dropdown' sim_id=id %}">{{ model_name }}</a></td>
-            </tr>
-        {% endfor %}
-    </table>
-
-
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover" style="width: 50%">
+                <thead>
+                    <tr>
+                        <th>Simulation ID</th>
+                        <th>Model Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id, model_name in simulation_model_list.items %}
+                        <tr>
+                            <td> {{ id }} </td>
+                            <td><a href="{% url 'home.dropdown' sim_id=id %}">{{ model_name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
 
