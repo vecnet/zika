@@ -179,6 +179,6 @@ def display_simulations(request):
     rows = [[col[i] for col in columns] for i in range(max_len)]
 
     template = loader.get_template('home/simulation.html')
-    context = {'simulationlist': sim_model_list, 'simulationlist2': rows, 'tests': tests, }
+    context = {'simulation_model_list': sim_model_list, 'simulationlist2': rows, 'tests': tests, }
 
     return HttpResponse(template.render(context, request))
