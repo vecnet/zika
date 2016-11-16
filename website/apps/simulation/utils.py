@@ -13,7 +13,8 @@
 import csv
 import logging
 
-from django.core.files.storage import default_storage
+import os
+from django.conf import settings
 
 from website.apps.simulation.models import Location, Simulation, Data
 
@@ -29,7 +30,8 @@ def load_simulation_file(fp, simulation_name):
     # Since the file is stored on the system, we can open and read it
     # Note: got default_storage idea from here:
     # http://stackoverflow.com/questions/27573124/opening-a-data-file-from-the-media-directory-in-django
-    file_obj = default_storage.open(str(simulation.getfilename()), "r")
+    filename = os.path.join(settings.MEDIA_ROOT, simulation.getfilename())
+    file_obj = open(filename, "r")
     dictreader = csv.DictReader(file_obj)
     line = None
 
