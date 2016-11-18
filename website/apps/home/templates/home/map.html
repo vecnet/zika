@@ -5,9 +5,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}" />
 {% endblock extra_css %}
 {% block extra_js %}
+    <script type="text/javascript" src="{% static 'map.js' %}"></script>
     <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
 {#    <script type="text/javascript" src="{% static 'd3/d3.min.js' %}"></script>#}
-    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+
 {% endblock extra_js %}
 <script>
     var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
@@ -30,11 +31,9 @@
         <select id="date-dropdown" class="form-control date-dropdown">
 {#        <a href="{% url 'home.choropleth_map' inquery_date=date sim_id=sim_id %}" target="columbia-map">#}
             {% for date in date_list %}
-                <option>{{ date }}</option>
+                <option><a href="{% url 'home.choropleth_map' inquery_date=date sim_id=sim_id %}">{{ date }}</a></option>
             {% endfor %}
         </select>
-    <p id="picked-date"></p>
-    <input type="text" id="picked-date" name="TextBox3">
 
     </div>
 {% endblock main_content %}

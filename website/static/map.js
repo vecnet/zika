@@ -5,17 +5,21 @@
  */
 		$(document).ready(function() {
 
-            document.getElementById("date-dropdown").onchange = function() {
-
-                window.alert(document.getElementById("date-dropdown").value);
-            };
+            // document.getElementById("date-dropdown").onchange = function() {
+            //     window.alert(document.getElementById("picked-date").value);
+            //     document.getElementById("picked-date").value = document.getElementById("date-d;ropdown").value
+            //     // dateSelected();
+            //     // window.alert(document.getElementById("date-dropdown").value);
+            // };
 
         });
 
 
 // Function t
 function dateSelected() {
-    var select_value = document.getElementById("date-dropdown");
-    var show_picked_date = document.getElementById("picked-date");
-    show_picked_date.value = select_value.value;
+    // window.alert(select_value);
+    var select_value = document.getElementById("date-dropdown").value;
+    // window.alert(select_value);
+    // var show_picked_date = document.getElementById("picked-date");
+    document.getElementById("picked-date").value = select_value;
 }
