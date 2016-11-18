@@ -1,4 +1,4 @@
-#!/bin/env python2
+#!/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # This file is part of the VecNet Zika modeling interface.
@@ -12,8 +12,8 @@
 
 import csv
 import logging
-
 import os
+
 from django.conf import settings
 
 from website.apps.simulation.models import Location, Simulation, Data
@@ -28,8 +28,6 @@ def load_simulation_file(fp, simulation_name):
     simulation.save()
 
     # Since the file is stored on the system, we can open and read it
-    # Note: got default_storage idea from here:
-    # http://stackoverflow.com/questions/27573124/opening-a-data-file-from-the-media-directory-in-django
     filename = os.path.join(settings.MEDIA_ROOT, simulation.getfilename())
     file_obj = open(filename, "r")
     dictreader = csv.DictReader(file_obj)

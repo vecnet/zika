@@ -11,11 +11,12 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import url
-# from website.apps.home.views import load_locations
-from website.apps.home.views import dropdown_menu
+
 from website.apps.home.views import choropleth_map_view
 from website.apps.home.views import csv_for_map_view
 from website.apps.home.views import display_simulations
+from website.apps.home.views import dropdown_menu
+from website.apps.home.views.MapView import MapView
 
 urlpatterns = [
     # the list of simulations
@@ -32,4 +33,7 @@ urlpatterns = [
 
     # department infor using highchart, example: http://127.0.0.1:8000/home/CESAR/
     # url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
+
+    url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
+
 ]

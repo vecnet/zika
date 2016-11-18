@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<head>
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}" />
+{% endblock extra_css %}
+{% block extra_js %}
+    <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
+{#    <script type="text/javascript" src="{% static 'd3/d3.min.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+{% endblock extra_js %}
+<script>
+    var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
+            .attr("width", width).attr("height", height);
+</script>
+</head>
+<body>
+{% block main_content %}
+    <div class="col-md-2">
+        <button type="button" class="btn btn-default">Back</button>
+
+        <ul class="nav nav-pills nav-stacked">
+            {#        <li><a href="#">Back</a></li>#}
+            <li><a href="#">Browse Map</a></li>
+            <li><a href="#">Upload Simulation</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-10">
+        <select id="date-dropdown" class="form-control date-dropdown">
+{#        <a href="{% url 'home.choropleth_map' inquery_date=date sim_id=sim_id %}" target="columbia-map">#}
+            {% for date in date_list %}
+                <option>{{ date }}</option>
+            {% endfor %}
+        </select>
+    <p id="picked-date"></p>
+
+    </div>
+{% endblock main_content %}
+</body>

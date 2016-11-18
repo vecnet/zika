@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
 
-{% block extra_css %}
-{% endblock %}
-
 {% block main_content %}
-    <div class="container">
-    <a href="{% url 'home.display_simulations' %}">Browse Map</a> |
-    <a href="{% url "simulation.upload" %}">Upload Simulation</a>
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="{% url 'home.display_simulations' %}"><strong>Browse Map</strong></a></li>
+            <li><a href="{% url "simulation.upload" %}"><strong>Upload Simulation</strong></a></li>
+        </ul>
+    </div>
 
-    <h1 class="text-center">Overcoming uncertainty to enable estimation and forecasting of Zika virus transmission</h1>
-        <p class="lead text-justify">
-            This project is developing new modeling tools and data on mosquito locations that will be use to improve Zika transmission forecasting. The assessment of infectious disease forecasts is critical for improving predications and translating the results from the models into accurate public health strategies. This project will provide estimates of mosquito density across the Americas for Aedes aegypti, the primary mosquito that transmits Zika. The project also will update human population data for detailed predictions about Zika-associated microcephaly. This information may be used by policymakers for decisions concerning resource allocation to improve public health. Results from this project will be relevant to the Zika public health emergency, and at this site we will share quality-assured interim and final data as rapidly and widely as possible, including with public health and research communities.
-        </p>
-        <p class="lead text-justify">
-            The material presented at this web site is based in part upon work supported by the National Science Foundation,
-            DEB, under <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1641130">Award #1641130</a>.  Any opinions, findings, and conclusions or recommendations expressed in this
-            material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
-        </p>
+    <div class="container">
+        <div class="col-md-10">
+            <h1 class="text-center">Overcoming uncertainty to enable estimation and forecasting of Zika virus transmission</h1>
+                <p class="lead text-justify">
+                    This project is developing new modeling tools and data on mosquito locations that will be use to improve Zika transmission forecasting. The assessment of infectious disease forecasts is critical for improving predications and translating the results from the models into accurate public health strategies. This project will provide estimates of mosquito density across the Americas for Aedes aegypti, the primary mosquito that transmits Zika. The project also will update human population data for detailed predictions about Zika-associated microcephaly. This information may be used by policymakers for decisions concerning resource allocation to improve public health. Results from this project will be relevant to the Zika public health emergency, and at this site we will share quality-assured interim and final data as rapidly and widely as possible, including with public health and research communities.
+                </p>
+                <p class="lead text-justify">
+                    The material presented at this web site is based in part upon work supported by the National Science Foundation,
+                    DEB, under <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1641130">Award #1641130</a>.  Any opinions, findings, and conclusions or recommendations expressed in this
+                    material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+                </p>
+        </div>
     </div>
 {% endblock %}
