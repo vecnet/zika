@@ -47,7 +47,7 @@ def load_simulation_file(fp, simulation_name):
                 municipality_code=line['municipality_code'],
             )
         if location.department != line['department']:
-            print("WARNING: deparment name mismatch (%s, %s)" % (location.department, line['department']))
+            print("WARNING: department name mismatch (%s, %s)" % (location.department, line['department']))
 
         if location.municipality != line['municipality']:
             print("WARNING: municipality name mismatch (%s, %s)" % (location.municipality, line['municipality']))
