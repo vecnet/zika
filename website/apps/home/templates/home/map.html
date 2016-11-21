@@ -16,17 +16,27 @@
 <body>
 {% block main_content %}
     <div class="col-md-10">
-        <select id="date-dropdown" class="form-control date-dropdown">
-            {% for date in date_list %}
-                <option><a href="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</a></option>
-            {% endfor %}
-        </select>
+        <div class="row">
+            <form class="form-inline">
+                <button id="prev-date-btn" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </button>
+                <select id="date-dropdown" class="form-control date-dropdown">
+                    {% for date in date_list %}
+                        <option><a href="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</a></option>
+                    {% endfor %}
+                </select>
+                <button id="next-date-btn" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
     </div>
 
     <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/simulation/chart/"></div>
     <div id="csv-url" data-url="{{ generatefilepath }}"></div>
     <div class="col-md-10">
-        <p>Click on a map to see chart</p>
+{#        <p>Click on a map to see chart</p>#}
         <p float="left" clear="left">
         <svg width="45%" height="600"></svg>
         <iframe id="iframe2" align="right" width="54%" height="600" frameborder="none"></iframe></p>
