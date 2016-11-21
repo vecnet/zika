@@ -18,7 +18,7 @@ from website.apps.home.models import Location, Data, Simulation
 
 # @method_decorator(login_required, name='dispatch')
 class ChartView(TemplateView):
-    template_name = "simulation/../templates/home/chart.html"
+    template_name = "../templates/home/chart.html"
 
     def get_context_data(self, simulation_id, municipality_code, **kwargs):
         simulation = get_object_or_404(Simulation, id=simulation_id)

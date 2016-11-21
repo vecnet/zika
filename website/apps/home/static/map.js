@@ -85,11 +85,8 @@ $(document).ready(function() {
                             return "#ccc";
                         }
                     })
-                    .on("click", function(d){
-                        var simulationumber = "{{ sim_id }}";
+                    .on("click", function(d) {
                         var url = $("#url").attr("data-url");
-                        url += simulationumber;
-                        url += "/";
                         url += d.properties.ID_ESPACIA;
                         document.getElementById('iframe2').src = url;
                     })

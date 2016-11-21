@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/simulation/chart/"></div>
+    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/home/chart/{{ sim_id }}/"></div>
     <div id="csv-url" data-url="{{ generatefilepath }}"></div>
     <div class="col-md-10">
 {#        <p>Click on a map to see chart</p>#}
