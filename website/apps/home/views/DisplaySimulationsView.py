@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
 from django.template import loader
 
-from website.apps.simulation.models import Simulation
+from website.apps.home.models import Simulation
 
 
 # View for the table of simulations and models (at /home url)

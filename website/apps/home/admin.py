@@ -10,14 +10,10 @@
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from django.contrib import admin
 
-from django.conf.urls import url
-from website.apps.simulation.views.ChartView import ChartView
-from website.apps.simulation.views.BrowseView import BrowseView
-from website.apps.simulation.views.UploadView import UploadView
+from website.apps.home.models import Location, Simulation, Data
 
-urlpatterns = [
-    url(r'^$', BrowseView.as_view(), name="simulation.browse"),
-    url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
-    url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
-]
+admin.site.register(Location)
+admin.site.register(Simulation)
+admin.site.register(Data)

@@ -29,7 +29,7 @@ urlpatterns = [
     # for additional information about using django.contrib.auth.urls
     url(r'^auth/', include('django.contrib.auth.urls')),
     url(r'^home/', include('website.apps.home.urls')),
-    url(r'^simulation/', include('website.apps.simulation.urls')),
+    # url(r'^simulation/', include('website.apps.simulation.urls')),
 ]
 
 try:

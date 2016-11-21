@@ -1,7 +1,8 @@
+import io
+
 from django.test import TestCase, Client
 from django.urls.base import reverse
-from datetime import date
-import io
+
 
 # FUNCTIONS TO TEST
 class Simulation(TestCase):

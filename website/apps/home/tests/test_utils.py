@@ -1,7 +1,9 @@
-from django.test import TestCase
-from website.apps.simulation.utils import load_simulation_file
-from website.apps.simulation.models import Simulation
 import io
+
+from django.test import TestCase
+from website.apps.simulation.models import Simulation
+
+from website.apps.home.utils import load_simulation_file
 
 
 # FUNCTIONS TO TEST

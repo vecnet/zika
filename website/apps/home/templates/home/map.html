@@ -21,9 +21,9 @@
                 <button id="prev-date-btn" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 </button>
-                <select id="date-dropdown" class="form-control date-dropdown">
+                <select id="date-dropdown" class="form-control date-dropdown" onchange='window.location.href=$("#date-dropdown").val()'>
                     {% for date in date_list %}
-                        <option><a href="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</a></option>
+                        <option value="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</option>
                     {% endfor %}
                 </select>
                 <button id="next-date-btn" type="button" class="btn btn-default">

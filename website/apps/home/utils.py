@@ -16,7 +16,7 @@ import os
 
 from django.conf import settings
 
-from website.apps.simulation.models import Location, Simulation, Data
+from website.apps.home.models import Location, Simulation, Data
 
 logger = logging.getLogger(__name__)
 

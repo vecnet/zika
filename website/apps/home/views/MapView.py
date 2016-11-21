@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
 
-from website.apps.simulation.models import Data
+from website.apps.home.models import Data
 
 
 class MapView(TemplateView):

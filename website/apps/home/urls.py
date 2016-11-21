@@ -12,8 +12,10 @@
 
 from django.conf.urls import url
 
+from website.apps.home.views.ChartView import ChartView
 from website.apps.home.views.DisplaySimulationsView import display_simulations
 from website.apps.home.views.MapView import MapView, csv_for_map_view
+from website.apps.home.views.UploadView import UploadView
 
 urlpatterns = [
     # the list of simulations
@@ -25,5 +27,6 @@ urlpatterns = [
     # views with the choropleth map, whether or not a specific date is supplied
     url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
     url(r'^map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', MapView.as_view(), name='home.mapview_with_date'),
-
+    url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
+    url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
 ]

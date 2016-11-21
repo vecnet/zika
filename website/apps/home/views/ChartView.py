@@ -10,21 +10,23 @@
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
-from website.apps.simulation.models import Location
-from website.apps.simulation.models import Simulation
+from website.apps.home.models import Location, Data, Simulation
 
 
 # @method_decorator(login_required, name='dispatch')
-class BrowseView(TemplateView):
-    template_name = "simulation/browse.html"
+class ChartView(TemplateView):
+    template_name = "simulation/../templates/home/chart.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, simulation_id, municipality_code, **kwargs):
+        simulation = get_object_or_404(Simulation, id=simulation_id)
+        location = get_object_or_404(Location, municipality_code=municipality_code)
+        data = Data.objects.filter(simulation=simulation, location=location)
         context = {
-            "locations": Location.objects.all(),
-            "simulations": Simulation.objects.all(),
+            "location": location,
+            "simulation": simulation,
+            "data": data,
         }
         return context
