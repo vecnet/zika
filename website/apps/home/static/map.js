@@ -31,7 +31,6 @@
 
             //Load in zika choropleth map data
             var csvpath = $("#csv-url").attr("data-url"); //"{{ generatefilepath }}";
-            window.alert(csvpath);
 
             d3.csv(csvpath, function (data) {
                 //Set input domain for color scale

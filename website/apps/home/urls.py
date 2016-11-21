@@ -35,6 +35,6 @@ urlpatterns = [
     # url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
 
     url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
-    url(r'^map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', MapView.as_view(), name='home.mapview'),
+    url(r'^map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', MapView.as_view(), name='home.mapview_with_date'),
 
 ]

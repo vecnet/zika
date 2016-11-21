@@ -1,4 +1,3 @@
-from django.template import loader
 from django.core.urlresolvers import reverse
 from django.views.generic.base import TemplateView
 
@@ -25,11 +24,10 @@ class MapView(TemplateView):
         else:
             date_arg = date_info[-1]
 
-        # Coped from choropleth_map_view
+        # Copied from choropleth_map_view
         passjspath = reverse('home.csv_for_map', kwargs={"inquery_date": date_arg, "sim_id": sim_id})
-        #template = loader.get_template('home/choropleth_map.html')
-        # context = {'generatefilepath': passjspath, 'inquery_date': date_arg, 'sim_id': sim_id}
 
+        print(passjspath)
         context = {
             "date_arg": date_arg,
             "date_list": date_info,
