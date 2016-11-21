@@ -156,29 +156,30 @@ def csv_for_map_view(request, inquery_date, sim_id):
 
         return HttpResponse(output.getvalue())
 
+
 # View for the table of simulations and models
 def display_simulations(request):
-    simulationinfo = Simulation.objects.all()
 
-    sim_model_list = {}
+    # Get all the simulations
+    all_simulations = Simulation.objects.all()
 
-    simulationlist = {'simulation_id': [], 'model_name': [], 'create_time': []}
+    sim_list = []
 
-    for entry in simulationinfo:
-        sim_model_list[entry.id] = entry.model_name
-        simulationlist['simulation_id'].append(str(entry.id))
-        simulationlist['model_name'].append(entry.model_name)
-        simulationlist['create_time'].append(entry.creation_timestamp)
+    # For each simulation in all_simulations
+    for entry in all_simulations:
+        sim = {}
+        sim['simulation_id'] = str(entry.id)
+        sim['simulation_name'] = entry.name
+        sim['model_name'] = entry.model_name
+        sim['create_time'] = entry.creation_timestamp
 
-    tests = ["simulation_id", "model_name", "create_time"]
-    columns = [simulationlist[test] for test in tests]
-    max_len = len(max(columns, key=len))
-    for col in columns:
-        col += [None]*(max_len-len(col))
+        # Add this simulation entry to the list
+        sim_list.append(sim)
 
-    rows = [[col[i] for col in columns] for i in range(max_len)]
 
     template = loader.get_template('home/simulation.html')
-    context = {'simulation_model_list': sim_model_list, 'simulationlist2': rows, 'tests': tests, }
+    context = {
+        'simulation_model_list': sim_list
+    }
 
     return HttpResponse(template.render(context, request))

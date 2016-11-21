@@ -91,6 +91,14 @@
         </div>
     {% endblock %}
 
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="{% url 'home.display_simulations' %}">Browse Map</a></li>
+            <li><a href="{% url 'simulation.upload' %}">Upload Simulation</a></li>
+            <li><a href="{% url  'index'%}">About</a></li>
+        </ul>
+    </div>
+
     {% block main_content %}
     {% endblock %}
 

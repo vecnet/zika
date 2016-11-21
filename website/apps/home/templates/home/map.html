@@ -15,16 +15,6 @@
 </head>
 <body>
 {% block main_content %}
-    <div class="col-md-2">
-        <button type="button" class="btn btn-default">Back</button>
-
-        <ul class="nav nav-pills nav-stacked">
-            {#        <li><a href="#">Back</a></li>#}
-            <li><a href="#">Browse Map</a></li>
-            <li><a href="#">Upload Simulation</a></li>
-        </ul>
-    </div>
-
     <div class="col-md-10">
         <select id="date-dropdown" class="form-control date-dropdown">
             {% for date in date_list %}

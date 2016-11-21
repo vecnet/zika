@@ -3,18 +3,22 @@
 {% block main_content %}
     <div class="container">
         <div class="table-responsive">
-            <table class="table table-hover" style="width: 50%">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Simulation ID</th>
+                        <th>Simulation Name</th>
                         <th>Model Name</th>
+                        <th>Date Uploaded</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for id, model_name in simulation_model_list.items %}
+                    {% for sim in simulation_model_list %}
                         <tr>
-                            <td> {{ id }} </td>
-                            <td><a href="{% url 'home.dropdown' sim_id=id %}">{{ model_name }}</a></td>
+                            <td> {{ sim.simulation_id }} </td>
+                            <td class="col-md-4"> {{ sim.simulation_name }}</td>
+                            <td class="col-md-4"><a href="{% url 'home.dropdown' sim_id=sim.simulation_id %}">{{ sim.model_name }}</a></td>
+                            <td>{{ sim.create_time }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
