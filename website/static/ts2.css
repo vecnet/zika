@@ -25,6 +25,9 @@ body { padding: 0 20px;}
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#012f4c', endColorstr='#47876d',GradientType=0 ); *//* IE6-9 */
 }
 
+.jumbotron img {float:right;height:155px;margin-right:-10px;margin-bottom:-40px;}  /* float:left;height:130px;width:157px;margin-right:20px;margin-top:0px; -ked */
+
+
 /* Left Menu Bootstrap style overrides -ked  */
 /* Set base border style for all menu items */
 .nav-tabs > li > a {

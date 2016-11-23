@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles bootstrap3 %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +57,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="https://dl.vecnet.org/">Digital Library</a></li>
                             <li><a href="https://dw.vecnet.org/">Data Warehouse Browser</a></li>
-                            <li><a href="https://om.vecnet.org/">OpenMalaria Portal</a></li>                                                 <li><a href="https://ci.vecnet.org/ts_emod/">EMOD Basic User Interface</a></li>
+                            <li><a href="https://om.vecnet.org/">OpenMalaria Portal</a></li>
+                            <li><a href="https://ci.vecnet.org/ts_emod/">EMOD Basic User Interface</a></li>
                             <li><a href="/">Zika Portal</a></li>
 
                         </ul>
@@ -84,8 +85,8 @@
         <div class="jumbotron subhead">
             <div class="container ">
                 {% block jumbotron_content %}
-                    <h1>Zika Portal</h1>
-                    <p class="lead">Using mathematical models to fight the Zika virus</p>
+                    <img src="{% static 'logo.png' %}"><h1>Zika Portal</h1>
+                    <p class="lead">Overcoming uncertainty to enable estimation and forecasting of Zika virus transmission</p>
                 {% endblock %}
             </div>
         </div>
@@ -93,9 +94,9 @@
 
     <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="{% url 'home.display_simulations' %}">Browse Map</a></li>
-            <li><a href="{% url 'simulation.upload' %}">Upload Simulation</a></li>
-            <li><a href="{% url  'about'%}">About</a></li>
+            <li><a href="{% url 'home.display_simulations' %}">{% bootstrap_icon 'th-list' %} Browse Map</a></li>
+            <li><a href="{% url 'simulation.upload' %}">{% bootstrap_icon 'upload' %} Upload Simulation</a></li>
+            <li><a href="{% url  'about'%}">{% bootstrap_icon 'question-sign' %} About</a></li>
         </ul>
     </div>
 
