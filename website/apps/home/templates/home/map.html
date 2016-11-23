@@ -18,7 +18,8 @@
     <div class="col-md-10">
         <div class="row">
             <form class="form-inline">
-                <button id="prev-date-btn" class="btn btn-default" onclick='PreviousDateBtn({{ prev_date }}, {{ sim_id }})'>{{ prev_date }}<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+                <button id="prev-date-btn" class="btn btn-default" onclick='PreviousDateBtn({{ prev_date }}, {{ sim_id }})'>
+                    {{ prev_date }}<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
 
 
                 <select id="date-dropdown" class="form-control date-dropdown" onchange='DateDropdownChange()'>
@@ -27,6 +28,7 @@
                     {% endfor %}
                 </select>
 
+            <button id="prev-date-btn" class="btn btn-default" onclick='NextDateBtn({{ next_date }}, {{ sim_id }})'>{{ next_date }}<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
 {#                <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>#}
             </form>
         </div>

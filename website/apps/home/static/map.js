@@ -109,3 +109,20 @@ $(document).ready(function() {
     });
 });
 
+// Function to handle when the date is changed in the dropdown on the /hom/map/{{sim_id}} page
+function DateDropdownChange() {
+    window.location.href = window.location.href.substr(0, -10) + $("#date-dropdown").val()
+}
+
+function PreviousDateBtn(prev_date, sim_id) {
+    var url = window.location.href;
+    var start_index = url.indexOf("home");
+    var clean_url = url.substr(0, start_index);
+    window.alert(prev_date.year + "-" + prev_date.month + "-" + prev_date.day );
+    // window.location.href = clean_url + '/home/map/' + sim_id + '/' + prev_date;
+    console.log(prev_date.year + "-" + prev_date.month + "-" + prev_date.day)
+}
+
+function NextDateBtn(next_date, sim_id) {
+    window.alert(next_date);
+}

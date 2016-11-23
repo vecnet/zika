@@ -1,4 +1,5 @@
 import csv
+import datetime
 import io
 
 from django.core.urlresolvers import reverse
@@ -32,9 +33,28 @@ class MapView(TemplateView):
         # Copied from choropleth_map_view
         passjspath = reverse('home.csv_for_map', kwargs={"inquery_date": date_arg, "sim_id": sim_id})
 
+        date_arg_index = date_info.index(date_arg)
+
+        # If the selected date is the last date in the list
+        print(len(date_info))
+        print(date_arg_index)
+        if date_arg_index == len(date_info)-1:
+            prev_date = date_info[date_arg_index-1]
+            next_date = None
+        elif date_arg_index == 0:
+            prev_date = None
+            next_date = date_info[date_arg_index+1]
+        else:
+            prev_date = date_info[date_arg_index - 1]
+            next_date = date_info[date_arg_index + 1]
+
+        pdate = datetime.date(int(prev_date[0:4]), int(prev_date[5:7]), int(prev_date[8:]))
+
         print(passjspath)
         context = {
             "date_arg": date_arg,
+            "prev_date": pdate,
+            "next_date": str(next_date),
             "date_list": date_info,
             "sim_id": sim_id,
             'generatefilepath': passjspath
