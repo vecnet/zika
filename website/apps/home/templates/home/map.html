@@ -8,27 +8,26 @@
     <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
     <script type="text/javascript" src="{% static 'map.js' %}"></script>
 {% endblock extra_js %}
-    <script>
-        var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
-                .attr("width", width).attr("height", height);
-    </script>
+<script>
+    var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
+        .attr("width", width).attr("height", height);
+</script>
 </head>
 <body>
 {% block main_content %}
     <div class="col-md-10">
         <div class="row">
             <form class="form-inline">
-                <button id="prev-date-btn" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                </button>
-                <select id="date-dropdown" class="form-control date-dropdown" onchange='window.location.href=$("#date-dropdown").val()'>
+                <button id="prev-date-btn" class="btn btn-default" onclick='PreviousDateBtn({{ prev_date }}, {{ sim_id }})'>{{ prev_date }}<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+
+
+                <select id="date-dropdown" class="form-control date-dropdown" onchange='DateDropdownChange()'>
                     {% for date in date_list %}
-                        <option value="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</option>
+                            <option value="{{ date }}" {% if date_arg == date %}selected="selected"{% endif %}>{{ date }}</option>
                     {% endfor %}
                 </select>
-                <button id="next-date-btn" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
+
+{#                <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>#}
             </form>
         </div>
     </div>
