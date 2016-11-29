@@ -13,6 +13,7 @@
 from django.conf.urls import url
 
 from website.apps.home.views.ChartView import ChartView
+from website.apps.home.views.DisplayHistoricalView import display_historical
 from website.apps.home.views.DisplaySimulationsView import display_simulations
 from website.apps.home.views.MapView import MapView, csv_for_map_view
 from website.apps.home.views.UploadView import UploadView
@@ -20,6 +21,7 @@ from website.apps.home.views.UploadView import UploadView
 urlpatterns = [
     # the list of simulations
     url(r'^$', display_simulations, name='home.display_simulations'),
+    url(r'^historical/$', display_historical, name='home.display_historical'),
 
     # get csv data for rendering choropleth map
     url(r'^csv_for_map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='home.csv_for_map'),
@@ -29,4 +31,5 @@ urlpatterns = [
     url(r'^map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', MapView.as_view(), name='home.mapview_with_date'),
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
     url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
+
 ]

@@ -56,6 +56,7 @@ class Simulation(models.Model):
     creation_timestamp = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True, related_name="simulations")
     data_file = models.FileField(upload_to="simulation_files")
+    historical = models.BooleanField(default=False)
 
     class Meta:
         db_table = "simulation"
