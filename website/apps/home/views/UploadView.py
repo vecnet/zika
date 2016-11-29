@@ -35,6 +35,10 @@ class UploadView(TemplateView):
                 is_historical = self.request.POST.get("historical")
                 load_simulation_file(request.FILES['output_file'], simulation_name=sim_name, is_historical=is_historical)
 
-                return HttpResponseRedirect(reverse('home.display_simulations'))
+                # Redirect to appropriate page whether uploading simulation or historical
+                if is_historical!='on':
+                    return HttpResponseRedirect(reverse('home.display_simulations'))
+                else:
+                    return HttpResponseRedirect(reverse('home.display_historical'))
         else:
             return HttpResponseRedirect("")
