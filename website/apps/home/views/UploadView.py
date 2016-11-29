@@ -32,7 +32,8 @@ class UploadView(TemplateView):
                 return HttpResponseBadRequest("No 'output_file' is provided")
             else:
                 sim_name = self.request.POST.get(u"name", None)
-                load_simulation_file(request.FILES['output_file'], simulation_name=sim_name)
+                is_historical = self.request.POST.get("historical")
+                load_simulation_file(request.FILES['output_file'], simulation_name=sim_name, is_historical=is_historical)
 
                 return HttpResponseRedirect(reverse('home.display_simulations'))
         else:

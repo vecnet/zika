@@ -21,10 +21,15 @@ from website.apps.home.models import Location, Simulation, Data
 logger = logging.getLogger(__name__)
 
 
-def load_simulation_file(fp, simulation_name):
+def load_simulation_file(fp, simulation_name, is_historical):
+
+    if is_historical=="on":
+        is_historical=True
+    else:
+        is_historical=False
 
     # Save the simulation object, with the data_file
-    simulation = Simulation.objects.create(name=simulation_name, data_file=fp)
+    simulation = Simulation.objects.create(name=simulation_name, data_file=fp, historical=is_historical)
     simulation.save()
 
     # Since the file is stored on the system, we can open and read it
