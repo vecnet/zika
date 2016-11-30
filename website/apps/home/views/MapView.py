@@ -53,7 +53,7 @@ class MapView(TemplateView):
         print(passjspath)
         context = {
             "date_arg": date_arg,
-            "prev_date": pdate,
+            "prev_date": str(pdate),
             "next_date": str(next_date),
             "date_list": date_info,
             "sim_id": sim_id,

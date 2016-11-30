@@ -4,16 +4,16 @@ from django.template import loader
 from website.apps.home.models import Simulation
 
 
-# View for the table of simulations and models (at /home url)
-def display_simulations(request):
+# View for the table of historical data
+def display_historical(request):
 
     # Get all the simulations
-    all_simulations = Simulation.objects.exclude(historical=True)
+    all_historical = Simulation.objects.exclude(historical=False)
 
-    sim_list = []
+    historical_list = []
 
     # For each simulation in all_simulations
-    for entry in all_simulations:
+    for entry in all_historical:
         sim = {
             'simulation_id': str(entry.id),
             'simulation_name': entry.name,
@@ -22,12 +22,11 @@ def display_simulations(request):
         }
 
         # Add this simulation entry to the list
-        sim_list.append(sim)
+        historical_list.append(sim)
 
-    template = loader.get_template('home/simulation.html')
+    template = loader.get_template('home/historical.html')
     context = {
-        'simulation_model_list': sim_list,
-        'nbar': 'display_simulations'
+        'historical_list': historical_list
     }
 
     return HttpResponse(template.render(context, request))
