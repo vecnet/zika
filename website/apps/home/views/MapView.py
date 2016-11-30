@@ -1,5 +1,4 @@
 import csv
-import datetime
 import io
 
 from django.core.urlresolvers import reverse
@@ -48,17 +47,15 @@ class MapView(TemplateView):
             prev_date = date_info[date_arg_index - 1]
             next_date = date_info[date_arg_index + 1]
 
-        pdate = datetime.date(int(prev_date[0:4]), int(prev_date[5:7]), int(prev_date[8:]))
-
-        print(passjspath)
         context = {
             "date_arg": date_arg,
-            "prev_date": str(pdate),
+            "prev_date": str(prev_date),
             "next_date": str(next_date),
             "date_list": date_info,
             "sim_id": sim_id,
             'generatefilepath': passjspath
         }
+
         return context
 
 
