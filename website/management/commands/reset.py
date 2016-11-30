@@ -1,7 +1,5 @@
 # Copyright (C) 2015, University of Notre Dame
 # All rights reserved
-import os
-
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.db import connection
@@ -14,16 +12,20 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
 
         # Named (optional) arguments
-        parser.add_argument("--nobackup",
+        parser.add_argument(
+            "--nobackup",
             action="store_true",
             dest="nobackup",
             default=False,
-            help="Do not backup database before reset")
-        parser.add_argument("--nomigrate",
+            help="Do not backup database before reset"
+        )
+        parser.add_argument(
+            "--nomigrate",
             action="store_true",
             dest="nomigrate",
             default=False,
-            help="Do not run migrate command")
+            help="Do not run migrate command"
+        )
 
     def handle(self, *args, **options):
         """
@@ -40,7 +42,7 @@ class Command(BaseCommand):
         #         print "Failed to backup the database, %s" % message
         #         return
         #     print "Backup complete, filename %s" % message
-        print "Dropping all tables"
+        print("Dropping all tables")
         if engine == "django.db.backends.sqlite3":
             # List of all tables in SQLite database
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
@@ -63,5 +65,5 @@ class Command(BaseCommand):
             raise RuntimeError("Unsupported database engine %s" % engine)
 
         if not options["nomigrate"]:
-            print "Running migrate command"
+            print("Running migrate command")
             call_command("migrate")
