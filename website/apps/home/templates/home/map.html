@@ -6,7 +6,8 @@
 {% endblock extra_css %}
 {% block extra_js %}
     <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
-    <script type="text/javascript" src="{% static 'map.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/date_change.js' %}"></script>
 {% endblock extra_js %}
 <script>
     var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
@@ -18,7 +19,8 @@
     <div class="col-md-10">
         <div class="row">
             <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default" onclick="PreviousDateBtn({{ prev_date }}, {{ sim_id }})">
+                <button id="prevDateBtn" type="button" class="btn btn-default"
+                        onclick="prevNextDateBtnClick('{{ prev_date }}')" {% if prev_date == 'None'%} disabled {% endif %}>
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 </button>
                 <div class="btn-group" role="group">
@@ -34,7 +36,8 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <button type="button" class="btn btn-default">
+                <button id="nextDateBtn" type="button" class="btn btn-default"
+                        onclick="prevNextDateBtnClick('{{ next_date }}')" {% if next_date == 'None'%} disabled {% endif %}>
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 </button>
             </div>
