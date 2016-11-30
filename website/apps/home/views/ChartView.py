@@ -24,7 +24,7 @@ class ChartView(TemplateView):
         simulation = get_object_or_404(Simulation, id=simulation_id)
         location = get_object_or_404(Location, municipality_code=municipality_code)
         data = Data.objects.filter(simulation=simulation, location=location)
-        historical = Data.objects.filter(simulation__model_name__contains='historical', location=location)
+        historical = Data.objects.filter(simulation__historical=1, location=location)
 
         context = {
             "location": location,
