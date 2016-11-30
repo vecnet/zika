@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+    <div class="container">
+        <div class="col-md-10">
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-group">
+                    <label for="simulationNameInput"><strong>Simulation Name</strong></label>
+                    <input type="text" class="form-control" id="simulationNameInput" name="name"
+                           placeholder="Simulation Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="simulationInputFile"><strong>Simulation File Input</strong></label>
+                    <input type="file" id="simulationInputFile" name="output_file">
+                </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="historical"><strong>Historical Data</strong>
+                            </label>
+                        </div>
+                    <input type="submit" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}

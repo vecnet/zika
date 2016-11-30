@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<head>
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}" />
+{% endblock extra_css %}
+{% block extra_js %}
+    <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
+    <script type="text/javascript" src="{% static 'map.js' %}"></script>
+{% endblock extra_js %}
+<script>
+    var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
+        .attr("width", width).attr("height", height);
+</script>
+</head>
+<body>
+{% block main_content %}
+    <div class="col-md-10">
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" onclick="PreviousDateBtn({{ prev_date }}, {{ sim_id }})">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </button>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">{{ date_arg }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for date in date_list %}
+                            <li>
+                                <a href="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/home/chart/{{ sim_id }}/"></div>
+    <div id="csv-url" data-url="{{ generatefilepath }}"></div>
+    <div class="col-md-10">
+{#        <p>Click on a map to see chart</p>#}
+        <p float="left" clear="left">
+        <svg width="45%" height="600"></svg>
+        <iframe id="iframe2" align="right" width="54%" height="600" frameborder="none"></iframe></p>
+        </body>
+    </div>
+
+{% endblock main_content %}

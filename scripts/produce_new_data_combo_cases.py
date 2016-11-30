@@ -1,12 +1,12 @@
-import os
 import csv
+import os
 import random
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def produce_new_data_combo_case():
-    fp = open(os.path.join(BASE_DIR, 'website', 'apps', 'simulation', 'data', 'data_cases_combo_20160810.csv'), 'rU')
+    fp = open(os.path.join(BASE_DIR, 'website', 'apps', 'simulation', '../website/apps/home/data', 'data_cases_combo_20160810.csv'), 'rU')
     dictreader = csv.DictReader(fp)
     data = []
     row = {}
@@ -20,7 +20,7 @@ def produce_new_data_combo_case():
         data.append(row)
     fp.close()
 
-    fp = open(os.path.join(BASE_DIR, 'website', 'apps', 'simulation', 'data', 'data_cases_combo_new.csv'), 'wb')
+    fp = open(os.path.join(BASE_DIR, 'website', 'apps', 'simulation', '../website/apps/home/data', 'data_cases_combo_new.csv'), 'wb')
     dictwriter = csv.DictWriter(fp, fieldnames=row.keys())
     dictwriter.writeheader()
     for row in data:

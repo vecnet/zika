@@ -14,7 +14,7 @@ body { padding: 0 20px;}
 
 /* Set up main header "jumbotron" band across the top */
 .jumbotron {
-    background: #11ccff; /* Solid color */
+    background: lightgrey /* #11ccff; /* Solid color */
     /*background: #2c84d7; /!* Solid color *!/*/
     /*background: -moz-linear-gradient(top, #012f4c 0%, #47876d 100%); *//* FF3.6+ */
     /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#012f4c), color-stop(100%,#47876d)); *//* Chrome,Safari4+ */
@@ -24,6 +24,9 @@ body { padding: 0 20px;}
     /*background: linear-gradient(to bottom, #012f4c 0%,#47876d 100%); *//* W3C */
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#012f4c', endColorstr='#47876d',GradientType=0 ); *//* IE6-9 */
 }
+
+.jumbotron img {float:right;height:155px;margin-right:-10px;margin-bottom:-40px;}  /* float:left;height:130px;width:157px;margin-right:20px;margin-top:0px; -ked */
+
 
 /* Left Menu Bootstrap style overrides -ked  */
 /* Set base border style for all menu items */

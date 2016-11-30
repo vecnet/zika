@@ -1,4 +1,4 @@
-#!/bin/env python2
+#!/bin/env python3.4
 # -*- coding: utf-8 -*-
 #
 # This file is part of the VecNet Zika modeling interface.
@@ -11,25 +11,25 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from django.conf.urls import url
-# from website.apps.home.views import load_locations
-from website.apps.home.views import dropdown_menu
-from website.apps.home.views import choropleth_map_view
-from website.apps.home.views import csv_for_map_view
-from website.apps.home.views import display_simulations
+
+from website.apps.home.views.ChartView import ChartView
+from website.apps.home.views.DisplayHistoricalView import display_historical
+from website.apps.home.views.DisplaySimulationsView import display_simulations
+from website.apps.home.views.MapView import MapView, csv_for_map_view
+from website.apps.home.views.UploadView import UploadView
 
 urlpatterns = [
     # the list of simulations
     url(r'^$', display_simulations, name='home.display_simulations'),
-
-    # forcasting dates in specific simulation
-    url(r'^dropdown/(?P<sim_id>[0-9]+)/$', dropdown_menu, name='home.dropdown'),
-
-    # choropleth map and highchart
-    url(r'^choropleth_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', choropleth_map_view, name="home.choropleth_map"),
+    url(r'^historical/$', display_historical, name='home.display_historical'),
 
     # get csv data for rendering choropleth map
-    url(r'^csv_for_map/(?P<inquery_date>[0-9, -]+)/(?P<sim_id>[0-9]+)/$', csv_for_map_view, name='home.csv_for_map'),
+    url(r'^csv_for_map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='home.csv_for_map'),
 
-    # department infor using highchart, example: http://127.0.0.1:8000/home/CESAR/
-    # url(r'^(?P<department_name>[A-Z, a-z, _]+)/$', load_locations),
+    # views with the choropleth map, whether or not a specific date is supplied
+    url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
+    url(r'^map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', MapView.as_view(), name='home.mapview_with_date'),
+    url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
+    url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
+
 ]

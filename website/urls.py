@@ -15,18 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic.base import TemplateView, RedirectView
-from website.apps.home.views import IndexView
+from django.views.generic.base import TemplateView
+
+from website.apps.home.views import AboutView
+
 urlpatterns = [
+    url(r'^$', AboutView.as_view(), name="index"),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', IndexView.as_view(), name="index"),
+    url(r'^about/$', AboutView.as_view(), name="about"),
     # robots.txt is implemented as a template because Django can't seem to serve a static file from urls.py
     url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt")),
     # Please refer to https://docs.djangoproject.com/en/1.8/topics/auth/default/#using-the-views
     # for additional information about using django.contrib.auth.urls
     url(r'^auth/', include('django.contrib.auth.urls')),
     url(r'^home/', include('website.apps.home.urls')),
-    url(r'^simulation/', include('website.apps.simulation.urls')),
+    # url(r'^simulation/', include('website.apps.simulation.urls')),
 ]
 
 try:
