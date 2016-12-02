@@ -99,15 +99,22 @@ a2enmod rewrite
 a2enmod ssl
 
 mkdir -p /etc/apache2/ssl/
-cat > /etc/apache2/sites-enabled/$SITE_URL.conf << EOL
+cat > /etc/apache2/sites-available/$SITE_URL.conf << EOL
 <VirtualHost *:80>
   ServerName $SITE_URL
+  Alias /.well-known/ /opt/portal/$SITE_URL/apache/.well-known/
   RewriteEngine On
   RewriteCond %{HTTPS} off
-
-  RewriteRule ^.well-known/(.*)$ http:///%{HTTP_HOST}/.well-known/$1 [L]
+  # Leave /.well-known/ directory open for let's encrypt it client
+  RewriteCond %{REQUEST_URI} !^/.well-known
   RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}?%{QUERY_STRING}
-  Alias /.well-known/ /opt/portal/zika.vecnet.org/apache/.well-known/
+
+  <Directory /opt/portal/$SITE_URL/apache/.well-known/>
+        Options -Indexes +FollowSymLinks
+        AllowOverride None
+        Require all granted
+  </Directory>
+
 
 </VirtualHost>
 
@@ -150,6 +157,7 @@ cat > /etc/apache2/sites-enabled/$SITE_URL.conf << EOL
 </VirtualHost>
 EOL
 
+a2ensite $SITE_URL.conf
 
 ##########################
 # Firewall configuration
