@@ -18,7 +18,8 @@ def display_simulations(request):
             'simulation_id': str(entry.id),
             'simulation_name': entry.name,
             'model_name': entry.model_name,
-            'create_time': entry.creation_timestamp
+            'create_time': entry.creation_timestamp,
+            'generated_date': entry.date_output_generated
         }
 
         # Add this simulation entry to the list

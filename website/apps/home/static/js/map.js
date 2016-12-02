@@ -1,5 +1,5 @@
 /**
- * This file contains the javascript necessary to render the d3 choropleth of Columbia
+ * This file contains the javascript necessary to render the d3 choropleth of Colombia
  * by municipality
  * Created on 11/16/16.
  */
