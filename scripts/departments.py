@@ -21,14 +21,14 @@ if __name__ == '__main__':
                 try:
                     data[department] += int(row["value"])
                 except ValueError:
-                    print row["location"], row["value"]
+                    print(row["location"], row["value"])
 
                 total += data[department]
         fp.close()
         bydate[filename] = data
         date = filename.strip("Municipality_Zika_")
         date = date.strip(".csv")
-        print date, total
+        print(date, total)
 
         for item in data:
             date = filename.strip("Municipality_Zika_")
@@ -36,5 +36,5 @@ if __name__ == '__main__':
             item2 = {"location": item, "cases": data[item], "date": date}
             csvdata.append(item2)
 
-    print csvdata
+    print(csvdata)
 
