@@ -23,10 +23,10 @@ logger = logging.getLogger(__name__)
 
 def load_simulation_file(fp, simulation_name, is_historical):
 
-    if is_historical=="on":
-        is_historical=True
+    if is_historical == "on":
+        is_historical = True
     else:
-        is_historical=False
+        is_historical = False
 
     # Save the simulation object, with the data_file
     simulation = Simulation.objects.create(name=simulation_name, data_file=fp, historical=is_historical)
@@ -64,10 +64,11 @@ def load_simulation_file(fp, simulation_name, is_historical):
             value_low=line['value_low'],
             value_mid=line['value_mid'],
             value_high=line['value_high'],
+
         )
 
     if line:
         # Non-empty simulation output file
         simulation.model_name = line['model_name']
-        # simulation.date_output_generated = line['output_generate_date']
+        simulation.date_output_generated = line['output_generate_date']
         simulation.save()

@@ -59,6 +59,12 @@
                     data: [
                         {% for value in historical_data %}{{ value.value_mid }}{% if not forloop.last %},{% endif %} {% endfor %}
                     ]
+                }],
+                plotLines: [{
+                    color: 'red', // Color value
+                    dashStyle: 'solid', // Style of the plot line. Default to solid
+                    value: new Date(2015, 12, 2), // Value of where the line will appear
+                    width: 2 // Width of the line
                 }]
             });
         });
