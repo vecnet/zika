@@ -7,7 +7,7 @@
 {% block extra_js %}
     <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
     <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/date_change.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
 {% endblock extra_js %}
 <script>
     var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
@@ -18,33 +18,39 @@
 {% block main_content %}
     <div class="col-md-10">
         <div class="row">
-            <div class="btn-group" role="group" aria-label="...">
-                <button id="prevDateBtn" type="button" class="btn btn-default"
-                        onclick="prevNextDateBtnClick('{{ prev_date }}')" {% if prev_date == 'None'%} disabled {% endif %}>
+        <label for="date-generated-btn-group">Simulation generated on:</label><br>
+            <div class="btn-group" role="group" aria-label="..." id="date-generated-btn-group">
+
+                <button id="prevSimBtn" type="button" class="btn btn-default"
+                        onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 0)"
+                        {% if current_index == 0 %} disabled {% endif %}>
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 </button>
+
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">{{ date_arg }}
+                            aria-haspopup="true" aria-expanded="false">{{ current_sim.date_output_generated }}
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        {% for date in date_list %}
+                        {% for sim in all_sim_with_model %}
                             <li>
-                                <a href="{% url 'home.mapview_with_date' inquery_date=date sim_id=sim_id %}">{{ date }}</a>
+                                <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id %}">{{ sim.date_output_generated }}</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
-                <button id="nextDateBtn" type="button" class="btn btn-default"
-                        onclick="prevNextDateBtnClick('{{ next_date }}')" {% if next_date == 'None'%} disabled {% endif %}>
+
+                <button id="nextSimBtn" type="button" class="btn btn-default"
+                        onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 1)"
+                        {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/home/chart/{{ sim_id }}/"></div>
+    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/home/chart/{{ current_sim.id }}/"></div>
     <div id="csv-url" data-url="{{ generatefilepath }}"></div>
     <div class="col-md-10">
 {#        <p>Click on a map to see chart</p>#}

@@ -48,9 +48,19 @@ class Location(models.Model):
         return "%s - %s" % (self.municipality, self.department)
 
 
+class SimulationModel(models.Model):
+    """ Simulation Model """
+    model_name = models.CharField(blank=False, max_length=100)
+    creation_timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "%s" % self.model_name
+
+
 class Simulation(models.Model):
     name = models.TextField()
-    model_name = models.TextField(blank=True)
+    # model_name = models.TextField(blank=True)
+    sim_model = models.ForeignKey(SimulationModel, null=True, blank=True, related_name="simulation_model")
     disease = models.TextField(default="ZVD")
     date_output_generated = models.DateField(null=True, blank=True)
     creation_timestamp = models.DateTimeField(auto_now=True)
