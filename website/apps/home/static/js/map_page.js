@@ -8,6 +8,8 @@
 
 /**
  * Function to change page based on left or right arrow button click from the simulation menu
+ * NOTE: all_sim_with_model_list is ORDERED from most recent to least recent. Thus, the most recent
+ * simulation will have index 0 and the oldest simulation will have index length-1.
  *
  * @param all_sim_with_model_list: List of all simulations that have the chosen model
  * @param current_sim_index: Index of the currently selected simulation
@@ -17,17 +19,20 @@
 function prevNextSimBtnClick(all_sim_with_model_list, current_sim_index, prev_or_next) {
     "use strict";
     var segments = window.location.pathname.toString().split("/");
+    // the previous button was clicked, want to go back in time
     if (prev_or_next === 0) {
-        if (current_sim_index !== 0) {
-            segments[segments.length - 2] = all_sim_with_model_list[current_sim_index - 1].id;
-        } else {
-            window.alert("You are looking at the most recent simulation");
-        }
-    } else if (prev_or_next === 1) {
+        // if the current simulation index is not the oldest in the list, increase index
         if (current_sim_index !== (all_sim_with_model_list.length - 1)) {
             segments[segments.length - 2] = all_sim_with_model_list[current_sim_index + 1].id;
         } else {
             window.alert("You are looking at the oldest simulation");
+        }
+    } else if (prev_or_next === 1) {  // next button was clicked, want to go forward in time
+        // if the current simulation index is not the most recent in the list, decrease index
+        if (current_sim_index !== 0) {
+            segments[segments.length - 2] = all_sim_with_model_list[current_sim_index - 1].id;
+        } else {
+            window.alert("You are looking at the most recent simulation");
         }
     } else {
         window.alert("Error changing simulations. Please try again.");

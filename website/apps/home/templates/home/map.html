@@ -21,9 +21,9 @@
         <label for="date-generated-btn-group">Simulation generated on:</label><br>
             <div class="btn-group" role="group" aria-label="..." id="date-generated-btn-group">
 
-                <button id="prevSimBtn" type="button" class="btn btn-default"
+                <button id="prevSimBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Older simulation"
                         onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 0)"
-                        {% if current_index == 0 %} disabled {% endif %}>
+                        {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 </button>
 
@@ -41,9 +41,9 @@
                     </ul>
                 </div>
 
-                <button id="nextSimBtn" type="button" class="btn btn-default"
+                <button id="nextSimBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Newer simulation"
                         onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 1)"
-                        {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
+                        {% if current_index == 0 %} disabled {% endif %}>
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 </button>
             </div>
