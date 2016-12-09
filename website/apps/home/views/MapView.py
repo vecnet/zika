@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
 
-from website.apps.home.models import Data
+from website.apps.home.models import Data, Simulation
 
 
 class MapView(TemplateView):
@@ -14,6 +14,7 @@ class MapView(TemplateView):
     def get_context_data(self, **kwargs):
 
         sim_id = kwargs.get('sim_id')
+        model_id = kwargs.get('model_id')
 
         info = Data.objects.filter(location__municipality_code='05001', simulation_id=sim_id).values('date')
 
@@ -22,37 +23,44 @@ class MapView(TemplateView):
         for d in info:
             date_info.append(str(d['date']))
 
-        date_arg = None
-
-        if kwargs.get('inquery_date'):
-            date_arg = kwargs.get('inquery_date')
-        else:
-            date_arg = date_info[-1]
+        date_arg = date_info[-1]
 
         # Copied from choropleth_map_view
         passjspath = reverse('home.csv_for_map', kwargs={"inquery_date": date_arg, "sim_id": sim_id})
 
-        date_arg_index = date_info.index(date_arg)
+        all_sim_with_model = Simulation.objects.filter(sim_model__id=model_id)\
+            .values('id', 'sim_model', 'date_output_generated', 'name')\
+            .exclude(historical=True).order_by('-date_output_generated')
 
-        # If the selected date is the last date in the list
-        print(len(date_info))
-        print(date_arg_index)
-        if date_arg_index == len(date_info)-1:
-            prev_date = date_info[date_arg_index-1]
-            next_date = None
-        elif date_arg_index == 0:
-            prev_date = None
-            next_date = date_info[date_arg_index+1]
-        else:
-            prev_date = date_info[date_arg_index - 1]
-            next_date = date_info[date_arg_index + 1]
+        current_simulation = Simulation.objects.get(id=sim_id, sim_model__id=model_id)
+
+        all_sim_list = []
+        for item in all_sim_with_model:
+            list_item = item
+            date_string = str(item['date_output_generated'].year) + '-' + str(item['date_output_generated'].month) + \
+                          '-' + str(item['date_output_generated'].day)
+            list_item['date_output_generated'] = date_string
+            all_sim_list.append(list_item)
+
+        current_sim_index = 0
+        i = 0
+        while i < len(all_sim_list):
+            print("i=" + str(i))
+            if all_sim_list[i]['id'] == current_simulation.id:
+                current_sim_index = i
+                break
+            else:
+                i += 1
+
+        print(current_sim_index)
 
         context = {
             "date_arg": date_arg,
-            "prev_date": str(prev_date),
-            "next_date": str(next_date),
-            "date_list": date_info,
-            "sim_id": sim_id,
+            "all_sim_with_model": all_sim_with_model,  # allows us to use datetime objects
+            "current_sim": current_simulation,
+            "all_sim_with_model_list": all_sim_list,  # dates are a string for passing into JS function,
+            "current_index": current_sim_index,
+            "length_all_sim_with_model_list": len(all_sim_list)-1,
             'generatefilepath': passjspath
         }
 

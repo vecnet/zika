@@ -18,7 +18,7 @@
                         <tr>
                             <td> {{ sim.simulation_id }} </td>
                             <td class="col-md-3"> {{ sim.simulation_name }}</td>
-                            <td class="col-md-3"><a href="{% url 'home.mapview' sim_id=sim.simulation_id %}">{{ sim.model_name }}</a></td>
+                            <td class="col-md-3"><a href="{% url 'home.mapview' model_id=sim.model.id sim_id=sim.simulation_id %}">{{ sim.model.model_name }}</a></td>
                             <td class="col-md-3">{{ sim.generated_date }}</td>
                             <td>{{ sim.create_time }}</td>
                         </tr>

@@ -17,7 +17,7 @@ def display_simulations(request):
         sim = {
             'simulation_id': str(entry.id),
             'simulation_name': entry.name,
-            'model_name': entry.model_name,
+            'model': entry.sim_model,
             'create_time': entry.creation_timestamp,
             'generated_date': entry.date_output_generated
         }

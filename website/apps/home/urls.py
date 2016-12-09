@@ -27,9 +27,9 @@ urlpatterns = [
     url(r'^csv_for_map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='home.csv_for_map'),
 
     # views with the choropleth map, whether or not a specific date is supplied
-    url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
-    url(r'^map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', MapView.as_view(), name='home.mapview_with_date'),
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
     url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
 
+    # url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
+    url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
 ]
