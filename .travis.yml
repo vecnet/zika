@@ -1,0 +1,42 @@
+language: python
+env:
+  global:
+    - SECRET_KEY=travis
+    - DJANGO_SETTINGS_MODULE="website.settings.staging"
+    - DATABASE_ENGINE="django.db.backends.postgresql_psycopg2"
+    - DATABASE_NAME=zika
+    - DATABASE_USER=postgres
+    - DATABASE_PASSWORD=""
+    - DATABASE_HOST=127.0.0.1
+    - DATABASE_PORT=5432
+    - DOCKER_COMPOSE_VERSION=1.7.0
+matrix:
+  include:
+    - os: linux
+      sudo: required
+      dist: trusty
+      language: generic
+      services: docker
+      env: USE_DOCKER="yes"
+    - os: linux
+      python: "3.5"
+      env: PYTHON=/usr/bin/python3.5
+      services: postgresql
+      addons:
+        apt:
+          packages:
+            - gsl-bin
+            - libxerces-c3.1
+            - xsdcxx
+    - os: osx
+      language: generic
+      env: PYTHON=/usr/bin/python
+      services: postgresql
+  allow_failures:
+    - os: osx
+script:
+  - python manage.py test
+notifications:
+  email:
+    on_success: never
+    on_failure: always
