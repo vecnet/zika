@@ -17,7 +17,21 @@
                 },
                 xAxis: {
                     categories: [
-                        {% for value in data %}'{{ value.date }}'{% if not forloop.last %},{% endif %} {% endfor %}]
+                        {% for value in data %}'{{ value.date }}'{% if not forloop.last %},{% endif %} {% endfor %}
+                    ],
+                    plotLines: [{
+                        color: 'red', // Color value
+                        dashStyle: 'solid', // Style of the plot line. Default to solid
+                        value: 'Dec. 31, 2015', // Value of where the line will appear, this is the index of the data point (starts at 1)
+                        width: 2 // Width of the line
+                    }]
+                },
+                plotOptions: {
+                    series: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
                 },
                 yAxis: {
                     title: {
@@ -27,7 +41,8 @@
                         value: 0,
                         width: 1,
                         color: '#808080'
-                    }]
+                    }],
+                    min: 0
                 },
                 tooltip: {
                     valueSuffix: ''
@@ -59,12 +74,6 @@
                     data: [
                         {% for value in historical_data %}{{ value.value_mid }}{% if not forloop.last %},{% endif %} {% endfor %}
                     ]
-                }],
-                plotLines: [{
-                    color: 'red', // Color value
-                    dashStyle: 'solid', // Style of the plot line. Default to solid
-                    value: new Date(2015, 12, 2), // Value of where the line will appear
-                    width: 2 // Width of the line
                 }]
             });
         });
