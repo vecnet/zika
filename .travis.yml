@@ -13,21 +13,9 @@ env:
 matrix:
   include:
     - os: linux
-      sudo: required
-      dist: trusty
-      language: generic
-      services: docker
-      env: USE_DOCKER="yes"
-    - os: linux
       python: "3.5"
       env: PYTHON=/usr/bin/python3.5
       services: postgresql
-      addons:
-        apt:
-          packages:
-            - gsl-bin
-            - libxerces-c3.1
-            - xsdcxx
     - os: osx
       language: generic
       env: PYTHON=/usr/bin/python

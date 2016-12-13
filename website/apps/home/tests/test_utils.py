@@ -1,7 +1,7 @@
 import io
 
 from django.test import TestCase
-from website.apps.simulation.models import Simulation
+from website.apps.home.models import Simulation
 
 from website.apps.home.utils import load_simulation_file
 
