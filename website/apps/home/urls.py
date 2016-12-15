@@ -12,7 +12,7 @@
 
 from django.conf.urls import url
 
-from website.apps.home.views.ChartView import ChartView
+from website.apps.home.views.ChartView import ChartView, CountryTotalChartView
 from website.apps.home.views.DisplayHistoricalView import display_historical
 from website.apps.home.views.DisplaySimulationsView import display_simulations
 from website.apps.home.views.MapView import MapView, csv_for_map_view
@@ -28,6 +28,7 @@ urlpatterns = [
 
     # views with the choropleth map, whether or not a specific date is supplied
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
+    url(r'^totalchart/(?P<simulation_id>\d+)/total/$', CountryTotalChartView.as_view(), name='home.countrytotalchart'),
     url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
 
     # url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),

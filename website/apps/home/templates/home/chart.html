@@ -1,74 +1,72 @@
-{#% extends "base.html" %#}
-
 {% block extra_js %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
     <script type="text/javascript" src="https://code.highcharts.com/highcharts-more.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#chart').highcharts({
-                        title: {
-            text: '{{ simulation.name }}'
-        },
-        subtitle: {
-            text: '{{ location.department }}, {{ location.municipality }}'
-        },
-        xAxis: {
-            type: 'datetime',
-            plotLines: [{
-                color: 'red', // Color value
-                dashStyle: 'solid', // Style of the plot line. Default to solid
-                value: {{ sim_generated_date_ms }},// date where the line will appear converted it to milliseconds
-                width: 2 // Width of the line
-            }]
-        },
-
-        yAxis: {
-            title: {
-                text: 'Number of Zika cases'
-            },
-            min: 0
-        },
-
-        tooltip: {
-            crosshairs: true,
-            shared: true,
-            valueSuffix: ''
-        },
-
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-
-        series: [{
-            name: 'Cases',
-            data:
-                    [
-                {% for value in data %}[{{ value.date }},{{ value.value_mid }}]{% if not forloop.last %}, {% endif %} {% endfor %},
-            ],
-            zIndex: 2
-        }, {
-            name: 'Range',
-            data:
-                    [
-                {% for value in data %}[{{ value.date }}, {{ value.value_low }}, {{ value.value_high }}]{% if not forloop.last %},{% endif %} {% endfor %}
-            ],
-            type: 'arearange',
-            lineWidth: 0,
-            linkedTo: ':previous',
-            color: Highcharts.getOptions().colors[0],
-            fillOpacity: 0.3,
-            zIndex: 0
-        }, {
-            name: 'Historical Cases',
-            data: [
-                {% for value in historical_data %} [{{ value.date }}, {{ value.value_mid }}] {% if not forloop.last %},{% endif %} {% endfor %}
-            ],
-            zIndex: 1
-        }]
+                title: {
+                    text: '{{ simulation.name }}'
+                },
+                subtitle: {
+                    text: '{{ location.department }}, {{ location.municipality }}'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    plotLines: [{
+                        color: 'red', // Color value
+                        dashStyle: 'solid', // Style of the plot line. Default to solid
+                        value: {{ sim_generated_date_ms }},// date where the line will appear converted it to milliseconds
+                        width: 2 // Width of the line
+                    }]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of Zika cases'
+                    },
+                    min: 0
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true,
+                    valueSuffix: ''
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                navigator: {
+                    enabled: true
+                },
+                series: [{
+                    name: 'Cases',
+                    data: [
+                            {% for value in data %}[{{ value.date }},{{ value.value_mid }}
+                                ]{% if not forloop.last %}, {% endif %} {% endfor %},
+                    ],
+                    zIndex: 2,
+                    showInNavigator: true
+                }, {
+                    name: 'Range',
+                    data: [
+                            {% for value in data %}[{{ value.date }}, {{ value.value_low }}, {{ value.value_high }}
+                                ]{% if not forloop.last %},{% endif %} {% endfor %}
+                    ],
+                    type: 'arearange',
+                    lineWidth: 0,
+                    linkedTo: ':previous',
+                    color: Highcharts.getOptions().colors[0],
+                    fillOpacity: 0.3,
+                    zIndex: 0
+                }, {
+                    name: 'Historical Cases',
+                    data: [
+                        {% for value in historical_data %} [{{ value.date }}, {{ value.value_mid }}] {% if not forloop.last %},{% endif %} {% endfor %}
+                    ],
+                    zIndex: 1
+                }]
             })
         });
     </script>
