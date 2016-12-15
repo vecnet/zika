@@ -4,6 +4,7 @@ import io
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
+from django.db.models import Sum
 
 from website.apps.home.models import Data, Simulation
 
@@ -45,14 +46,11 @@ class MapView(TemplateView):
         current_sim_index = 0
         i = 0
         while i < len(all_sim_list):
-            print("i=" + str(i))
             if all_sim_list[i]['id'] == current_simulation.id:
                 current_sim_index = i
                 break
             else:
                 i += 1
-
-        print(current_sim_index)
 
         context = {
             "date_arg": date_arg,
