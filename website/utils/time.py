@@ -29,3 +29,16 @@ def datetime_to_unix_timestamp(timestamp):
     epoch = datetime.datetime(1970, 1, 1, tzinfo=pytz.UTC)
     unix_timestamp = (timestamp - epoch).total_seconds()  # Float
     return unix_timestamp
+
+def datetime_to_unix_timestamp_notz(timestamp):
+    """ Covert timezone-aware datetime object to Unix timestamp.
+    Note that on Linux we can do timestamp.strftime("%s").
+    However, this is not cross-platform and doesn't work on Windows.
+
+    :param timestamp: datetime object
+    :return: Number of seconds since 1970/1/1 UTC (float). On some platforms can be rounded, but usually
+    is not exactly a whole number and contains milliseconds and even microseconds as decimal
+    """
+    epoch = datetime.datetime(1970, 1, 1)
+    unix_timestamp = (timestamp - epoch).total_seconds()  # Float
+    return unix_timestamp
