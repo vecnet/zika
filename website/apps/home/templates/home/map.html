@@ -50,7 +50,6 @@
         </div>
     </div>
 
-    <div id="url" data-url="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/home/chart/{{ current_sim.id }}/"></div>
     <div id="csv-url" data-url="{{ generatefilepath }}"></div>
     <div class="col-md-10">
         <svg width="45%" height="600"></svg>
