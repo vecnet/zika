@@ -16,6 +16,7 @@ class MapView(TemplateView):
 
         sim_id = kwargs.get('sim_id')
         model_id = kwargs.get('model_id')
+        municipality_code = kwargs.get('municipality_code')
 
         info = Data.objects.filter(location__municipality_code='05001', simulation_id=sim_id).values('date')
 
@@ -59,6 +60,7 @@ class MapView(TemplateView):
             "all_sim_with_model_list": all_sim_list,  # dates are a string for passing into JS function,
             "current_index": current_sim_index,
             "length_all_sim_with_model_list": len(all_sim_list)-1,
+            "municipality_code": municipality_code,
             'generatefilepath': passjspath
         }
 
