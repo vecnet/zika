@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^csv_for_map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='home.csv_for_map'),
 
     # views for the charts (country totals or municipality)
-    url(r'^totalchart/(?P<simulation_id>\d+)/total/$', CountryTotalChartView.as_view(), name='home.countrytotalchart'),
+    url(r'^chart/(?P<simulation_id>\d+)/total/$', CountryTotalChartView.as_view(), name='home.countrytotalchart'),
     url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
 
     # views for the map

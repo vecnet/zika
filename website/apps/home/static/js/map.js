@@ -91,8 +91,9 @@ $(document).ready(function() {
                         var url = $("#url").attr("data-url");
                         url += d.properties.ID_ESPACIA;
                         // if window.location.toString() ends in 5 digit code, then remove 5 digit code and replace it with new 5 digit code
-                        window.location = d.properties.ID_ESPACIA.toString() + "/"; // add municipality code to the url
+                        window.alert(url);
                         document.getElementById("iframe2").src = url; // url is the home/chart/<sim_id>/<municipality_code>
+                        window.location = d.properties.ID_ESPACIA.toString() + "/"; // add municipality code to the url
                     })
                     .on("mouseover", function(d) {
                         d3.select(this).transition().duration(300).style("opacity", 1);

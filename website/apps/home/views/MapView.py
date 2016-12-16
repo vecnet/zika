@@ -53,6 +53,12 @@ class MapView(TemplateView):
             else:
                 i += 1
 
+        iframe_src = '/home/chart/' + str(current_simulation.id) + '/'
+        if(municipality_code):
+            iframe_src += str(municipality_code) + '/'
+        else:
+            iframe_src += 'total/'
+
         context = {
             "date_arg": date_arg,
             "all_sim_with_model": all_sim_with_model,  # allows us to use datetime objects
@@ -61,6 +67,7 @@ class MapView(TemplateView):
             "current_index": current_sim_index,
             "length_all_sim_with_model_list": len(all_sim_list)-1,
             "municipality_code": municipality_code,
+            "iframe_src": iframe_src,
             'generatefilepath': passjspath
         }
 

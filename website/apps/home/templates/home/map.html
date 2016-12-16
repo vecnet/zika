@@ -55,7 +55,7 @@
     <div class="col-md-10">
         <svg width="45%" height="600"></svg>
         <iframe id="iframe2" align="right" width="55%" height="600" frameborder="none"
-        src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}/home/totalchart/{{ current_sim.id }}/total/"></iframe>
+        src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ iframe_src }}">{{ request }}</iframe>
     </div>
 </body>
 {% endblock main_content %}
