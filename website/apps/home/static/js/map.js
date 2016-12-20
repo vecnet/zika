@@ -90,7 +90,7 @@ $(document).ready(function() {
                     .on("click", function(d) {
                         // if window.location.toString() ends in 5 digit code, then remove 5 digit code and replace it with new 5 digit code
                         var segments = window.location.pathname.toString().split("/");
-                        if(segments[segments.length - 2].match(/\d{5}/g)){
+                        if(segments[segments.length - 2].match(/\d{4,5}/g)){
                             segments[segments.length - 2] = d.properties.ID_ESPACIA.toString();
                             window.location = segments.join("/");
                         } else {

@@ -16,7 +16,7 @@ import os
 
 from django.conf import settings
 
-from website.apps.home.models import Location, Simulation, Data
+from website.apps.home.models import Location, Simulation, Data, SimulationModel
 
 logger = logging.getLogger(__name__)
 
@@ -64,11 +64,13 @@ def load_simulation_file(fp, simulation_name, is_historical):
             value_low=line['value_low'],
             value_mid=line['value_mid'],
             value_high=line['value_high'],
-
         )
 
     if line:
-        # Non-empty simulation output file
-        simulation.model_name = line['model_name']
+        # Add simulation model id to simulation object
+        if line['model_name'] is not None:
+            model_obj = SimulationModel.objects.get_or_create(model_name=line['model_name'])
+            simulation.sim_model_id = model_obj[0].id
+        # TODO: return an error if there is no model provided in the file, model is required
         simulation.date_output_generated = line['output_generate_date']
         simulation.save()

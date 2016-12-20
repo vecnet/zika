@@ -54,8 +54,12 @@ class MapView(TemplateView):
                 i += 1
 
         iframe_src = '/home/chart/' + str(current_simulation.id) + '/'
-        if(municipality_code):
-            iframe_src += str(municipality_code) + '/'
+        if municipality_code:
+            if len(municipality_code) != 5:
+                five_digit_mun_code = '0' + str(municipality_code)
+                iframe_src += five_digit_mun_code + '/'
+            else:
+                iframe_src += str(municipality_code) + '/'
         else:
             iframe_src += 'total/'
 
