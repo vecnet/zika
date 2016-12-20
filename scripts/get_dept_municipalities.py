@@ -20,4 +20,5 @@ all_dept_municipality_list = list(dept_mun_set)
 
 for item in all_dept_municipality_list:
     write_file.write(item+"\n")
-print(list(set(date_list)))
+    print(item+"\n")
+# print(list(set(date_list)))
