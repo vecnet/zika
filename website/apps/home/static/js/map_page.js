@@ -19,18 +19,27 @@
 function prevNextSimBtnClick(all_sim_with_model_list, current_sim_index, prev_or_next) {
     "use strict";
     var segments = window.location.pathname.toString().split("/");
+    // We only want to change the simulation id when the button is clicked.
+    // if there are 6 segments, then no municipality code is included. If there are 7 segments
+    // then the municipality code is in the url.
+    var replace_index = null;
+    if (segments.length === 6) {
+        replace_index = segments.length - 2;
+    } else if (segments.length === 7) {
+        replace_index = segments.length - 3;
+    }
     // the previous button was clicked, want to go back in time
     if (prev_or_next === 0) {
         // if the current simulation index is not the oldest in the list, increase index
         if (current_sim_index !== (all_sim_with_model_list.length - 1)) {
-            segments[segments.length - 2] = all_sim_with_model_list[current_sim_index + 1].id;
+            segments[replace_index] = all_sim_with_model_list[current_sim_index + 1].id;
         } else {
             window.alert("You are looking at the oldest simulation");
         }
     } else if (prev_or_next === 1) {  // next button was clicked, want to go forward in time
         // if the current simulation index is not the most recent in the list, decrease index
         if (current_sim_index !== 0) {
-            segments[segments.length - 2] = all_sim_with_model_list[current_sim_index - 1].id;
+            segments[replace_index] = all_sim_with_model_list[current_sim_index - 1].id;
         } else {
             window.alert("You are looking at the most recent simulation");
         }
