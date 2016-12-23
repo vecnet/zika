@@ -23,14 +23,18 @@ urlpatterns = [
     url(r'^$', display_simulations, name='home.display_simulations'),
     url(r'^historical/$', display_historical, name='home.display_historical'),
 
+    # upload simulation/historical data view
+    url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
+
     # get csv data for rendering choropleth map
     url(r'^csv_for_map/(?P<sim_id>[0-9]+)/(?P<inquery_date>[0-9, -]+)/$', csv_for_map_view, name='home.csv_for_map'),
 
-    # views with the choropleth map, whether or not a specific date is supplied
-    url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
-    url(r'^totalchart/(?P<simulation_id>\d+)/total/$', CountryTotalChartView.as_view(), name='home.countrytotalchart'),
+    # views for the charts (country totals or municipality)
+    url(r'^chart/(?P<simulation_id>\d+)/total/$', CountryTotalChartView.as_view(), name='home.countrytotalchart'),
     url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
 
-    # url(r'^map/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
+    # views for the map
     url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
+    url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/(?P<municipality_code>\d+)/$',
+        MapView.as_view(), name='home.mapview'),
 ]

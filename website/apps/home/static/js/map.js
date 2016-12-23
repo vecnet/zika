@@ -1,3 +1,5 @@
+/*jslint browser:true*/
+/*global window*/
 /**
  * This file contains the javascript necessary to render the d3 choropleth of Colombia
  * by municipality
@@ -30,7 +32,7 @@ $(document).ready(function() {
     var svg = d3.select("body").select("svg");
 
     //Load in zika choropleth map data
-    var csvpath = $("#csv-url").attr("data-url"); //"{{ generatefilepath }}";
+    var csvpath = $("#csv-url").attr("data-url");
 
     d3.csv(csvpath, function (data) {
         //Set input domain for color scale
@@ -58,7 +60,7 @@ $(document).ready(function() {
 
                     var jsonState = json.features[j].properties.ID_ESPACIA;
 
-                    if (dataState == jsonState) {
+                    if (dataState === jsonState) {
                         //Copy the data value into the JSON
                         json.features[j].properties.value = dataValue;
                         //Stop looking through the JSON
@@ -86,9 +88,14 @@ $(document).ready(function() {
                         }
                     })
                     .on("click", function(d) {
-                        var url = $("#url").attr("data-url");
-                        url += d.properties.ID_ESPACIA;
-                        document.getElementById('iframe2').src = url;
+                        // if window.location.toString() ends in 5 digit code, then remove 5 digit code and replace it with new 5 digit code
+                        var segments = window.location.pathname.toString().split("/");
+                        if(segments[segments.length - 2].match(/\d{4,5}/g)){
+                            segments[segments.length - 2] = d.properties.ID_ESPACIA.toString();
+                            window.location = segments.join("/");
+                        } else {
+                            window.location = d.properties.ID_ESPACIA.toString() + "/";
+                        }
                     })
                     .on("mouseover", function(d) {
                         d3.select(this).transition().duration(300).style("opacity", 1);
@@ -104,7 +111,7 @@ $(document).ready(function() {
                                 .style("opacity", 0.8);
                         div.transition().duration(300)
                                 .style("opacity", 0);
-                    })
+                    });
         });
     });
 });

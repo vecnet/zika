@@ -16,6 +16,7 @@ class MapView(TemplateView):
 
         sim_id = kwargs.get('sim_id')
         model_id = kwargs.get('model_id')
+        municipality_code = kwargs.get('municipality_code')
 
         info = Data.objects.filter(location__municipality_code='05001', simulation_id=sim_id).values('date')
 
@@ -52,6 +53,16 @@ class MapView(TemplateView):
             else:
                 i += 1
 
+        iframe_src = '/home/chart/' + str(current_simulation.id) + '/'
+        if municipality_code:
+            if len(municipality_code) != 5:
+                five_digit_mun_code = '0' + str(municipality_code)
+                iframe_src += five_digit_mun_code + '/'
+            else:
+                iframe_src += str(municipality_code) + '/'
+        else:
+            iframe_src += 'total/'
+
         context = {
             "date_arg": date_arg,
             "all_sim_with_model": all_sim_with_model,  # allows us to use datetime objects
@@ -59,6 +70,8 @@ class MapView(TemplateView):
             "all_sim_with_model_list": all_sim_list,  # dates are a string for passing into JS function,
             "current_index": current_sim_index,
             "length_all_sim_with_model_list": len(all_sim_list)-1,
+            "municipality_code": municipality_code,
+            "iframe_src": iframe_src,
             'generatefilepath': passjspath
         }
 

@@ -25,7 +25,7 @@ data_file.write("name,output_generate_date,value_mid,value_high,disease,model_na
                 "municipality_code,municipality,department_code,date,value_low,id,population\n")
 
 # Open the department and municipality file:
-dept_mun_file = open('department_municipalities_colombia.csv', 'r')
+dept_mun_file = open('all_department_municipalities_colombia.csv', 'r')
 department_municipality_list = []
 for dept_mun in dept_mun_file:
     dept_and_municipality = []

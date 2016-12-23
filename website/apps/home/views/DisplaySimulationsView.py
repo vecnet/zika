@@ -17,10 +17,11 @@ def display_simulations(request):
         sim = {
             'simulation_id': str(entry.id),
             'simulation_name': entry.name,
-            'model': entry.sim_model,
             'create_time': entry.creation_timestamp,
             'generated_date': entry.date_output_generated
         }
+        if entry.sim_model is not None:
+            sim['simulation_model'] = entry.sim_model
 
         # Add this simulation entry to the list
         sim_list.append(sim)

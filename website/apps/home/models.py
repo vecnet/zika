@@ -59,7 +59,6 @@ class SimulationModel(models.Model):
 
 class Simulation(models.Model):
     name = models.TextField()
-    # model_name = models.TextField(blank=True)
     sim_model = models.ForeignKey(SimulationModel, null=True, blank=True, related_name="simulation_model")
     disease = models.TextField(default="ZVD")
     date_output_generated = models.DateField(null=True, blank=True)
