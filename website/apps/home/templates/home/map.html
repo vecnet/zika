@@ -35,7 +35,12 @@
                     <ul class="dropdown-menu">
                         {% for sim in all_sim_with_model %}
                             <li>
+                            {% if municipality_code %}
+                                <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id municipality_code=municipality_code %}">{{ sim.date_output_generated }}</a>
+                            {% endif %}
+                            {% if not municipality_code %}
                                 <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id %}">{{ sim.date_output_generated }}</a>
+                            {% endif %}
                             </li>
                         {% endfor %}
                     </ul>
