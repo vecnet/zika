@@ -1,56 +1,60 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 <head>
-{% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}" />
-{% endblock extra_css %}
-{% block extra_js %}
-    <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
-    <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
-{% endblock extra_js %}
-<script>
-    var width=1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
-        .attr("width", width).attr("height", height);
-</script>
+    {% block extra_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+    {% endblock extra_css %}
+    {% block extra_js %}
+        <script type="text/javascript" src="/static/examples/d3.v3.js"></script>
+        <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
+    {% endblock extra_js %}
+    <script>
+        var width = 1000, height = 1100, svg = d3.select('#columbia-map').append(svg)
+                .attr("width", width).attr("height", height);
+    </script>
 </head>
 <body>
 {% block main_content %}
     <div class="col-md-10">
         <div class="row">
-        <label for="date-generated-btn-group">Simulation generated on:</label><br>
-            <div class="btn-group" role="group" aria-label="..." id="date-generated-btn-group">
+            <div class="col-md-10 center-block" style="text-align: center">
+                <label for="date-generated-btn-group">Simulation generated on:</label><br>
+                <div class="btn-group" role="group" aria-label="..." id="date-generated-btn-group">
 
-                <button id="prevSimBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Older simulation"
-                        onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 0)"
-                        {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                </button>
-
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">{{ current_sim.date_output_generated }}
-                        <span class="caret"></span>
+                    <button id="prevSimBtn" type="button" class="btn btn-default" data-toggle="tooltip"
+                            data-placement="bottom" title="Older simulation"
+                            onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 0)"
+                            {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     </button>
-                    <ul class="dropdown-menu">
-                        {% for sim in all_sim_with_model %}
-                            <li>
-                            {% if municipality_code %}
-                                <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id municipality_code=municipality_code %}">{{ sim.date_output_generated }}</a>
-                            {% endif %}
-                            {% if not municipality_code %}
-                                <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id %}">{{ sim.date_output_generated }}</a>
-                            {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
 
-                <button id="nextSimBtn" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Newer simulation"
-                        onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 1)"
-                        {% if current_index == 0 %} disabled {% endif %}>
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">{{ current_sim.date_output_generated }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for sim in all_sim_with_model %}
+                                <li>
+                                    {% if municipality_code %}
+                                        <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id municipality_code=municipality_code %}">{{ sim.date_output_generated }}</a>
+                                    {% endif %}
+                                    {% if not municipality_code %}
+                                        <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id %}">{{ sim.date_output_generated }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <button id="nextSimBtn" type="button" class="btn btn-default" data-toggle="tooltip"
+                            data-placement="top" title="Newer simulation"
+                            onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 1)"
+                            {% if current_index == 0 %} disabled {% endif %}>
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -59,7 +63,7 @@
     <div class="col-md-10">
         <svg width="45%" height="600"></svg>
         <iframe id="iframe2" align="right" width="55%" height="600" frameborder="none"
-        src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ iframe_src }}">{{ request }}</iframe>
+                src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ iframe_src }}">{{ request }}</iframe>
     </div>
-</body>
+    </body>
 {% endblock main_content %}
