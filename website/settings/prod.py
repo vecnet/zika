@@ -42,7 +42,7 @@ LOGOUT_URL="https://www.vecnet.org/index.php/log-out"
 TKT_AUTH_LOGIN_URL = 'https://www.vecnet.org/index.php/sso-login'
 TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
 
-MIDDLEWARE_CLASSES += ('django_auth_pubtkt.DjangoAuthPubtkt',)
+# MIDDLEWARE_CLASSES += ('django_auth_pubtkt.DjangoAuthPubtkt',)
 
 LOGGING = {
     'version': 1,

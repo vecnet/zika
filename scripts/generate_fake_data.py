@@ -5,6 +5,7 @@ import decimal
 import random
 import sys
 import uuid
+import os
 
 from django.db.models.functions import datetime
 
@@ -36,17 +37,17 @@ for dept_mun in dept_mun_file:
 name = 'suspected cases'
 
 # Check if output_generated_date provided
-if argument_list[3]:
+try:
     output_generate_date = argument_list[3]
-else:
-    output_generate_date = str(datetime.datetime.date())
+except IndexError:
+    output_generate_date = datetime.datetime.today().strftime("%Y-%m-%d")
 
 disease = "ZVD"
 
 # Check if model name provided
-if argument_list[2]:
+try:
     model_name = argument_list[2]
-else:
+except IndexError:
     model_name = "test_model"
 
 date_list = ['2015-08-13', '2015-08-20', '2015-08-27', '2015-09-03', '2015-09-10', '2015-09-17', '2015-09-24',
@@ -107,7 +108,7 @@ for date in date_list:
 
             sim_data_list = ','.join(map(str, line))
 
-            print(sim_data_list + "\n")
+            print(sim_data_list)
 
             data_file.write(sim_data_list + "\n")
         dept_mun_line_num += 1
