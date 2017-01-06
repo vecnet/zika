@@ -21,6 +21,7 @@ script:
   - python manage.py test website.tests.utils.test_time
 notifications:
   email:
+    recipients:
       - ecaldwe1@nd.edu
       - avyushko@nd.edu
     on_success: always
