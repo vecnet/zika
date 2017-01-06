@@ -109,3 +109,16 @@ cat zika.vecnet.org.conf | sed s/wellbeing.crc.nd.edu/zika.vecnet.org/
 6. Check if there are database migrations by reviewing the list of known migrations:
     `./manage.py migrate --list`
 
+7. Install logwatch
+```bash
+sudo apt-get install logwatch
+```
+
+For postfix configuration, choose "smarthost" and specify smtp.nd.edu as relay host
+
+8. Configure logwatch: /etc/logwatch/conf/logwatch.conf file
+```
+MailTo = avyushko@nd.edu
+MailFrom = avyushko+zika@nd.edu
+Detail = High
+```

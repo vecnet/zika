@@ -16,15 +16,10 @@ matrix:
       python: "3.5"
       env: PYTHON=/usr/bin/python3.5
       services: postgresql
-    - os: osx
-      language: generic
-      env: PYTHON=/usr/bin/python
-      services: postgresql
-  allow_failures:
-    - os: osx
+
 script:
-  - python manage.py test
+  - python manage.py test website.tests.utils.test_time
 notifications:
   email:
-    on_success: never
+    on_success: always
     on_failure: always
