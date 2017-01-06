@@ -1,4 +1,2 @@
 -r base.txt
-pycrypto==2.6.1
-Fabric==1.10.2  # Library used to update project folder on server
 # django-auth-pubtkt==1.1.2 # Implementation of mod_auth_pubtkt as Django middleware

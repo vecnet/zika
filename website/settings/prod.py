@@ -5,15 +5,15 @@ EMAIL_HOST = 'smtp.nd.edu'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 
-SERVER_EMAIL = "VecNet Zika modeling interface <vecnet@nd.edu>"
-DEFAULT_FROM_EMAIL = "VecNet Zika modeling interface <vecnet@nd.edu>"
+SERVER_EMAIL = "VecNet Zika <vecnet@nd.edu>"
+DEFAULT_FROM_EMAIL = "VecNet Zika <vecnet@nd.edu>"
 
 # Supress "You have not set a value for the SECURE_HSTS_SECONDS setting." warning
 # Reason: Be sure to read the documentation first; enabling HSTS carelessly can cause serious, irreversible problems.
 SILENCED_SYSTEM_CHECKS = ['security.W004', ]
 
 ALLOWED_HOSTS = ['zika.vecnet.org', ]
-ADMINS = [('Alex','avyushko@nd.edu'),
+ADMINS = [('Alex','avyushko@nd.edu'), ('Beth', 'ecaldwe1@nd.edu ')
          ]
 
 DEBUG = False
