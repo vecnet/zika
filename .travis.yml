@@ -18,7 +18,7 @@ matrix:
       services: postgresql
 
 script:
-  - python manage.py test website.tests.utils.test_time
+  - python manage.py test
 notifications:
   email:
     recipients:
