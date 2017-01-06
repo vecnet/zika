@@ -13,7 +13,7 @@ DEFAULT_FROM_EMAIL = "VecNet Zika <vecnet@nd.edu>"
 SILENCED_SYSTEM_CHECKS = ['security.W004', ]
 
 ALLOWED_HOSTS = ['zika.vecnet.org', ]
-ADMINS = [('Alex','avyushko@nd.edu'), ('Beth', 'ecaldwe1@nd.edu ')
+ADMINS = [('Alex','avyushko@nd.edu'), ('Beth', 'ecaldwe1@nd.edu')
          ]
 
 DEBUG = False
