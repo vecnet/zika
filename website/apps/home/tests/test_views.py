@@ -1,12 +1,14 @@
+from datetime import date
+
 from django.test import TestCase, Client
 from django.urls.base import reverse
-from datetime import date
 
 from .utils.find_html_element_by_id import FindHTMLElementById
 
 
 class Home(TestCase):
-    fixtures = ['test_simulation_data.json', 'test_location.json', 'test_simulation.json', 'test_location_data.json']
+    fixtures = ['test-fixtures/test-fixture-sim1-aug6-data.json', 'test-fixtures/test-fixture-locations.json',
+                'test-fixtures/test-fixture-simulation1.json', 'test-fixtures/test-fixture-simulationmodel.json']
 
     def setUp(self):
         self.client = Client()
