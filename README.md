@@ -27,6 +27,10 @@ This Django project has been tested on Windows 10 x64, MAC OS 10.7 and CentOS 7
 * PostgreSQL 9.4
 * Apache 2.4
 
+# Project documentation
+
+Project documentation, including meeting minutes is on Google Drive - https://drive.google.com/drive/folders/0BwiQpgfLBcI1aVVtQ2VoVnBoMHc
+
 #Quick Start Guide
 1. Create database structures
     `./manage.py migrate`
