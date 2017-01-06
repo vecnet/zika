@@ -162,3 +162,5 @@ LOGGING = {
 # The default is 'SAMEORIGIN', but unless there is a good reason for your site to serve other parts
 # of itself in a frame, you should change it to 'DENY'.
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+DATABASE_BACKUP_DIR = MEDIA_ROOT

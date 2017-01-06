@@ -1,11 +1,13 @@
 # Copyright (C) 2015, University of Notre Dame
 # All rights reserved
+import os
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.db import connection
 from django import db
 
 # from website.database_apps.database_manager.utils.backup_and_restore_functions import backup
+from website.management.commands.backup_db import backup
 
 
 class Command(BaseCommand):
@@ -35,13 +37,14 @@ class Command(BaseCommand):
         engine = db.connections.databases["default"]["ENGINE"]
         cursor = connection.cursor()
 
-        # if not options["nobackup"]:
-        #     print "Making database backup"
-        #     result, message = backup("reset", os.environ.get("USER", "unknown"))
-        #     if not result:
-        #         print "Failed to backup the database, %s" % message
-        #         return
-        #     print "Backup complete, filename %s" % message
+        if not options["nobackup"]:
+            print("Making database backup")
+            result, message = backup("reset", os.environ.get("USER", "unknown"))
+            if not result:
+                print("Failed to backup the database, %s" % message)
+                return
+            print("Backup complete, filename %s" % message)
+
         print("Dropping all tables")
         if engine == "django.db.backends.sqlite3":
             # List of all tables in SQLite database
