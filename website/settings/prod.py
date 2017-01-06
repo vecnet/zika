@@ -2,6 +2,9 @@ from .base import *
 
 MANAGERS = (('Alex', 'avyushko@nd.edu'), )
 EMAIL_HOST = 'smtp.nd.edu'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+
 SERVER_EMAIL = "VecNet Zika modeling interface <vecnet@nd.edu>"
 DEFAULT_FROM_EMAIL = "VecNet Zika modeling interface <vecnet@nd.edu>"
 
