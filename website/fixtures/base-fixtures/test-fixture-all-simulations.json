@@ -1,0 +1,86 @@
+[
+  {
+    "model": "home.simulation",
+    "pk": 1,
+    "fields": {
+      "name": "historical data cases combo",
+      "sim_model": 1,
+      "disease": "ZVD",
+      "date_output_generated": "2016-08-09",
+      "creation_timestamp": "2016-12-20T19:48:44.375Z",
+      "created_by": null,
+      "data_file": "simulation_files/historical_data_dateGenerated_sji4FME.csv",
+      "historical": true
+    }
+  },
+  {
+    "model": "home.simulation",
+    "pk": 2,
+    "fields": {
+      "name": "test data 1",
+      "sim_model": 2,
+      "disease": "ZVD",
+      "date_output_generated": "2016-06-02",
+      "creation_timestamp": "2016-12-20T19:51:00.518Z",
+      "created_by": null,
+      "data_file": "simulation_files/fixed_data_1_nYRvQZ3.csv",
+      "historical": false
+    }
+  },
+  {
+    "model": "home.simulation",
+    "pk": 3,
+    "fields": {
+      "name": "test data 2",
+      "sim_model": 2,
+      "disease": "ZVD",
+      "date_output_generated": "2016-06-09",
+      "creation_timestamp": "2016-12-20T20:17:01.145Z",
+      "created_by": null,
+      "data_file": "simulation_files/fixed_data_2.csv",
+      "historical": false
+    }
+  },
+  {
+    "model": "home.simulation",
+    "pk": 4,
+    "fields": {
+      "name": "test data 3",
+      "sim_model": 2,
+      "disease": "ZVD",
+      "date_output_generated": "2016-06-16",
+      "creation_timestamp": "2016-12-20T20:20:22.276Z",
+      "created_by": null,
+      "data_file": "simulation_files/fixed_data_3.csv",
+      "historical": false
+    }
+  },
+  {
+    "model": "home.simulation",
+    "pk": 5,
+    "fields": {
+      "name": "test data 4",
+      "sim_model": 2,
+      "disease": "ZVD",
+      "date_output_generated": "2016-06-23",
+      "creation_timestamp": "2016-12-20T20:23:16.371Z",
+      "created_by": null,
+      "data_file": "simulation_files/fixed_data_4.csv",
+      "historical": false
+    }
+  },
+  {
+    "model": "home.simulation",
+    "pk": 6,
+    "fields": {
+      "name": "test historical",
+      "sim_model": 2,
+      "disease": "ZVD",
+      "date_output_generated": "2016-06-16",
+      "creation_timestamp": "2017-01-04T20:26:40.373Z",
+      "created_by": null,
+      "data_file": "simulation_files/fixed_data_3_wIU4x2O.csv",
+      "historical": true
+    }
+  }
+]

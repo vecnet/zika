@@ -1,23 +1,44 @@
+from datetime import date
+
 from django.test import TestCase, Client
 from django.urls.base import reverse
-from datetime import date
 
 from .utils.find_html_element_by_id import FindHTMLElementById
 
 
 class Home(TestCase):
-    fixtures = ['test_simulation_data.json', 'test_location.json', 'test_simulation.json', 'test_location_data.json']
+    fixtures = ['test-fixtures/test-fixture-sim1-aug6-data_shortened.json', 'test-fixtures/test-fixture-locations.json',
+                'test-fixtures/test-fixture-simulation1.json', 'test-fixtures/test-fixture-simulationmodel.json']
 
     def setUp(self):
         self.client = Client()
 
-    def test_choropleth_pass(self):
-        inquery_date = date(2015, 8, 6)
-        sim_id = 1
+    def test_mapview_pass(self):
+        model_id = 2
+        sim_id = 2
 
         url = reverse(
-            "home.choropleth_map",
-            kwargs={"inquery_date": inquery_date, "sim_id": sim_id}
+            "home.mapview",
+            kwargs={"model_id": model_id, "sim_id": sim_id}
+        )
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        parser = FindHTMLElementById("iframe2")
+        parser.feed(response.content.decode(encoding="latin-1"))
+        self.assertTrue(parser.is_found)
+        self.assertFalse(parser.is_duplicated_id)
+        self.assertEqual(parser.tag, "iframe")
+
+    def test_mapview_with_municipality_pass(self):
+        model_id = 2
+        sim_id = 2
+        municipality_code = 99524
+
+        url = reverse(
+            "home.mapview",
+            kwargs={"model_id": model_id, "sim_id": sim_id, "municipality_code": municipality_code}
         )
 
         response = self.client.get(url)
@@ -31,7 +52,7 @@ class Home(TestCase):
 
     def test_csv_for_map_view_pass(self):
         inquery_date = date(2015, 8, 6)
-        sim_id = 1
+        sim_id = 2
 
         url = reverse(
             "home.csv_for_map",
@@ -41,7 +62,7 @@ class Home(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEquals(b'ID_ESPACIA,value\r\n5001,0.0\r\n5002,0.0\r\n5004,0.0\r\n5021,0.0\r\n', response.content)
+        self.assertEquals(b'ID_ESPACIA,value\r\n5001,1.0\r\n5002,1.0\r\n5004,1.0\r\n5021,1.0\r\n', response.content)
 
     def test_csv_for_map_view_fail(self):
         inquery_date = date(2013, 8, 6)
@@ -63,4 +84,5 @@ class Home(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['simulationlist'], {1: 'data_cases_combo'})
+        self.assertEqual(response.context['simulation_model_list'][0]['simulation_name'], 'test data 1')
+        self.assertEqual(response.context['simulation_model_list'][0]['simulation_id'], '2')
