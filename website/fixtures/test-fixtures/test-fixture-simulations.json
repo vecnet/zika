@@ -1,0 +1,30 @@
+[
+    {
+    "model": "home.simulation",
+    "pk": 1,
+    "fields": {
+      "name": "historical data cases combo",
+      "sim_model": 1,
+      "disease": "ZVD",
+      "date_output_generated": "2016-08-09",
+      "creation_timestamp": "2016-12-20T19:48:44.375Z",
+      "created_by": null,
+      "data_file": "simulation_files/historical_data_dateGenerated_sji4FME.csv",
+      "historical": true
+    }
+  },
+  {
+    "model": "home.simulation",
+    "pk": 2,
+    "fields": {
+      "name": "test data 1",
+      "sim_model": 2,
+      "disease": "ZVD",
+      "date_output_generated": "2016-06-02",
+      "creation_timestamp": "2016-12-20T19:51:00.518Z",
+      "created_by": null,
+      "data_file": "simulation_files/fixed_data_1_nYRvQZ3.csv",
+      "historical": false
+    }
+  }
+]
