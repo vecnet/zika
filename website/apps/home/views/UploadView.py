@@ -1,4 +1,4 @@
-#!/bin/env python2
+#!/bin/env python3.4
 # -*- coding: utf-8 -*-
 #
 # This file is part of the VecNet Zika modeling interface.
@@ -26,17 +26,18 @@ class UploadView(TemplateView):
     template_name = "../templates/simulation/upload.html"
 
     @transaction.atomic
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         if request.method == 'POST':
             if not request.FILES['output_file']:
                 return HttpResponseBadRequest("No 'output_file' is provided")
             else:
                 sim_name = self.request.POST.get(u"name", None)
                 is_historical = self.request.POST.get("historical")
-                load_simulation_file(request.FILES['output_file'], simulation_name=sim_name, is_historical=is_historical)
+                load_simulation_file(request.FILES['output_file'], simulation_name=sim_name,
+                                     is_historical=is_historical)
 
                 # Redirect to appropriate page whether uploading simulation or historical
-                if is_historical!='on':
+                if is_historical != 'on':
                     return HttpResponseRedirect(reverse('home.display_simulations'))
                 else:
                     return HttpResponseRedirect(reverse('home.display_historical'))

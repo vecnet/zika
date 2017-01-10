@@ -1,13 +1,15 @@
+import io
 from datetime import date
 
 from django.test import TestCase, Client
 from django.urls.base import reverse
 
-import io
 
 class Home(TestCase):
-    fixtures = ['test-fixtures/test-fixture-sim1-aug6-data_shortened.json', 'test-fixtures/test-fixture-locations.json',
-                'test-fixtures/test-fixture-simulations.json', 'test-fixtures/test-fixture-simulationmodel.json']
+    fixtures = ['test-fixtures/test-fixture-sim1-aug6-data_shortened.json',
+                'test-fixtures/test-fixture-locations.json',
+                'test-fixtures/test-fixture-simulations.json',
+                'test-fixtures/test-fixture-simulation-model.json']
 
     def setUp(self):
         self.client = Client()
@@ -109,7 +111,9 @@ class Home(TestCase):
             url,
             data={
                 'name': 'test',
-                'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population")
+                'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,"
+                                           "department,municipality_code,municipality,department_code,"
+                                           "date,value_low,id,population")
             }
         )
 
