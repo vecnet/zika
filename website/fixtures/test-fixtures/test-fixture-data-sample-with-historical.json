@@ -1,0 +1,114 @@
+[
+  {
+    "model": "home.data",
+    "pk": 1,
+    "fields": {
+      "uuid": "",
+      "location": 1,
+      "value_low": 1,
+      "value_mid": 1,
+      "value_high": 2.93543972119817,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-12-20T19:47:12.348Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 2,
+    "fields": {
+      "uuid": "",
+      "location": 2,
+      "value_low": 1,
+      "value_mid": 1,
+      "value_high": 3.4572434699368,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-12-20T19:47:12.350Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 3,
+    "fields": {
+      "uuid": "",
+      "location": 3,
+      "value_low": 1,
+      "value_mid": 1,
+      "value_high": 2.951902419381,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-12-20T19:47:12.351Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 4,
+    "fields": {
+      "uuid": "",
+      "location": 4,
+      "value_low": 1,
+      "value_mid": 1,
+      "value_high": 1.02928810159701,
+      "date": "2015-08-06",
+      "simulation": 1,
+      "creation_timestamp": "2016-12-20T19:47:12.352Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 49369,
+    "fields": {
+      "uuid": "",
+      "location": 32,
+      "value_low": 0,
+      "value_mid": 0.6206036839479862,
+      "value_high": 7.530445777280646,
+      "date": "2015-08-06",
+      "simulation": 2,
+      "creation_timestamp": "2016-12-20T19:48:58.951Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 49370,
+    "fields": {
+      "uuid": "",
+      "location": 72,
+      "value_low": 0,
+      "value_mid": 0.6504451657887445,
+      "value_high": 3.868825080323171,
+      "date": "2015-08-06",
+      "simulation": 2,
+      "creation_timestamp": "2016-12-20T19:48:58.954Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 49371,
+    "fields": {
+      "uuid": "",
+      "location": 88,
+      "value_low": 0.8077659017070163,
+      "value_mid": 5,
+      "value_high": 8.57445879846007,
+      "date": "2015-08-06",
+      "simulation": 2,
+      "creation_timestamp": "2016-12-20T19:48:58.956Z"
+    }
+  },
+  {
+    "model": "home.data",
+    "pk": 49372,
+    "fields": {
+      "uuid": "",
+      "location": 92,
+      "value_low": 0,
+      "value_mid": 0.8787376538528113,
+      "value_high": 7.200115824187662,
+      "date": "2015-08-06",
+      "simulation": 2,
+      "creation_timestamp": "2016-12-20T19:48:58.958Z"
+    }
+  }
+]
