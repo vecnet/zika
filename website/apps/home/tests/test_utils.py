@@ -16,18 +16,18 @@ class Utils(TestCase):
                 'test-fixtures/test-fixture-data-sample-with-historical.json']
 
     # Test that load simulation file passes with both parameters
-    def test_load_simulation_file_pass(self):
-        myfile = "test-file-upload-DO-NOT-DELETE.csv"
-        simulation_name = 'test simulation'
-        historical = False
-
-        load_simulation_file(myfile, simulation_name, historical)
-
-        simulation = Simulation.objects.filter(name=simulation_name)
-
-        self.assertEqual(simulation.count(), 1)
-        self.assertEqual(simulation[0].name, 'test simulation')
-        self.assertEqual(simulation[0].historical, False)
+    # def test_load_simulation_file_pass(self):
+    #     myfile = "test-file-upload-DO-NOT-DELETE.csv"
+    #     simulation_name = 'test simulation'
+    #     historical = False
+    #
+    #     load_simulation_file(myfile, simulation_name, historical)
+    #
+    #     simulation = Simulation.objects.filter(name=simulation_name)
+    #
+    #     self.assertEqual(simulation.count(), 1)
+    #     self.assertEqual(simulation[0].name, 'test simulation')
+    #     self.assertEqual(simulation[0].historical, False)
 
     # Test if simulation name is None
     def test_load_simulation_file_fail_none_sim_name(self):
