@@ -47,6 +47,9 @@ TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
 
 # MIDDLEWARE_CLASSES += ('django_auth_pubtkt.DjangoAuthPubtkt',)
 
+# Enable Google Analytics
+DISABLE_GOOGLE_ANALYTICS = False
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
