@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'website',
     'website.apps.home',
+    'analytics'
     # 'csvimport.app.CSVImportConf'
 )
 
@@ -127,6 +128,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'website', 'media')
 
 LOGIN_URL = "/auth/login/"
 LOGOUT_URL = "/auth/logout/?next=/"
+
+# Google Analytics is enable in prod environment only
+DISABLE_GOOGLE_ANALYTICS = True
 
 # Django logging configuration
 # https://docs.djangoproject.com/en/1.8/topics/logging/
