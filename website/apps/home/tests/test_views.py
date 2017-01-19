@@ -95,29 +95,29 @@ class Home(TestCase):
         self.assertEqual(response.context['historical_list'][0]['simulation_name'], 'historical data cases combo')
         self.assertEqual(response.context['historical_list'][0]['simulation_id'], '1')
 
-    def test_upload_view(self):
-        url = reverse(
-            "simulation.upload",
-        )
-        response = self.client.get(url)
+    # def test_upload_view(self):
+    #     url = reverse(
+    #         "simulation.upload",
+    #     )
+    #     response = self.client.get(url)
+    #
+    #     self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.status_code, 200)
-
-    def test_upload_view_post(self):
-        url = reverse(
-            "simulation.upload",
-        )
-        response = self.client.post(
-            url,
-            data={
-                'name': 'test',
-                'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,"
-                                           "department,municipality_code,municipality,department_code,"
-                                           "date,value_low,id,population")
-            }
-        )
-
-        self.assertEqual(response.status_code, 302)
+    # def test_upload_view_post(self):
+    #     url = reverse(
+    #         "simulation.upload",
+    #     )
+    #     response = self.client.post(
+    #         url,
+    #         data={
+    #             'name': 'test',
+    #             'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,"
+    #                                        "department,municipality_code,municipality,department_code,"
+    #                                        "date,value_low,id,population")
+    #         }
+    #     )
+    #
+    #     self.assertEqual(response.status_code, 302)
 
     def test_country_total_chart_view(self):
         sim_id = 2
