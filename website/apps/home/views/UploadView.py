@@ -41,15 +41,13 @@ class UploadView(TemplateView):
                 simulation.save()
 
                 new_sim = Simulation.objects.get(id=simulation.id)
-                print(new_sim.is_uploaded)
                 if new_sim:
 
                     p = Popen(["/home/beth/.virtualenvs/vecnetzika-py3/bin/python3.4", "manage.py",
                                           "load_sim_data", str(new_sim.id)], stdout=PIPE, stderr=PIPE)
-                    # p.communicate()
 
                 # Redirect to appropriate page whether uploading simulation or historical
-                if is_historical != 'on':
+                if is_historical != True:
                     return HttpResponseRedirect(reverse('home.display_simulations'))
                 else:
                     return HttpResponseRedirect(reverse('home.display_historical'))

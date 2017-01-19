@@ -11,6 +11,7 @@
                         <th>Name</th>
                         <th></th>
                         <th>Date Uploaded</th>
+                        <th>Uploaded?</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -19,9 +20,20 @@
                             <td> {{ sim.simulation_id }} </td>
                             <td class="col-md-4"> {{ sim.simulation_name }}</td>
                             <td class="col-md-4">
-                                <a href="{% url 'home.mapview' model_id=sim.simulation_model.id sim_id=sim.simulation_id %}">{{ sim.simulation_model }}</a>
+                                {% if sim.is_uploaded %}
+                                    <a href="{% url 'home.mapview' model_id=sim.simulation_model.id sim_id=sim.simulation_id %}">
+                                        {{ sim.simulation_model }}
+                                    </a>
+                                {% else %}{% endif %}
                             </td>
                             <td>{{ sim.create_time }}</td>
+                            <td>
+                                {% if sim.is_uploaded %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
