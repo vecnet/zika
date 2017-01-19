@@ -17,7 +17,8 @@ def display_historical(request):
         sim = {
             'simulation_id': str(entry.id),
             'simulation_name': entry.name,
-            'create_time': entry.creation_timestamp
+            'create_time': entry.creation_timestamp,
+            'is_uploaded': entry.is_uploaded
         }
         if entry.sim_model is not None:
             sim['simulation_model'] = entry.sim_model

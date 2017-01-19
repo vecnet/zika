@@ -18,8 +18,10 @@ def display_simulations(request):
             'simulation_id': str(entry.id),
             'simulation_name': entry.name,
             'create_time': entry.creation_timestamp,
-            'generated_date': entry.date_output_generated
+            'generated_date': entry.date_output_generated,
+            'is_uploaded': entry.is_uploaded
         }
+
         if entry.sim_model is not None:
             sim['simulation_model'] = entry.sim_model
 

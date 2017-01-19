@@ -10,22 +10,18 @@
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import logging
+from subprocess import Popen, PIPE
 
 from django.core.urlresolvers import reverse
-from django.db import transaction
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.views.generic.base import TemplateView
 
-from website.apps.home.utils import load_simulation_file
-
-logger = logging.getLogger(__name__)
+from website.apps.home.models import Simulation
 
 
 class UploadView(TemplateView):
     template_name = "../templates/simulation/upload.html"
 
-    @transaction.atomic
     def post(self, request):
         if request.method == 'POST':
             if not request.FILES['output_file']:
@@ -33,11 +29,25 @@ class UploadView(TemplateView):
             else:
                 sim_name = self.request.POST.get(u"name", None)
                 is_historical = self.request.POST.get("historical")
-                load_simulation_file(request.FILES['output_file'], simulation_name=sim_name,
-                                     is_historical=is_historical)
+
+                if is_historical == "on":
+                    is_historical = True
+                else:
+                    is_historical = False
+
+                # Create the simulation and save it
+                simulation = Simulation.objects.create(name=sim_name, data_file=request.FILES['output_file'],
+                                                       historical=is_historical, is_uploaded=False)
+                simulation.save()
+
+                new_sim = Simulation.objects.get(id=simulation.id)
+                if new_sim:
+
+                    p = Popen(["/home/beth/.virtualenvs/vecnetzika-py3/bin/python3.4", "manage.py",
+                                          "load_sim_data", str(new_sim.id)], stdout=PIPE, stderr=PIPE)
 
                 # Redirect to appropriate page whether uploading simulation or historical
-                if is_historical != 'on':
+                if is_historical != True:
                     return HttpResponseRedirect(reverse('home.display_simulations'))
                 else:
                     return HttpResponseRedirect(reverse('home.display_historical'))

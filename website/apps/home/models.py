@@ -1,4 +1,4 @@
-#!/bin/env python2
+#!/bin/env python3.4
 # -*- coding: utf-8 -*-
 #
 # This file is part of the VecNet Zika modeling interface.
@@ -9,17 +9,6 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-
-#
-# class Location(models.Model):
-#     report_date = models.DateField(default='1999-01-01')
-#     location = models.TextField(default='')
-#     department = models.TextField(default='')
-#     municipality = models.TextField(default='')
-#     data_type = models.TextField(default='')
-#     data_field_code = models.TextField(default='')
-#     value = models.IntegerField(default=0)
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -66,6 +55,7 @@ class Simulation(models.Model):
     created_by = models.ForeignKey(User, null=True, related_name="simulations")
     data_file = models.FileField(upload_to="simulation_files")
     historical = models.BooleanField(default=False)
+    is_uploaded = models.BooleanField(default=False)
 
     class Meta:
         db_table = "simulation"
