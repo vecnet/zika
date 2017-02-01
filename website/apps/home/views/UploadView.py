@@ -43,8 +43,11 @@ class UploadView(TemplateView):
                 new_sim = Simulation.objects.get(id=simulation.id)
                 if new_sim:
 
+                    outfile = open('logs/outfile', 'w')
+                    errfile = open('logs/errfile', 'w')
+
                     p = Popen(["/home/beth/.virtualenvs/vecnetzika-py3/bin/python3.4", "manage.py",
-                                          "load_sim_data", str(new_sim.id)], stdout=PIPE, stderr=PIPE)
+                                          "load_sim_data", str(new_sim.id)], stdout=outfile, stderr=errfile)
 
                 # Redirect to appropriate page whether uploading simulation or historical
                 if is_historical != True:

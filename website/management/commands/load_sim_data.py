@@ -4,10 +4,11 @@ import csv
 import os
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from website.apps.home.models import Simulation, Location, Data, SimulationModel
+from website.apps.home.models import Simulation, Location, Data, SimulationModel, Totals
 
 
 class Command(BaseCommand):
@@ -54,6 +55,7 @@ class Command(BaseCommand):
                     municipality=line['municipality'],
                     municipality_code=line['municipality_code'],
                 )
+
             if location.department != line['department']:
                 print("WARNING: department name mismatch (%s, %s)" % (location.department, line['department']))
 
@@ -68,6 +70,24 @@ class Command(BaseCommand):
                 value_mid=line['value_mid'],
                 value_high=line['value_high'],
             )
+
+            try:
+                total_obj = Totals.objects.get(data_date=line['date'].split(" ")[0], simulation=sim.id,
+                                               date_output_generated=sim.date_output_generated)
+
+                total_obj.total_low += float(line['value_low'])
+                total_obj.total_mid += float(line['value_mid'])
+                total_obj.total_high += float(line['value_high'])
+                total_obj.save()
+            except ObjectDoesNotExist:
+                total = Totals.objects.create(
+                    data_date=line['date'].split(" ")[0],
+                    simulation=sim,
+                    total_low=line['value_low'],
+                    total_mid=line['value_mid'],
+                    total_high=line['value_high'],
+                    date_output_generated=sim.date_output_generated
+                )
 
         sim.is_uploaded = True
         sim.save()
