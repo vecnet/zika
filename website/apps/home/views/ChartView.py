@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.base import TemplateView
 from django.db.models import Sum
 
-from website.apps.home.models import Location, Data, Simulation
+from website.apps.home.models import Location, Data, Simulation, Totals
 from website.utils.time import datetime_to_unix_timestamp_notz
 
 
@@ -65,17 +65,11 @@ class CountryTotalChartView(TemplateView):
 
     def get_context_data(self, simulation_id, **kwargs):
         simulation = get_object_or_404(Simulation, id=simulation_id)
-        data = Data.objects.filter(simulation=simulation)
-        historical = Data.objects.filter(simulation__historical=1)
+        totals_data = Totals.objects.filter(simulation=simulation)
+        historical_totals_data = Totals.objects.filter(simulation__historical=1)
 
-        totals = sum_cases_by_date(simulation.id, data)
-        historical_totals = sum_historical_data(historical)
-
-        # Convert each date in the historical data set to milliseconds
-        for h in historical:
-            hist_date_time = datetime.datetime.combine(h.date, datetime.datetime.min.time())
-            ms_hist_date = datetime_to_unix_timestamp_notz(hist_date_time) * 1000
-            h.date = ms_hist_date
+        data_dict = format_totals_by_date(totals_data)
+        historical_data = format_historical_totals(historical_totals_data)
 
         # Convert the date the simulation was generated to milliseconds
         sim_gen_date_ms = datetime_to_unix_timestamp_notz(
@@ -83,38 +77,29 @@ class CountryTotalChartView(TemplateView):
 
         context = {
             "simulation": simulation,
-            "simulation_mids": totals['mid_totals'],
-            "simulation_range": totals['range_totals'],
-            "historical_data": historical_totals,
+            "simulation_mids": data_dict['mid_totals'],
+            "simulation_range": data_dict['range_totals'],
+            "historical_data": historical_data,
             "sim_generated_date_ms": sim_gen_date_ms
         }
 
         return context
 
 
-def sum_cases_by_date(simulation_id, simulation_data):
-    date_list = []
-    # Get a list of all the dates in the simulation
-    for data_point in simulation_data:
-        date_list.append(data_point.date)
-
-    # List of unique dates
-    date_list = list(set(date_list))
-    date_list.sort()
+def format_totals_by_date(totals_data):
+    # Sort data list by date
+    sorted_totals_data = sorted(totals_data, key=lambda total: total.data_date)
 
     all_value_mid_totals = []
     all_value_range_totals = []
 
-    for d in date_list:
-        sums = Data.objects.filter(simulation_id=simulation_id, date=d).aggregate(total_low_range=Sum('value_low'),
-                                                                                  total_mid_point=Sum('value_mid'),
-                                                                                  total_high_range=Sum('value_high'))
-        date_in_ms = datetime_to_unix_timestamp_notz(datetime.datetime.combine(d, datetime.datetime.min.time())) * 1000
+    for total_obj in sorted_totals_data:
+        date_in_ms = datetime_to_unix_timestamp_notz(datetime.datetime.combine(total_obj.data_date, datetime.datetime.min.time())) * 1000
 
-        value_mid_total_for_date = [date_in_ms, sums['total_mid_point']]
-        value_range_total_for_date = [date_in_ms, sums['total_low_range'], sums['total_high_range']]
-
+        value_mid_total_for_date = [date_in_ms, total_obj.total_mid]
         all_value_mid_totals.append(value_mid_total_for_date)
+
+        value_range_total_for_date = [date_in_ms, total_obj.total_low, total_obj.total_high]
         all_value_range_totals.append(value_range_total_for_date)
 
     data_dict = {
@@ -125,32 +110,19 @@ def sum_cases_by_date(simulation_id, simulation_data):
     return data_dict
 
 
-def sum_historical_data(historical_data):
-    date_list = []
-    # Get a list of all the dates in the simulation
-    for data_point in historical_data:
-        date_list.append(data_point.date)
+def format_historical_totals(historical_totals_data):
+    # Sort data list by date
+    sorted_totals_data = sorted(historical_totals_data, key=lambda total: total.data_date)
 
-    # List of unique dates
-    date_list = list(set(date_list))
-    date_list.sort()
-
-    # List to store totals for each unique date
     all_value_mid_totals = []
 
     # For each unique date, get the sum for each municipality on that date
-    for d in date_list:
-        sums = Data.objects.filter(simulation__historical=1, date=d).aggregate(total_mid_point=Sum('value_mid'))
+    for total_obj in sorted_totals_data:
+        date_in_ms = datetime_to_unix_timestamp_notz(
+            datetime.datetime.combine(total_obj.data_date, datetime.datetime.min.time())) * 1000
 
-        # Convert dates to milliseconds
-        date_in_ms = datetime_to_unix_timestamp_notz(datetime.datetime.combine(d, datetime.datetime.min.time())) * 1000
-
-        # List entry will be date in milliseconds and the sum of all value_mid
-        value_mid_total_for_date = [date_in_ms, sums['total_mid_point']]
-
+        value_mid_total_for_date = [date_in_ms, total_obj.total_mid]
         all_value_mid_totals.append(value_mid_total_for_date)
 
-    historical_data_totals = all_value_mid_totals
-
-    return historical_data_totals
+    return all_value_mid_totals
 
