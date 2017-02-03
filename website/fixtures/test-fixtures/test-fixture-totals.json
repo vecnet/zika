@@ -1,0 +1,26 @@
+[
+{
+  "model": "home.totals",
+  "pk": 3,
+  "fields": {
+    "data_date": "2015-08-13",
+    "total_low": 286.772913324014,
+    "total_mid": 2979.09252602774,
+    "total_high": 7102.14114399089,
+    "simulation": 2,
+    "date_output_generated": "2016-06-02"
+  }
+},
+{
+  "model": "home.totals",
+  "pk": 3,
+  "fields": {
+    "data_date": "2015-08-13",
+    "total_low": 286.772913324014,
+    "total_mid": 2979.09252602774,
+    "total_high": 7102.14114399089,
+    "simulation": 1,
+    "date_output_generated": "2016-06-02"
+  }
+}
+]

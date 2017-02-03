@@ -1,8 +1,8 @@
 # FUNCTIONS TO TEST
 from django.test import TestCase
 
-from website.apps.home.models import Data
-from website.apps.home.views.ChartView import sum_cases_by_date
+from website.apps.home.models import Totals
+from website.apps.home.views.ChartView import format_totals_by_date, format_historical_totals
 
 
 class Utils(TestCase):
@@ -10,25 +10,24 @@ class Utils(TestCase):
     fixtures = ['test-fixtures/test-fixture-locations.json',
                 'test-fixtures/test-fixture-simulations.json',
                 'test-fixtures/test-fixture-simulation-model.json',
-                'test-fixtures/test-fixture-data-sample-with-historical.json']
+                'test-fixtures/test-fixture-totals.json']
 
 
     # Test aggregating data points returns expected values
-    def test_sum_cases_by_date(self):
+    def test_format_totals_by_date(self):
         sim_id = 2
-        sim_data = Data.objects.filter(simulation_id=sim_id)
+        sim_data = Totals.objects.filter(simulation_id=sim_id)
 
-        data_dict = sum_cases_by_date(sim_id, sim_data)
+        data_dict = format_totals_by_date(sim_data)
 
-        self.assertEqual(data_dict['mid_totals'], [[1438819200000.0, 7.149786503589542]])
-        self.assertEqual(data_dict['range_totals'], [[1438819200000.0, 0.8077659017070163, 27.17384548025155]])
+        self.assertEqual(data_dict['mid_totals'], [[1438819200000.0, 2979.09252602774]])
+        self.assertEqual(data_dict['range_totals'], [[1438819200000.0, 286.772913324014, 7102.14114399089]])
 
     # Test that aggregating historical data points returns expected values
     def test_sum_historical_data(self):
         sim_id = 1
-        sim_data = Data.objects.filter(simulation_id=sim_id)
+        sim_data = Totals.objects.filter(simulation_id=sim_id, simulation__is_historical=True)
 
-        data_dict = sum_cases_by_date(sim_id, sim_data)
+        data = format_historical_totals(sim_data)
 
-        self.assertEqual(data_dict['mid_totals'], [[1438819200000.0, 4.0]])
-        self.assertEqual(data_dict['range_totals'], [[1438819200000.0, 4.0, 10.37387371211298]])
+        self.assertEqual(data, [[1438819200000.0, 2979.09252602774]])
