@@ -7,19 +7,43 @@
     "total_low": 286.772913324014,
     "total_mid": 2979.09252602774,
     "total_high": 7102.14114399089,
+    "simulation": 1,
+    "date_output_generated": "2016-06-02"
+  }
+},
+{
+  "model": "home.totals",
+  "pk": 4,
+  "fields": {
+    "data_date": "2015-08-20",
+    "total_low": 276.106981186517,
+    "total_mid": 3135.96808488268,
+    "total_high": 7001.27887646723,
     "simulation": 2,
     "date_output_generated": "2016-06-02"
   }
 },
 {
   "model": "home.totals",
-  "pk": 3,
+  "pk": 5,
   "fields": {
-    "data_date": "2015-08-13",
-    "total_low": 286.772913324014,
-    "total_mid": 2979.09252602774,
-    "total_high": 7102.14114399089,
-    "simulation": 1,
+    "data_date": "2015-08-27",
+    "total_low": 283.597569014026,
+    "total_mid": 3177.3048931069,
+    "total_high": 7028.99098585279,
+    "simulation": 2,
+    "date_output_generated": "2016-06-02"
+  }
+},
+{
+  "model": "home.totals",
+  "pk": 6,
+  "fields": {
+    "data_date": "2015-09-03",
+    "total_low": 299.543765159763,
+    "total_mid": 3155.27605852072,
+    "total_high": 7129.35462907125,
+    "simulation": 2,
     "date_output_generated": "2016-06-02"
   }
 }

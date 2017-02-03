@@ -9,7 +9,8 @@ class Home(TestCase):
     fixtures = ['test-fixtures/test-fixture-sim1-aug6-data_shortened.json',
                 'test-fixtures/test-fixture-locations.json',
                 'test-fixtures/test-fixture-simulations.json',
-                'test-fixtures/test-fixture-simulation-model.json']
+                'test-fixtures/test-fixture-simulation-model.json',
+                'test-fixtures/test-fixture-totals.json']
 
     def setUp(self):
         self.client = Client()
@@ -95,30 +96,6 @@ class Home(TestCase):
         self.assertEqual(response.context['historical_list'][0]['simulation_name'], 'historical data cases combo')
         self.assertEqual(response.context['historical_list'][0]['simulation_id'], '1')
 
-    # def test_upload_view(self):
-    #     url = reverse(
-    #         "simulation.upload",
-    #     )
-    #     response = self.client.get(url)
-    #
-    #     self.assertEqual(response.status_code, 200)
-
-    # def test_upload_view_post(self):
-    #     url = reverse(
-    #         "simulation.upload",
-    #     )
-    #     response = self.client.post(
-    #         url,
-    #         data={
-    #             'name': 'test',
-    #             'output_file': io.StringIO("put_generate_date,value_mid,value_high,disease,model_name,"
-    #                                        "department,municipality_code,municipality,department_code,"
-    #                                        "date,value_low,id,population")
-    #         }
-    #     )
-    #
-    #     self.assertEqual(response.status_code, 302)
-
     def test_country_total_chart_view(self):
         sim_id = 2
 
@@ -130,8 +107,12 @@ class Home(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['simulation'].id, 2)
-        self.assertEqual(response.context['simulation_mids'], [[1438819200000.0, 4.0]])
-        self.assertEqual(response.context['simulation_range'], [[1438819200000.0, 4.0, 10.37387371211298]])
+        self.assertEqual(response.context['simulation_mids'], [[1440028800000.0, 3135.96808488268],
+                                                               [1440633600000.0, 3177.3048931069],
+                                                               [1441238400000.0, 3155.27605852072]])
+        self.assertEqual(response.context['simulation_range'], [[1440028800000.0, 276.106981186517, 7001.27887646723],
+                                                                [1440633600000.0, 283.597569014026, 7028.99098585279],
+                                                                [1441238400000.0, 299.543765159763, 7129.35462907125]])
         self.assertEqual(response.context['sim_generated_date_ms'], 1464825600000.0)
 
     def test_chart_view(self):
