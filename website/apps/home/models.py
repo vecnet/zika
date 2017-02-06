@@ -97,3 +97,17 @@ class Data(models.Model):
 
     def __str__(self):
         return "%s" % self.value_mid
+
+
+class Totals(models.Model):
+    """ Totals for estimates by date """
+    data_date = models.DateField(null=False)
+    total_low = models.FloatField(null=False)
+    total_mid = models.FloatField(null=True, blank=True)
+    total_high = models.FloatField(null=True, blank=True)
+    simulation = models.ForeignKey(Simulation, related_name="totals_data")
+    date_output_generated = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return "Sim ID: %s Date: %s, mid: %s  range: [ %s, %s]" % (self.simulation.id, self.data_date, self.total_mid,
+                                                                   self.total_low, self.total_high)
