@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+<head>
+    {% block extra_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+    {% endblock extra_css %}
+    {% block extra_js %}
+        {#        <script type="text/javascript" src="/static/examples/d3.v3.js"></script>#}
+        {#        <script type="text/javascript" src="{% static 'js/map.js' %}"></script>#}
+        <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    {% endblock extra_js %}
+</head>
+
+{% block main_content %}
+    <body>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-10 center-block" style="text-align: center">
+                <label for="date-generated-btn-group">Simulation generated on:</label><br>
+                <div class="btn-group" role="group" aria-label="..." id="date-generated-btn-group">
+
+                    <button id="prevSimBtn" type="button" class="btn btn-default" data-toggle="tooltip"
+                            data-placement="bottom" title="Older simulation"
+                            onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 0)"
+                            {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    </button>
+
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">{{ current_sim.date_output_generated }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for sim in all_sim_with_model %}
+                                <li>
+                                    {% if municipality_code %}
+                                        <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id municipality_code=municipality_code %}">{{ sim.date_output_generated }}</a>
+                                    {% endif %}
+                                    {% if not municipality_code %}
+                                        <a href="{% url 'home.mapview' model_id=sim.sim_model sim_id=sim.id %}">{{ sim.date_output_generated }}</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <button id="nextSimBtn" type="button" class="btn btn-default" data-toggle="tooltip"
+                            data-placement="top" title="Newer simulation"
+                            onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 1)"
+                            {% if current_index == 0 %} disabled {% endif %}>
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-10">
+        <div class="row" style="padding-top:50px">
+            <div class="col-md-5">
+                <div id="map" style="width: 400px; height: 500px; padding-top:20px"></div>
+            </div> <!--width="55%" height="600" -->
+            <div class="col-md-5">
+                <iframe id="iframe2" style="width: 550px; height: 600px;" frameborder="none"
+                        src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ iframe_src }}">{{ request }}</iframe>
+            </div>
+        </div>
+    </div>
+    </body>
+
+    <script type="text/javascript" src="{% static '/examples/col_adm3.js' %}"></script>
+
+    <script type="text/javascript">
+
+        var map = L.map('map').setView([4.214943, -73.256836], 5);
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.light'
+        }).addTo(map);
+
+        // get color depending on simulated cases (value_mid)
+        function getColor(d) {
+            return d > 20.0 ? '#023858' :
+                    d > 10.0 ? '#045a8d' :
+                            d > 1.0 ? '#0570b0' :
+                                    d > 0.75 ? '#3690c0' :
+                                            d > 0.5 ? '#74a9cf' :
+                                                    d > 0.25 ? '#a6bddb' :
+                                                            d > 0 ? '#d0d1e6' :
+                                                                    '#ece7f2';
+        }
+
+        function style(feature) {
+            var mapData = {{ map_data|safe}};
+            if (feature.properties.ID_ESPACIA.length == 4) {
+                feature.properties.ID_ESPACIA = '0' + feature.properties.ID_ESPACIA.toString();
+            }
+            else {
+                feature.properties.ID_ESPACIA = feature.properties.ID_ESPACIA.toString()
+            }
+
+            var color_value = 0;
+            try {
+                color_value = mapData[feature.properties.ID_ESPACIA]['value_mid'];
+            } catch (err) {
+            }
+            return {
+                fillColor: getColor(color_value),
+                weight: 2,
+                opacity: 1,
+                color: 'gray',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+
+        function onEachFeature(feature, layer) {
+            var popupContent = "<p>" + feature.properties.NOM_DEPART + " " +
+                    feature.properties.NOM_MUNICI + "</p>";
+
+            if (feature.properties && feature.properties.popupContent) {
+                popupContent += feature.properties.popupContent;
+            }
+
+            layer.bindPopup(popupContent);
+        }
+
+        var geojson = L.geoJson(colombiaData, {
+            onEachFeature: onEachFeature,
+            style: style
+        }).addTo(map);
+
+        geojson.on('click', function(e) {
+            alert(e['layer']['feature']['properties']['ID_ESPACIA']);
+            var segments = window.location.pathname.toString().split("/");
+            if(segments[segments.length - 2].match(/\d{4,5}/g)){
+                segments[segments.length - 2] = e['layer']['feature']['properties']['ID_ESPACIA'].toString();
+                window.location = segments.join("/");
+            } else {
+                window.location = e['layer']['feature']['properties']['ID_ESPACIA'].toString() + "/";
+            }
+        });
+
+    </script>
+{% endblock main_content %}

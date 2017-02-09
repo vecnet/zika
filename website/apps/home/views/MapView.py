@@ -1,6 +1,7 @@
 import csv
 import io
-
+import json
+from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
@@ -10,7 +11,7 @@ from website.apps.home.models import Data, Simulation
 
 
 class MapView(TemplateView):
-    template_name = "home/map.html"
+    template_name = "home/map_leaflet.html"
 
     def get_context_data(self, **kwargs):
 
@@ -63,6 +64,17 @@ class MapView(TemplateView):
         else:
             iframe_src += 'total/'
 
+        sim_data = Data.objects.filter(simulation_id=sim_id,
+                                       date=current_simulation.date_output_generated).values('id',
+                                                                                             'location__municipality_code',
+                                                                                             'value_mid')
+
+        # Create dictionary with municipality code as key. municipality_code == ID_ESPACIA
+        map_data_dict = {}
+        for item in sim_data:
+            key = item["location__municipality_code"]
+            map_data_dict[key] = item
+
         context = {
             "date_arg": date_arg,
             "all_sim_with_model": all_sim_with_model,  # allows us to use datetime objects
@@ -72,7 +84,7 @@ class MapView(TemplateView):
             "length_all_sim_with_model_list": len(all_sim_list)-1,
             "municipality_code": municipality_code,
             "iframe_src": iframe_src,
-            'generatefilepath': passjspath
+            'map_data': map_data_dict
         }
 
         return context
