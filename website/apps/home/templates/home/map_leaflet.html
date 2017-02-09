@@ -138,7 +138,6 @@
         }).addTo(map);
 
         geojson.on('click', function(e) {
-            alert(e['layer']['feature']['properties']['ID_ESPACIA']);
             var segments = window.location.pathname.toString().split("/");
             if(segments[segments.length - 2].match(/\d{4,5}/g)){
                 segments[segments.length - 2] = e['layer']['feature']['properties']['ID_ESPACIA'].toString();
