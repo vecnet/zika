@@ -121,19 +121,7 @@
             };
         }
 
-        function onEachFeature(feature, layer) {
-            var popupContent = "<p>" + feature.properties.NOM_DEPART + " " +
-                    feature.properties.NOM_MUNICI + "</p>";
-
-            if (feature.properties && feature.properties.popupContent) {
-                popupContent += feature.properties.popupContent;
-            }
-
-            layer.bindPopup(popupContent);
-        }
-
         var geojson = L.geoJson(colombiaData, {
-            onEachFeature: onEachFeature,
             style: style
         }).addTo(map);
 
@@ -145,6 +133,14 @@
             } else {
                 window.location = e['layer']['feature']['properties']['ID_ESPACIA'].toString() + "/";
             }
+        });
+
+        geojson.on('mouseover', function(e) {
+          //open popup;
+          var popup = L.popup()
+           .setLatLng(e.latlng)
+           .setContent(e['layer']['feature']['properties']['NOM_DEPART'] + ' ' + e['layer']['feature']['properties']['NOM_MUNICI'])
+           .openOn(map);
         });
 
     </script>
