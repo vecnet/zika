@@ -10,8 +10,10 @@
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from subprocess import Popen, PIPE
+from subprocess import Popen
 
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.views.generic.base import TemplateView
@@ -19,8 +21,14 @@ from django.views.generic.base import TemplateView
 from website.apps.home.models import Simulation
 
 
-class UploadView(TemplateView):
+class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = "../templates/simulation/upload.html"
+
+    def test_func(self):
+        if not self.request.user.is_superuser:
+            raise PermissionDenied
+        else:
+            return True
 
     def post(self, request):
         if request.method == 'POST':
