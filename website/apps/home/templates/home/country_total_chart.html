@@ -41,7 +41,11 @@
                     borderWidth: 0
                 },
                 navigator: {
-                    enabled: true
+                    enabled: true,
+                    series: {
+                        color: '#434348',
+                        lineWidth: 2
+                    }
                 },
                 series: [{
                     name: 'Cases',
@@ -49,7 +53,7 @@
                         {% for value in simulation_mids %}{{ value }}{% if not forloop.last %}, {% endif %} {% endfor %},
                     ],
                     zIndex: 2,
-                    showInNavigator: true
+                    showInNavigator: false
                 }, {
                     name: 'Range',
                     data: [
@@ -64,10 +68,11 @@
                 }, {
                     name: 'Historical Cases',
                     data: [
-                        {#                {% for value in historical_data %} [{{ value.date }}, {{ value.value_mid }}] {% if not forloop.last %},{% endif %} {% endfor %}#}
                         {% for value in historical_data %} {{ value }} {% if not forloop.last %},{% endif %} {% endfor %}
                     ],
-                    zIndex: 1
+                    zIndex: 1,
+                    showInNavigator: true,
+                    color: '#434348'
                 }]
             })
         });

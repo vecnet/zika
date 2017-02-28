@@ -27,7 +27,7 @@ def calculate_totals(apps, schema_editor):
         # For each date in the simulation data, see if a total exists for that simulation and date in the Totals
         for d in date_list:
             try:
-                simTot = SimulationTotals.objects.filter(simulation=sim.id, data_date=d)
+                simTot = SimulationTotals.objects.get(simulation=sim.id, data_date=d)
             except ObjectDoesNotExist:
                 # If the simulation does not exist in the totals table, we need to calculate the totals
                 sums = SimulationData.objects.filter(simulation_id=sim.id, date=d).aggregate(
