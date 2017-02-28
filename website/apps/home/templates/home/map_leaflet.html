@@ -137,7 +137,7 @@
 
         geojson.on('mouseover', function(e) {
           //open popup;
-          var popup = L.popup()
+          var popup = L.popup({autoPan: false})
            .setLatLng(e.latlng)
            .setContent(e['layer']['feature']['properties']['NOM_DEPART'] + ' ' + e['layer']['feature']['properties']['NOM_MUNICI'])
            .openOn(map);
