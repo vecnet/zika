@@ -1,3 +1,5 @@
+from django.core.exceptions import ImproperlyConfigured
+
 from .base import *
 
 MANAGERS = (('Alex', 'avyushko@nd.edu'), )
@@ -117,8 +119,16 @@ try:
 except ImportError:
     pass
 
+try:
+    # Ignore PyCharm error below if you are using website.settings.dev
+    PYTHON_EXECUTABLE
+except NameError:
+    # Throw an exception if PYTHON_EXECUTABLE is not defined
+    raise ImproperlyConfigured("PYTHON_EXECUTABLE option must be defined in settings_local in production environment")
+
 # SECRET_KEY must be defined in settings_local on production environment
 # Example:
 # SECRET_KEY = 'z5azf=qbb%lmzd^xf9#g5bqtv30e%12P!t(&!0hkpzp0jc8q5$'
 
-# DATABASES must be defined in settings_local on production enviroment
+# DATABASES must be defined in settings_local in production environment
+# PYTHON_EXECUTABLE must be defined in settings_local in production environment

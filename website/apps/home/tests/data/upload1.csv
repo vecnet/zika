@@ -1,0 +1,2 @@
+name,output_generate_date,value_mid,value_high,disease,model_name,department,municipality_code,municipality,department_code,date,value_low,id,population
+suspected cases,2016-06-02,2.0,3.0,ZVD,test_model,ANTIOQUIA,05147,CAREPA,05,2015-08-13,1.0,9614fdc3-060a-4505-a67a-e1ff456e9a48,all
