@@ -109,6 +109,7 @@
             {% if user.is_superuser %}
                 <li {% if request.resolver_match.url_name == 'simulation.upload'%}class="active" {% endif %}><a href="{% url 'simulation.upload' %}">{% bootstrap_icon 'upload' %} Upload Simulation</a></li>
             {% endif %}
+            <li><a href="/admin/">{% bootstrap_icon 'user' %} Admin</a></li>
             <li {% if request.resolver_match.url_name == 'home.display_historical'%}class="active" {% endif %}><a href="{% url 'home.display_historical' %}">{% bootstrap_icon 'th-list' %} View Historical Data</a></li>
             <li {% if request.resolver_match.url_name == 'about'%}class="active" {% endif %}><a href="{% url 'about'%}">{% bootstrap_icon 'question-sign' %} About</a></li>
         </ul>

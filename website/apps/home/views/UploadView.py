@@ -38,7 +38,7 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         try:
             data_file = request.FILES['output_file']
             sim_name = request.POST['name']
-            is_historical = request.POST['historical']
+            is_historical = request.POST.get('historical', "")
             is_test = request.POST.get('is_test', None)
         except KeyError as e:
             return HttpResponseBadRequest("Missing parameter: %s" % e)

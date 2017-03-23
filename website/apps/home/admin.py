@@ -12,9 +12,10 @@
 
 from django.contrib import admin
 
-from website.apps.home.models import Location, Simulation, Data, SimulationModel
+from website.apps.home.models import Location, Simulation, Data, SimulationModel, Totals
 
 admin.site.register(Location)
 admin.site.register(Simulation)
 admin.site.register(Data)
+admin.site.register(Totals)
 admin.site.register(SimulationModel)

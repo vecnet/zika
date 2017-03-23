@@ -190,15 +190,13 @@ class Home(TestCase):
         self.assertIn("name", str(response.content))
 
     def test_upload_view_post_no_historical(self):
+        # If "Historical" checkbox is not selected, no "historical" parameter is sent by browser
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
             data={'name': 'test', 'output_file': io.StringIO("")}
         )
-        # Missing parameter: "'name'"
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("Missing parameter", str(response.content))
-        self.assertIn("historical", str(response.content))
+        self.assertEqual(response.status_code, 302)
 
     def test_upload_view_post_success_historical(self):
         simulation_count = Simulation.objects.count()

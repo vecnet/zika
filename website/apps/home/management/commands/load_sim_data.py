@@ -92,4 +92,4 @@ class Command(BaseCommand):
 
         sim.is_uploaded = True
         sim.save()
-
+        print("Upload complete")
