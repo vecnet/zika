@@ -42,8 +42,10 @@ SECURE_BROWSER_XSS_FILTER = True
 # VecNet Single Sign On integration
 LOGIN_URL = '/sso/'
 LOGOUT_URL="https://www.vecnet.org/index.php/log-out"
-TKT_AUTH_LOGIN_URL = 'https://www.vecnet.org/index.php/sso-login'
-TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
+# TKT_AUTH_LOGIN_URL = 'https://www.vecnet.org/index.php/sso-login'
+# TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
+LOGIN_URL = "/auth/login/"
+LOGOUT_URL = "/auth/logout/?next=/"
 
 # MIDDLEWARE_CLASSES += ('django_auth_pubtkt.DjangoAuthPubtkt',)
 
