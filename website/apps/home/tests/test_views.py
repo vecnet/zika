@@ -1,8 +1,12 @@
 import io
 from datetime import date
 
+import time
+from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls.base import reverse
+
+from website.apps.home.models import Simulation
 
 
 class Home(TestCase):
@@ -14,6 +18,9 @@ class Home(TestCase):
 
     def setUp(self):
         self.client = Client()
+        self.admin = User.objects.create(username="admin", is_superuser=True, is_staff=True)
+        self.admin.set_password("1")
+        self.admin.save()
 
     def test_mapview_pass(self):
         model_id = 2
@@ -133,3 +140,96 @@ class Home(TestCase):
         self.assertEqual(response.context['location'].municipality_code, '99524')
         self.assertEqual(response.context['location'].municipality, "LA PRIMAVERA")
         self.assertEqual(response.context['sim_generated_date_ms'], 1464825600000.0)
+
+    def test_upload_view_get_anonymous(self):
+        response = self.client.post(reverse('simulation.upload'))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
+    def test_upload_view_post_anonymous(self):
+        response = self.client.post(reverse('simulation.upload'), data={})
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('login'), response.url)
+
+    def test_upload_view_get_not_superuser(self):
+        user = User.objects.create(username='user')
+        user.set_password('1')
+        user.save()
+        self.client.login(username='user', password='1')
+        response = self.client.get(reverse('simulation.upload'))
+        self.assertEqual(response.status_code, 403)
+
+    def test_upload_view_post_not_superuser(self):
+        user = User.objects.create(username='user')
+        user.set_password('1')
+        user.save()
+        self.client.login(username='user', password='1')
+        response = self.client.post(reverse('simulation.upload'), data={})
+        self.assertEqual(response.status_code, 403)
+
+    def test_upload_view_get_success(self):
+        self.client.login(username='admin', password='1')
+        response = self.client.get(reverse('simulation.upload'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('simulationNameInput', str(response.content))
+
+    def test_upload_view_post_no_output_file(self):
+        self.client.login(username='admin', password='1')
+        response = self.client.post(reverse('simulation.upload'), data={'name': 'test'})
+        # Missing parameter: "'output_file'"
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("Missing parameter", str(response.content))
+        self.assertIn("output_file", str(response.content))
+
+    def test_upload_view_post_no_name(self):
+        self.client.login(username='admin', password='1')
+        response = self.client.post(reverse('simulation.upload'), data={'output_file': io.StringIO("")})
+        # Missing parameter: "'name'"
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("Missing parameter", str(response.content))
+        self.assertIn("name", str(response.content))
+
+    def test_upload_view_post_no_historical(self):
+        self.client.login(username='admin', password='1')
+        response = self.client.post(
+            reverse('simulation.upload'),
+            data={'name': 'test', 'output_file': io.StringIO("")}
+        )
+        # Missing parameter: "'name'"
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("Missing parameter", str(response.content))
+        self.assertIn("historical", str(response.content))
+
+    def test_upload_view_post_success_historical(self):
+        simulation_count = Simulation.objects.count()
+        self.client.login(username='admin', password='1')
+        response = self.client.post(
+            reverse('simulation.upload'),
+            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'on', 'is_test': 'yes'}
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('home.display_historical'))
+        time.sleep(0.1)
+        self.assertEqual(Simulation.objects.count(), simulation_count + 1)
+        simulation = Simulation.objects.get(name='test')
+        self.assertEqual(simulation.historical, True)
+        self.assertEqual(simulation.is_uploaded, False)
+        # Note due to "transactional" nature of Django unit tests, it is impossible to test
+        # data loading code here
+
+    def test_upload_view_post_success_not_historical(self):
+        simulation_count = Simulation.objects.count()
+        self.client.login(username='admin', password='1')
+        response = self.client.post(
+            reverse('simulation.upload'),
+            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'no', 'is_test': 'yes'}
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('home.display_simulations'))
+        time.sleep(0.1)
+        self.assertEqual(Simulation.objects.count(), simulation_count + 1)
+        simulation = Simulation.objects.get(name='test')
+        self.assertEqual(simulation.historical, False)
+        self.assertEqual(simulation.is_uploaded, False)
+        # Note due to "transactional" nature of Django unit tests, it is impossible to test
+        # data loading code here

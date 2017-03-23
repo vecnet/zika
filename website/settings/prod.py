@@ -1,3 +1,5 @@
+from django.core.exceptions import ImproperlyConfigured
+
 from .base import *
 
 MANAGERS = (('Alex', 'avyushko@nd.edu'), )
@@ -40,12 +42,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 
 # VecNet Single Sign On integration
-LOGIN_URL = '/sso/'
-LOGOUT_URL="https://www.vecnet.org/index.php/log-out"
-# TKT_AUTH_LOGIN_URL = 'https://www.vecnet.org/index.php/sso-login'
-# TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
+# LOGIN_URL = '/sso/'
+# LOGOUT_URL="https://www.vecnet.org/index.php/log-out"
 LOGIN_URL = "/auth/login/"
 LOGOUT_URL = "/auth/logout/?next=/"
+
+TKT_AUTH_LOGIN_URL = 'https://www.vecnet.org/index.php/sso-login'
+TKT_AUTH_PUBLIC_KEY = os.path.join(BASE_DIR, 'apache', 'tkt_pubkey_dsa.pem')
 
 # MIDDLEWARE_CLASSES += ('django_auth_pubtkt.DjangoAuthPubtkt',)
 
@@ -119,8 +122,16 @@ try:
 except ImportError:
     pass
 
+try:
+    # Ignore PyCharm error below if you are using website.settings.dev
+    PYTHON_EXECUTABLE
+except NameError:
+    # Throw an exception if PYTHON_EXECUTABLE is not defined
+    raise ImproperlyConfigured("PYTHON_EXECUTABLE option must be defined in settings_local in production environment")
+
 # SECRET_KEY must be defined in settings_local on production environment
 # Example:
 # SECRET_KEY = 'z5azf=qbb%lmzd^xf9#g5bqtv30e%12P!t(&!0hkpzp0jc8q5$'
 
-# DATABASES must be defined in settings_local on production enviroment
+# DATABASES must be defined in settings_local in production environment
+# PYTHON_EXECUTABLE must be defined in settings_local in production environment

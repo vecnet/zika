@@ -2,11 +2,11 @@
 # All rights reserved
 import csv
 import os
-
 from django.conf import settings
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
-from django.db import transaction
+from django.db.transaction import atomic
 
 from website.apps.home.models import Simulation, Location, Data, SimulationModel, Totals
 
@@ -17,6 +17,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("sim_id", type=int)
 
+    @atomic
     def handle(self, *args, **options):
         """
         Upload data file
