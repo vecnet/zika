@@ -1,7 +1,10 @@
+import sys
 from .base import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o*4s(hs!!yc3ikl2p9$kftik&hj)#q!&7ey!x&rzjfi4=3jo'
+
+PYTHON_EXECUTABLE = sys.executable
 
 try:
     # Optional settings specific to the local system (for example, custom
