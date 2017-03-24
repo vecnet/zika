@@ -82,8 +82,8 @@ class Data(models.Model):
     value_low = models.FloatField(null=False)
     value_mid = models.FloatField(null=True, blank=True)
     value_high = models.FloatField(null=True, blank=True)
-    date = models.DateField(null=False)
-    simulation = models.ForeignKey(Simulation, related_name="data")
+    date = models.DateField(null=False, db_index=True)
+    simulation = models.ForeignKey(Simulation, related_name="data", db_index=True)
     creation_timestamp = models.DateTimeField(auto_now=True)
 
     class Meta:
