@@ -42,7 +42,9 @@ class Command(BaseCommand):
                 model_obj = SimulationModel.objects.get_or_create(model_name=line['model_name'])
                 sim.sim_model_id = model_obj[0].id
 
-            sim.date_output_generated = line['output_generate_date']
+            #  Assuming date is in "YYYY-MM-DD HH:MM:SS" format
+            # However, YYYY-MM-DD works, too
+            sim.date_output_generated = line['output_generate_date'].split(" ")[0]  #
 
             location = Location.objects.filter(
                 department_code=line['department_code'],
