@@ -95,11 +95,11 @@ body { padding: 0 20px;}
 */
 
 /* Link colors - according to VECNet style guide */
-a { color: #999; } /* grey out a's w/o links */
-a:link, a:visited {color: #2c7f8c;} /* #4c8773 -ked */
-a:hover, a:active, a:focus {color: #28605f;}
-/* this keeps a href buttons from getting link colors above */
-a.btn:link, a.btn:visited { color:#333; }
+/*a { color: #999; } !* grey out a's w/o links *!*/
+/*a:link, a:visited {color: #2c7f8c;} !* #4c8773 -ked *!*/
+/*a:hover, a:active, a:focus {color: #28605f;}*/
+/*!* this keeps a href buttons from getting link colors above *!*/
+/*a.btn:link, a.btn:visited { color:#333; }*/
 
 /* breadcrumb - according to VECNet style guide */
 .breadcrumb { border: none; background:transparent; margin-left:0; padding-left:0;}

@@ -12,16 +12,15 @@
 
 from django.conf.urls import url
 
+from website.apps.home.views.BrowseView import BrowseView
 from website.apps.home.views.ChartView import ChartView, CountryTotalChartView
-from website.apps.home.views.DisplayHistoricalView import display_historical
-from website.apps.home.views.DisplaySimulationsView import display_simulations
 from website.apps.home.views.MapView import MapView, csv_for_map_view
 from website.apps.home.views.UploadView import UploadView
 
 urlpatterns = [
     # the list of simulations
-    url(r'^$', display_simulations, name='home.display_simulations'),
-    url(r'^historical/$', display_historical, name='home.display_historical'),
+    url(r'^$', BrowseView.as_view(), name='home.display_simulations'),
+    url(r'^historical/$', BrowseView.as_view(), kwargs={"is_historical":True}, name='home.display_historical'),
 
     # upload simulation/historical data view
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),

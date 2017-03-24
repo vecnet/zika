@@ -8,17 +8,16 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+from django.views.generic.list import ListView
 
-from website.notification import set_notification
-import logging
-logger = logging.getLogger(__name__)
+from website.apps.home.models import Simulation
 
 
-# Keep this view for testing purposes
-def test_http_code_500(request):
-    # View to test
-    # - HTTP 500 handler in production mode (when DEBUG = False)
-    # - Django logging configuration
-    set_notification(request.session, "hello", "alert-info")
-    logger.debug("Raising RuntimeError - just because")
-    raise RuntimeError
+class BrowseView(ListView):
+    """ Browse list of simulations. Using the same template for historical and simulated data """
+    template_name = "home/browse.html"
+
+    def get_queryset(self):
+        if self.kwargs.get("is_historical", False):
+            return Simulation.objects.filter(historical=True)
+        return Simulation.objects.filter(historical=False)

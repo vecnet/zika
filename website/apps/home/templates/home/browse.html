@@ -12,22 +12,23 @@
                         <th>Date Generated</th>
                         <th>Date Uploaded</th>
                         <th>Uploaded?</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sim in simulation_model_list %}
+                    {% for sim in object_list %}
                         <tr>
-                            <td> {{ sim.simulation_id }} </td>
-                            <td class="col-md-3"> {{ sim.simulation_name }}</td>
+                            <td> {{ sim.id }} </td>
+                            <td class="col-md-3"> {{ sim.name }}</td>
                             <td class="col-md-3">
                                 {% if sim.is_uploaded %}
-                                    <a href="{% url 'home.mapview' model_id=sim.simulation_model.id sim_id=sim.simulation_id %}">
-                                        {{ sim.simulation_model }}
+                                    <a href="{% url 'home.mapview' model_id=sim.sim_model.id sim_id=sim.id %}">
+                                        {{ sim.sim_model.model_name }}
                                     </a>
                                 {% else %}{% endif %}
                             </td>
-                            <td class="col-md-3">{{ sim.generated_date }}</td>
-                            <td>{{ sim.create_time }}</td>
+                            <td class="col-md-3">{{ sim.date_output_generated }}</td>
+                            <td class="col-md-3">{{ sim.creation_timestamp }}</td>
                             <td>
                                 {% if sim.is_uploaded %}
                                     Yes
@@ -35,6 +36,12 @@
                                     No
                                 {% endif %}
                             </td>
+                        <td>
+                            {% if user.is_superuser and user.is_staff %}
+                                <a href="{% url 'admin:home_simulation_change' sim.id %}" class="btn btn-success">Edit</a>
+{#                                <a href="{% url 'admin:home_simulation_delete' sim.id %}" class="btn btn-danger">Delete</a>#}
+                            {% endif %}
+                        </td>
                         </tr>
                     {% endfor %}
                 </tbody>

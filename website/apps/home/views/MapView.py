@@ -1,11 +1,20 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of the VecNet Zika modeling interface.
+# For copyright and licensing information about this package, see the
+# NOTICE.txt and LICENSE.txt files in its top-level directory; they are
+# available at https://github.com/vecnet/zika
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License (MPL), version 2.0.  If a copy of the MPL was not distributed
+# with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import csv
+
 import io
-import json
-from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
-from django.db.models import Sum
 
 from website.apps.home.models import Data, Simulation
 
@@ -19,17 +28,17 @@ class MapView(TemplateView):
         model_id = kwargs.get('model_id')
         municipality_code = kwargs.get('municipality_code')
 
-        info = Data.objects.filter(location__municipality_code='05001', simulation_id=sim_id).values('date')
+        data_items = Data.objects.filter(simulation_id=sim_id).values('date').distinct()
 
         date_info = []
 
-        for d in info:
+        for d in data_items:
             date_info.append(str(d['date']))
 
         date_arg = date_info[-1]
 
         # Copied from choropleth_map_view
-        passjspath = reverse('home.csv_for_map', kwargs={"inquery_date": date_arg, "sim_id": sim_id})
+        passjspath = reverse('home.csv_for_map', kwargs={'inquery_date': date_arg, 'sim_id': sim_id})
 
         all_sim_with_model = Simulation.objects.filter(sim_model__id=model_id)\
             .values('id', 'sim_model', 'date_output_generated', 'name')\
@@ -54,20 +63,16 @@ class MapView(TemplateView):
             else:
                 i += 1
 
-        iframe_src = '/home/chart/' + str(current_simulation.id) + '/'
         if municipality_code:
-            if len(municipality_code) != 5:
-                five_digit_mun_code = '0' + str(municipality_code)
-                iframe_src += five_digit_mun_code + '/'
-            else:
-                iframe_src += str(municipality_code) + '/'
+            municipality_code = municipality_code.zfill(5)
+            iframe_src = reverse(
+                'simulation.chart',
+                kwargs={'simulation_id': current_simulation.id, 'municipality_code': municipality_code})
         else:
-            iframe_src += 'total/'
+            iframe_src = reverse('home.countrytotalchart', kwargs={"simulation_id": current_simulation.id})
 
-        sim_data = Data.objects.filter(simulation_id=sim_id,
-                                       date=current_simulation.date_output_generated).values('id',
-                                                                                             'location__municipality_code',
-                                                                                             'value_mid')
+        sim_data = Data.objects.filter(simulation_id=sim_id, date=current_simulation.date_output_generated)\
+            .values('id', 'location__municipality_code', 'value_mid')
 
         # Create dictionary with municipality code as key. municipality_code == ID_ESPACIA
         map_data_dict = {}

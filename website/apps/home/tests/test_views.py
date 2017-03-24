@@ -89,8 +89,7 @@ class Home(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['simulation_model_list'][0]['simulation_name'], 'test data 1')
-        self.assertEqual(response.context['simulation_model_list'][0]['simulation_id'], '2')
+        self.assertEqual(response.context['object_list'][0].name, 'test data 1')
 
     def test_display_historical(self):
 
@@ -100,8 +99,8 @@ class Home(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['historical_list'][0]['simulation_name'], 'historical data cases combo')
-        self.assertEqual(response.context['historical_list'][0]['simulation_id'], '1')
+        self.assertEqual(response.context['object_list'][0].name, 'historical data cases combo')
+        self.assertEqual(response.context['object_list'][0].id, 1)
 
     def test_country_total_chart_view(self):
         sim_id = 2
