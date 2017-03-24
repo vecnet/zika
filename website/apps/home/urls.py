@@ -16,6 +16,7 @@ from website.apps.home.views.BrowseView import BrowseView
 from website.apps.home.views.ChartView import ChartView, CountryTotalChartView
 from website.apps.home.views.MapView import MapView, csv_for_map_view
 from website.apps.home.views.UploadView import UploadView
+from website.apps.home.views.delete_simulation_view import delete_simulation_view
 
 urlpatterns = [
     # the list of simulations
@@ -31,6 +32,9 @@ urlpatterns = [
     # views for the charts (country totals or municipality)
     url(r'^chart/(?P<simulation_id>\d+)/total/$', CountryTotalChartView.as_view(), name='home.countrytotalchart'),
     url(r'^chart/(?P<simulation_id>\d+)/(?P<municipality_code>\d+)/$', ChartView.as_view(), name="simulation.chart"),
+
+    # Permanently delete simulation
+    url(r'^delete/(?P<simulation_id>\d+)/$', delete_simulation_view, name="simulation.delete"),
 
     # views for the map
     url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),

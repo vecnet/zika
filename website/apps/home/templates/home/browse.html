@@ -36,10 +36,10 @@
                                     No
                                 {% endif %}
                             </td>
-                        <td>
+                        <td class="col-md-3">
                             {% if user.is_superuser and user.is_staff %}
                                 <a href="{% url 'admin:home_simulation_change' sim.id %}" class="btn btn-success">Edit</a>
-{#                                <a href="{% url 'admin:home_simulation_delete' sim.id %}" class="btn btn-danger">Delete</a>#}
+                                <a href="{% url 'simulation.delete' simulation_id=sim.id %}" class="btn btn-danger">Delete</a>
                             {% endif %}
                         </td>
                         </tr>
