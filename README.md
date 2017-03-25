@@ -118,6 +118,15 @@ Check wsgi.py and manage.py to see how it works - they are different from defaul
 
 3. Enable VecNet SSO
 
+4. Make sure web server has write access to media and logs directories
+```bash
+sudo chown avyushko:www-data logs
+sudo chmod -R g+rw logs
+sudo chown avyushko:www-data media
+sudo chmod -R g+rw media
+sudo chmod g+rwx media/simulation_files
+```
+
 # Enable VecNet SSO
 
 1. Install django-auth-pubtkt package

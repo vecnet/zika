@@ -1,3 +1,14 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of the VecNet Zika modeling interface.
+# For copyright and licensing information about this package, see the
+# NOTICE.txt and LICENSE.txt files in its top-level directory; they are
+# available at https://github.com/vecnet/zika
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License (MPL), version 2.0.  If a copy of the MPL was not distributed
+# with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import io
 from datetime import date
 
@@ -6,7 +17,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls.base import reverse
 
-from website.apps.home.models import Simulation
+from website.apps.home.models import UploadJob
 
 
 class Home(TestCase):
@@ -198,7 +209,7 @@ class Home(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_upload_view_post_success_historical(self):
-        simulation_count = Simulation.objects.count()
+        upload_jobs_count = UploadJob.objects.count()
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
@@ -207,15 +218,14 @@ class Home(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('home.display_historical'))
         time.sleep(0.1)
-        self.assertEqual(Simulation.objects.count(), simulation_count + 1)
-        simulation = Simulation.objects.get(name='test')
-        self.assertEqual(simulation.historical, True)
-        self.assertEqual(simulation.is_uploaded, False)
+        self.assertEqual(UploadJob.objects.count(), upload_jobs_count + 1)
+        upload_job = UploadJob.objects.get(name='test')
+        self.assertEqual(upload_job.historical, True)
         # Note due to "transactional" nature of Django unit tests, it is impossible to test
         # data loading code here
 
     def test_upload_view_post_success_not_historical(self):
-        simulation_count = Simulation.objects.count()
+        upload_jobs_count = UploadJob.objects.count()
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
@@ -224,9 +234,8 @@ class Home(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('home.display_simulations'))
         time.sleep(0.1)
-        self.assertEqual(Simulation.objects.count(), simulation_count + 1)
-        simulation = Simulation.objects.get(name='test')
-        self.assertEqual(simulation.historical, False)
-        self.assertEqual(simulation.is_uploaded, False)
+        self.assertEqual(UploadJob.objects.count(), upload_jobs_count + 1)
+        upload_job = UploadJob.objects.get(name='test')
+        self.assertEqual(upload_job.historical, False)
         # Note due to "transactional" nature of Django unit tests, it is impossible to test
         # data loading code here
