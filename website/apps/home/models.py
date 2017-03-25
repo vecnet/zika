@@ -19,9 +19,9 @@ class Location(models.Model):
     Represents location in the database
     """
     department = models.TextField(blank=True)
-    department_code = models.TextField(blank=True)
+    department_code = models.TextField(blank=True, db_index=True)
     municipality = models.TextField(blank=True)
-    municipality_code = models.TextField(blank=True)
+    municipality_code = models.TextField(blank=True, db_index=True)
     creation_timestamp = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -101,12 +101,12 @@ class Data(models.Model):
 
 class Totals(models.Model):
     """ Totals for estimates by date """
-    data_date = models.DateField(null=False)
+    data_date = models.DateField(null=False, db_index=True)
     total_low = models.FloatField(null=False)
     total_mid = models.FloatField(null=True, blank=True)
     total_high = models.FloatField(null=True, blank=True)
     simulation = models.ForeignKey(Simulation, related_name="totals_data")
-    date_output_generated = models.DateField(null=True, blank=True)
+    date_output_generated = models.DateField(null=True, blank=True, db_index=True)
 
     def __str__(self):
         return "Sim ID: %s Date: %s, mid: %s  range: [ %s, %s]" % (self.simulation.id, self.data_date, self.total_mid,

@@ -82,6 +82,7 @@ def load_simulation_file(upload_job):
                     is_uploaded=False,
                     created_by=upload_job.created_by,
                 )
+                sim.save()
 
             location = Location.objects.filter(
                 department_code=line['department_code'].strip(),
@@ -101,7 +102,6 @@ def load_simulation_file(upload_job):
 
             if location.municipality != line['municipality']:
                 print("WARNING: municipality name mismatch (%s, %s)" % (location.municipality, line['municipality']))
-            sim.save()
             simulation_set.add(sim)
 
             Data.objects.create(
@@ -131,6 +131,8 @@ def load_simulation_file(upload_job):
                     date_output_generated=sim.date_output_generated
                 )
         for sim in simulation_set:
+            # for data in Data.objects.filter(simulation=sim).distinct('date'):
+            #
             sim.is_uploaded = True
             sim.save()
     except Exception as e:
