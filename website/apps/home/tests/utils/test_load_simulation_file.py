@@ -91,6 +91,12 @@ class LoadSimulationFileTest(TestCase):
         upload_job.data_file.save('data.csv', data_file)
         result, message = load_simulation_file(upload_job)
         self.assertEqual(result, True)
+        upload_job.refresh_from_db()
+
+        self.assertIsNotNone(upload_job.upload_start_timestamp)
+        self.assertEqual(upload_job.status, UploadJob.COMPLETED)
+        self.assertEqual(upload_job.progress, 100)
+
         self.assertEqual(Simulation.objects.count(), 2)
         self.assertEqual(Data.objects.count(), 2)
         simulation1 = Simulation.objects.get(date_output_generated='2016-02-09')

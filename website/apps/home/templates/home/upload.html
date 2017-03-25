@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load bootstrap3 %}
+
 {% block main_content %}
     <div class="container">
         <div class="col-md-10">
@@ -23,14 +25,28 @@
             </form>
         </div>
     <div class="col-md-10">
-        <h3>List of uploads</h3>
+        <h3>List of uploads <a class="btn btn-success" href="">{% bootstrap_icon 'refresh' %} Refresh</a> </h3>
         <table class="table table-hover">
-        <tr><th>Name</th><th>Status</th><th>Error message</th></tr>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Progress</th>
+            <th>Started</th>
+            <th>Error message</th>
+        </tr>
         {% for job in jobs %}
             <tr>
                 <td>{{ job.name }}</td>
                 <td>{{ job.status }}</td>
-                <td>{{ job.last_error_message }}</td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ job.progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ job.progress }}%">
+                            <span>{{ job.progress }}% Complete</span>
+                        </div>
+                    </div>
+                </td>
+                <td>{{ job.upload_start_timestamp|default:'' }}</td>
+                <td>{{ job.last_error_message|default:'' }}</td>
             </tr>
         {% endfor %}
         </table>

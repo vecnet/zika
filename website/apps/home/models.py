@@ -129,6 +129,8 @@ class UploadJob(models.Model):
     progress = models.IntegerField(blank=True, default=0) # Upload progress 0 to 100
     created_by = models.ForeignKey(User)
     creation_timestamp = models.DateTimeField(auto_now=True)
+    # When upload process started
+    upload_start_timestamp = models.DateTimeField(null=True, blank=True)
     pid = models.TextField(blank=True)  # Process ID of the process uploading data
     simulations = models.ManyToManyField(Simulation, related_name='upload_jobs')
     stdout_file = models.FileField(null=True, blank=True, upload_to='output')

@@ -14,6 +14,7 @@ import csv
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.timezone import now
 
 from website.apps.home.models import Location, Data, Simulation, SimulationModel, Totals, UploadJob
 
@@ -32,7 +33,8 @@ def load_simulation_file(upload_job):
     # Reopen in binary mode
     # upload_job.data_file.close()
     upload_job.status = UploadJob.IN_PROGRESS
-    upload_job.save(update_fields=['status'])
+    upload_job.upload_start_timestamp = now()
+    upload_job.save(update_fields=['status', 'upload_start_timestamp'])
     try:
         csvfile = upload_job.data_file
         # Workaround for Bug #13809
@@ -40,13 +42,21 @@ def load_simulation_file(upload_job):
         # It is fixed in Django 1.11, so it will be possible to use upload_job.data_file.open("r")
         # But we are on Django 1.10 yet
         csvfile = upload_job.data_file.storage.open(upload_job.data_file.name, "r")
+        in_memory_csv = []
+        for row in csvfile:
+            in_memory_csv.append(row)
 
-        dictreader = csv.DictReader(csvfile)
+        dictreader = csv.DictReader(in_memory_csv)
 
         line = None
         simulation_set = set()
+        lines_read = 0
 
         for line in dictreader:
+            lines_read += 1
+            if lines_read % 100 == 0:
+                upload_job.progress = int(100 * float(lines_read) / len(in_memory_csv))
+                upload_job.save(update_fields=['progress'])
             if line['output_generate_date'] is None:
                 # Assuming this is an empty line
                 continue
@@ -132,6 +142,7 @@ def load_simulation_file(upload_job):
         return False, msg
 
     upload_job.status = UploadJob.COMPLETED
-    upload_job.save(update_fields=['status'])
+    upload_job.progress = 100
+    upload_job.save(update_fields=['status', 'progress'])
     print('Upload complete')
     return True, ""

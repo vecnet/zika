@@ -34,7 +34,7 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
 
     def get_context_data(self, **kwargs):
-        return {"jobs": UploadJob.objects.all()}
+        return {"jobs": UploadJob.objects.all().order_by("-creation_timestamp")}
 
     def post(self, request):
         try:
