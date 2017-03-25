@@ -19,8 +19,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.conf import settings
-from website.apps.home.models import Simulation
-
+from website.apps.home.models import UploadJob
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +32,9 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             raise PermissionDenied
         else:
             return True
+
+    def get_context_data(self, **kwargs):
+        return {"jobs": UploadJob.objects.all()}
 
     def post(self, request):
         try:
@@ -48,23 +50,24 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         else:
             is_historical = False
 
-        # Create the simulation and save it
-        simulation = Simulation.objects.create(
-            name=sim_name, data_file=data_file, historical=is_historical, is_uploaded=False
+        job = UploadJob.objects.create(
+            name=sim_name, data_file=data_file, historical=is_historical, created_by=request.user
         )
 
         if not is_test:
-            # Skip executing load_sim_data command if executing from Django test client
-            # because all unit tests are executed inside of a transaction and load_sim_data command won't see
+            # Skip executing load_data command if executing from Django test client
+            # because all unit tests are executed inside of a transaction and load_data command won't see
             # simulation we just created and will fail
 
             # Capture output from the management command for debugging purpose
-            outfile = open('logs/load_sim_data_stdout', 'w')
-            errfile = open('logs/load_sim_data_stderr', 'w')
+            outfile = open('logs/load_data_stdout', 'w')
+            errfile = open('logs/load_data_stderr', 'w')
             p = Popen(
-                [settings.PYTHON_EXECUTABLE, 'manage.py', 'load_sim_data', str(simulation.id)],
+                [settings.PYTHON_EXECUTABLE, 'manage.py', 'load_data', str(job.id)],
                 stdout=outfile, stderr=errfile
             )
+            job.pid = p.pid
+            job.save(update_fields=['pid'])
             logger.debug("PID %s started for loading simulation data in background" % p.pid)
 
         # Redirect to appropriate page whether uploading simulation or historical

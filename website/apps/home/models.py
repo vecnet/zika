@@ -111,3 +111,34 @@ class Totals(models.Model):
     def __str__(self):
         return "Sim ID: %s Date: %s, mid: %s  range: [ %s, %s]" % (self.simulation.id, self.data_date, self.total_mid,
                                                                    self.total_low, self.total_high)
+
+
+class UploadJob(models.Model):
+    """ Upload Job holds information for file upload process running in background
+    """
+    NEW = "New"
+    IN_PROGRESS = "In Progress"
+    COMPLETED = "Completed"
+    FAILED = "Failed"
+
+    name = models.TextField(default=None)
+    status = models.TextField(default=NEW)
+    last_error_message = models.TextField(blank=True, default="")
+    data_file = models.FileField(null=True, blank=True, upload_to='simulation_files')
+    historical = models.BooleanField(default=False)
+    progress = models.IntegerField(blank=True, default=0) # Upload progress 0 to 100
+    created_by = models.ForeignKey(User)
+    creation_timestamp = models.DateTimeField(auto_now=True)
+    pid = models.TextField(blank=True)  # Process ID of the process uploading data
+    simulations = models.ManyToManyField(Simulation, related_name='upload_jobs')
+    stdout_file = models.FileField(null=True, blank=True, upload_to='output')
+    stderr_file = models.FileField(null=True, blank=True, upload_to='output')
+
+    def __str__(self):
+        return "%s (%s)" % (self.name, self.status)
+
+    class Meta:
+        db_table = "upload_job"
+        verbose_name = "Upload Job"
+        verbose_name_plural = "Upload Jobs"
+        managed = True  # Django manages the database table's lifecycle.

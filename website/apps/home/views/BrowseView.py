@@ -8,13 +8,14 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License (MPL), version 2.0.  If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from django.views.generic.list import ListView
 
 from website.apps.home.models import Simulation
 
 
 class BrowseView(ListView):
-    """ Browse list of simulations. Using the same template for historical and simulated data """
+    """ List of simulations. Using the same template for historical and simulated data """
     template_name = "home/browse.html"
 
     def get_queryset(self):

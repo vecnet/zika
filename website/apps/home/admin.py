@@ -12,7 +12,8 @@
 
 from django.contrib import admin
 
-from website.apps.home.models import Location, Simulation, Data, SimulationModel, Totals
+from website.apps.home.models import Location, Simulation, Data, SimulationModel, Totals, UploadJob
+
 
 class LocationAdmin(admin.ModelAdmin):
     list_display = ("id", "department", "department_code", "municipality", "municipality_code", "creation_timestamp")
@@ -35,3 +36,4 @@ admin.site.register(Data, DataAdmin)
 
 admin.site.register(Totals)
 admin.site.register(SimulationModel)
+admin.site.register(UploadJob)
