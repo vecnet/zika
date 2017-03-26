@@ -15,6 +15,7 @@ from subprocess import Popen
 
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.views.generic.base import TemplateView
@@ -60,8 +61,18 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             # simulation we just created and will fail
 
             # Capture output from the management command for debugging purpose
-            outfile = open('logs/load_data_stdout', 'w')
-            errfile = open('logs/load_data_stderr', 'w')
+            outfile = ContentFile("")
+            job.stdout_file.save("load_data_stdout_%s.txt" % job.id, outfile)
+            # Reopen file we just created in "w" mode
+            outfile = job.stdout_file.storage.open(job.stdout_file.name, "w")
+            # outfile = open('logs/load_data_stdout', 'w')
+
+            errfile = ContentFile("")
+            job.stderr_file.save("load_data_stderr_%s.txt" % job.id, errfile)
+            # Reopen file we just created in "w" mode
+            errfile = job.stderr_file.storage.open(job.stderr_file.name, "w")
+
+            # errfile = open('logs/load_data_stderr', 'w')
             p = Popen(
                 [settings.PYTHON_EXECUTABLE, 'manage.py', 'load_data', str(job.id)],
                 stdout=outfile, stderr=errfile
