@@ -44,6 +44,8 @@ class Command(BaseCommand):
         # On Windows, signal() can only be called with SIGABRT, SIGFPE, SIGILL, SIGINT, SIGSEGV, or SIGTERM.
         # A ValueError will be raised in any other case.
         signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGABRT, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
         job_id = options['job_id']
         job = UploadJob.objects.get(id=job_id)
         print('Starting data upload, job_id %s' % job_id)
