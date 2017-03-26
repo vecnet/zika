@@ -20,5 +20,5 @@ class BrowseView(ListView):
 
     def get_queryset(self):
         if self.kwargs.get("is_historical", False):
-            return Simulation.objects.filter(historical=True)
-        return Simulation.objects.filter(historical=False)
+            return Simulation.objects.filter(historical=True).order_by("-creation_timestamp")
+        return Simulation.objects.filter(historical=False).order_by("-creation_timestamp")

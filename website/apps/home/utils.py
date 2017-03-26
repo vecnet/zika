@@ -14,6 +14,7 @@ import csv
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import connection
 from django.utils.timezone import now
 
 from website.apps.home.models import Location, Data, Simulation, SimulationModel, Totals, UploadJob
@@ -112,7 +113,8 @@ def load_simulation_file(upload_job):
                 value_mid=line['value_mid'].strip(),
                 value_high=line['value_high'].strip(),
             )
-
+            if connection.queries:
+                print('Data: %s' % connection.queries[-1]['time'])
             try:
                 total_obj = Totals.objects.get(data_date=line['date'].split(" ")[0], simulation=sim.id,
                                                date_output_generated=sim.date_output_generated)
@@ -130,6 +132,8 @@ def load_simulation_file(upload_job):
                     total_high=line['value_high'],
                     date_output_generated=sim.date_output_generated
                 )
+            if connection.queries:
+                print('Totals: %s' % connection.queries[-1]['time'])
         for sim in simulation_set:
             # for data in Data.objects.filter(simulation=sim).distinct('date'):
             #
