@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     # Although it's not required that you use the sites framework, it's strongly encouraged
     'django.contrib.sites',
     'bootstrap3',
+    'rest_framework',
     'website',
     'website.apps.home',
     'analytics'
@@ -165,6 +166,7 @@ LOGGING = {
 
 # The default is 'SAMEORIGIN', but unless there is a good reason for your site to serve other parts
 # of itself in a frame, you should change it to 'DENY'.
-X_FRAME_OPTIONS = "SAMEORIGIN"
+# Chart and map are in a frame, so use 'SAMEORIGIN'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 DATABASE_BACKUP_DIR = MEDIA_ROOT
