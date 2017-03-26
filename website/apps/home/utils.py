@@ -89,6 +89,8 @@ def load_simulation_file(upload_job):
                 department_code=line['department_code'].strip(),
                 municipality_code=line['municipality_code'].strip(),
             ).first()
+            if connection.queries:
+                print('Location SELECT: %s' % connection.queries[-1]['time'])
 
             if not location:
                 location = Location.objects.create(
@@ -119,6 +121,8 @@ def load_simulation_file(upload_job):
                 total_obj = Totals.objects.get(data_date=line['date'].split(" ")[0], simulation=sim.id,
                                                date_output_generated=sim.date_output_generated)
 
+                if connection.queries:
+                    print('Totals SELECT: %s' % connection.queries[-1]['time'])
                 total_obj.total_low += float(line['value_low'])
                 total_obj.total_mid += float(line['value_mid'])
                 total_obj.total_high += float(line['value_high'])
