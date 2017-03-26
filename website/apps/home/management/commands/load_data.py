@@ -20,6 +20,7 @@ job = None
 import signal
 import sys
 def signal_handler(signal, frame):
+    print('SIGTERM handler activated: %s' % signal)
     global job
     job.status = UploadJob.FAILED
     job.last_error_message = 'SIGINT received, upload job terminated'

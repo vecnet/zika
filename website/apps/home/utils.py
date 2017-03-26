@@ -74,7 +74,8 @@ def load_simulation_file(upload_job):
                 logger.error(msg)
                 upload_job.status = UploadJob.FAILED
                 upload_job.last_error_message = msg
-                upload_job.save(update_fields=['status', 'last_error_message'])
+                upload_job.upload_end_timestamp = now()
+                upload_job.save(update_fields=['status', 'last_error_message', 'upload_end_timestamp'])
                 return False, msg
             if not sim:
                 sim = Simulation(
@@ -152,11 +153,13 @@ def load_simulation_file(upload_job):
         msg = '%s: %s' % ((type(e).__name__), str(e))
         upload_job.status = UploadJob.FAILED
         upload_job.last_error_message = msg
-        upload_job.save(update_fields=['status', 'last_error_message'])
+        upload_job.upload_end_timestamp = now()
+        upload_job.save(update_fields=['status', 'last_error_message', 'upload_end_timestamp'])
         return False, msg
 
     upload_job.status = UploadJob.COMPLETED
+    upload_job.upload_end_timestamp = now()
     upload_job.progress = 100
-    upload_job.save(update_fields=['status', 'progress'])
+    upload_job.save(update_fields=['status', 'progress', 'upload_end_timestamp'])
     print('Upload complete')
     return True, ""

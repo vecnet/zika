@@ -75,4 +75,6 @@ docs/build/
 
 logs/*
 !/logs/README.txt
+!/logs/errfile
+!/logs/outfile
 config_local.py

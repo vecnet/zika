@@ -32,12 +32,21 @@
             <th>Status</th>
             <th>Progress</th>
             <th>Started</th>
+            <th>Duration</th>
             <th>Error message</th>
+            <th>PID</th>
         </tr>
         {% for job in jobs %}
             <tr>
                 <td>{{ job.name }}</td>
-                <td>{{ job.status }}</td>
+                <td>
+                    {% if job.status == 'Failed' %}
+                    <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span></span>
+                    {% elif job.status == 'Completed' %}
+                    {% bootstrap_icon 'ok' %}
+                    {% endif %}
+                    {{ job.status }}
+                </td>
                 <td>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="{{ job.progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ job.progress }}%">
@@ -46,7 +55,9 @@
                     </div>
                 </td>
                 <td>{{ job.upload_start_timestamp|default:'' }}</td>
+                <td>{{ job.duration|default:'' }}</td>
                 <td>{{ job.last_error_message|default:'' }}</td>
+                <td>{{ job.pid|default:'' }}</td>
             </tr>
         {% endfor %}
         </table>

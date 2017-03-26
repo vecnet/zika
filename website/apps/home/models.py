@@ -12,6 +12,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.timezone import now
 
 
 class Location(models.Model):
@@ -131,6 +132,7 @@ class UploadJob(models.Model):
     creation_timestamp = models.DateTimeField(auto_now=True)
     # When upload process started
     upload_start_timestamp = models.DateTimeField(null=True, blank=True)
+    upload_end_timestamp = models.DateTimeField(null=True, blank=True)
     pid = models.TextField(blank=True)  # Process ID of the process uploading data
     simulations = models.ManyToManyField(Simulation, related_name='upload_jobs')
     stdout_file = models.FileField(null=True, blank=True, upload_to='output')
@@ -138,6 +140,25 @@ class UploadJob(models.Model):
 
     def __str__(self):
         return "%s (%s)" % (self.name, self.status)
+
+    @property
+    def duration(self):
+        if self.status in (self.COMPLETED, self.FAILED):
+            try:
+                return self.upload_end_timestamp - self.upload_start_timestamp
+            except TypeError:
+                # TypeError: unsupported operand type(s) for -: 'NoneType' and 'NoneType'
+                # TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+                # TypeError: unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
+                return None
+        if self.status == self.IN_PROGRESS:
+            try:
+                return now() - self.upload_start_timestamp
+            except TypeError:
+                # TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+                return None
+        return None
+
 
     class Meta:
         db_table = "upload_job"
