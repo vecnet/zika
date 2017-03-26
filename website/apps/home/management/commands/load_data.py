@@ -15,6 +15,16 @@ from django.core.management.base import BaseCommand
 from website.apps.home.models import UploadJob
 from website.apps.home.utils import load_simulation_file
 
+job = None
+
+import signal
+import sys
+def signal_handler(signal, frame):
+    global job
+    job.status = UploadJob.FAILED
+    job.last_error_message = 'SIGINT received, upload job terminated'
+    job.save(update_fields=['status', 'last_error_message'])
+    sys.exit(0)
 
 class Command(BaseCommand):
     help = 'Upload csv data file and save objects in database'
@@ -29,7 +39,11 @@ class Command(BaseCommand):
         :param options:
         :return:
         """
-
+        global job
+        # Signal handler for SIGINT (set UploadJob status to "FAILED")
+        # On Windows, signal() can only be called with SIGABRT, SIGFPE, SIGILL, SIGINT, SIGSEGV, or SIGTERM.
+        # A ValueError will be raised in any other case.
+        signal.signal(signal.SIGINT, signal_handler)
         job_id = options['job_id']
         job = UploadJob.objects.get(id=job_id)
         print('Starting data upload, job_id %s' % job_id)

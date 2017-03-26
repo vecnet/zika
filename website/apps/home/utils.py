@@ -13,6 +13,7 @@
 import csv
 import logging
 
+import time
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
 from django.utils.timezone import now
@@ -54,6 +55,7 @@ def load_simulation_file(upload_job):
         lines_read = 0
 
         for line in dictreader:
+            start_time = time.time()
             lines_read += 1
             if lines_read % 100 == 0:
                 upload_job.progress = int(100 * float(lines_read) / len(in_memory_csv))
@@ -91,7 +93,7 @@ def load_simulation_file(upload_job):
             ).first()
             if connection.queries:
                 print('Location SELECT: %s' % connection.queries[-1]['time'])
-
+            print("Execution time_: %s" % (time.time() - start_time))
             if not location:
                 location = Location.objects.create(
                     department=line['department'].strip(),
@@ -136,8 +138,10 @@ def load_simulation_file(upload_job):
                     total_high=line['value_high'],
                     date_output_generated=sim.date_output_generated
                 )
+            print("Execution time__: %s" % (time.time() - start_time))
             if connection.queries:
-                print('Totals: %s' % connection.queries[-1]['time'])
+                print('Totals: %s' % connection.queries[-1])
+            print("Execution time: %s" % (time.time() - start_time))
         for sim in simulation_set:
             # for data in Data.objects.filter(simulation=sim).distinct('date'):
             #
