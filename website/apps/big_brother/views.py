@@ -15,7 +15,7 @@ import os
 
 from django.http.response import HttpResponse
 
-from website.database_apps.big_brother.models import TrackingCode
+from website.apps.big_brother.models import TrackingCode
 
 logger = logging.getLogger(__name__)
 static_dir = os.path.join(os.path.dirname((os.path.abspath(__file__))), "static", "big_brother")
