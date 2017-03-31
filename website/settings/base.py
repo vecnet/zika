@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'website',
     'website.apps.home',
+    'website.apps.big_brother',
     'analytics'
     # 'csvimport.app.CSVImportConf'
 )
@@ -53,7 +54,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'website.apps.big_brother.middleware.BigBrotherMiddleware',
     'website.middleware.RedirectionMiddleware',
+
 )
 
 ROOT_URLCONF = 'website.urls'

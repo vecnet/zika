@@ -48,11 +48,13 @@
                     {{ job.status }}
                 </td>
                 <td>
+                    {% if job.status == "In Progress" %}
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="{{ job.progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ job.progress }}%">
                             <span>{{ job.progress }}% Complete</span>
                         </div>
                     </div>
+                    {% endif %}
                 </td>
                 <td>{{ job.upload_start_timestamp|default:'' }}</td>
                 <td>{{ job.duration|default:'' }}</td>
