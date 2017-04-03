@@ -173,3 +173,8 @@ LOGGING = {
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 DATABASE_BACKUP_DIR = MEDIA_ROOT
+
+# https://docs.djangoproject.com/en/1.10/ref/settings/#data-upload-max-memory-size
+# The maximum size in bytes that a request body may be before a SuspiciousOperation (RequestDataTooBig) is raised.
+# You can set this to None to disable the check.
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
