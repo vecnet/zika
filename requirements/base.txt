@@ -1,6 +1,6 @@
-Django==1.10.5  # The web framework for perfectionists with deadlines
-django-bootstrap3==7.0.1  # Library to integrate bootstrap into django templating
+Django==1.11  # The web framework for perfectionists with deadlines
+django-bootstrap3==8.2.2  # Library to integrate bootstrap into django templating
 psycopg2>=2.5.4  # django.contrib.postgres.fields.JSONField requires PostgreSQL 9.4 and Psycopg2 2.5.4.
 pytz==2016.10  # Timezone library
-django-google-analytics-id==0.9.0  # Templatetag for google analytics
+django-google-analytics-id==1.0.1  # Templatetag for google analytics
 djangorestframework==3.6.2  # Django Rest Framework: a powerful and flexible toolkit for building Web APIs
