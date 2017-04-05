@@ -3,6 +3,7 @@
 <head>
     {% block extra_css %}
         <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'spin.css' %}"/>
     {% endblock extra_css %}
     {% block extra_js %}
         {#        <script type="text/javascript" src="/static/examples/d3.v3.js"></script>#}
@@ -61,7 +62,7 @@
     <div class="col-md-10">
         <div class="row" style="padding-top:50px">
             <div class="col-md-5">
-                <div id="map" style="width: 400px; height: 500px; padding-top:20px"></div>
+                <div id="map" style="width: 400px; height: 500px; padding-top:20px"><span id="spinner" class="glyphicon glyphicon-refresh ts-om-spin" style="color:#ffa500;"></span></div>
             </div> <!--width="55%" height="600" -->
             <div class="col-md-5">
                 <iframe id="iframe2" style="width: 550px; height: 600px;" frameborder="none"
@@ -74,7 +75,8 @@
     <script type="text/javascript" src="{% static '/examples/col_adm3.js' %}"></script>
 
     <script type="text/javascript">
-
+    $(document).ready(function() {
+        $("#spinner").hide();
         var map = L.map('map').setView([4.214943, -73.256836], 5);
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
@@ -88,13 +90,13 @@
         // get color depending on simulated cases (value_mid)
         function getColor(d) {
             return d > 20.0 ? '#023858' :
-                    d > 10.0 ? '#045a8d' :
-                            d > 1.0 ? '#0570b0' :
-                                    d > 0.75 ? '#3690c0' :
-                                            d > 0.5 ? '#74a9cf' :
-                                                    d > 0.25 ? '#a6bddb' :
-                                                            d > 0 ? '#d0d1e6' :
-                                                                    '#ece7f2';
+                d > 10.0 ? '#045a8d' :
+                    d > 1.0 ? '#0570b0' :
+                        d > 0.75 ? '#3690c0' :
+                            d > 0.5 ? '#74a9cf' :
+                                d > 0.25 ? '#a6bddb' :
+                                    d > 0 ? '#d0d1e6' :
+                                        '#ece7f2';
         }
 
         function style(feature) {
@@ -125,9 +127,9 @@
             style: style
         }).addTo(map);
 
-        geojson.on('click', function(e) {
+        geojson.on('click', function (e) {
             var segments = window.location.pathname.toString().split("/");
-            if(segments[segments.length - 2].match(/\d{4,5}/g)){
+            if (segments[segments.length - 2].match(/\d{4,5}/g)) {
                 segments[segments.length - 2] = e['layer']['feature']['properties']['ID_ESPACIA'].toString();
                 window.location = segments.join("/");
             } else {
@@ -135,13 +137,13 @@
             }
         });
 
-        geojson.on('mouseover', function(e) {
-          //open popup;
-          var popup = L.popup({autoPan: false})
-           .setLatLng(e.latlng)
-           .setContent(e['layer']['feature']['properties']['NOM_DEPART'] + ' ' + e['layer']['feature']['properties']['NOM_MUNICI'])
-           .openOn(map);
+        geojson.on('mouseover', function (e) {
+            //open popup;
+            var popup = L.popup({autoPan: false})
+                .setLatLng(e.latlng)
+                .setContent(e['layer']['feature']['properties']['NOM_DEPART'] + ' ' + e['layer']['feature']['properties']['NOM_MUNICI'])
+                .openOn(map);
         });
-
+    })
     </script>
 {% endblock main_content %}
