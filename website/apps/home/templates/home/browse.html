@@ -7,11 +7,9 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Simulation Name</th>
                         <th>Model Name</th>
-                        <th>Date Generated</th>
                         <th>Date Uploaded</th>
-                        <th>Uploaded?</th>
+                        <th>Upload Complete</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -19,7 +17,7 @@
                     {% for sim in object_list %}
                         <tr>
                             <td> {{ sim.id }} </td>
-                            <td class="col-md-3"> {{ sim.name }}</td>
+{#                            <td class="col-md-3"> {{ sim.name }}</td>#}
                             <td class="col-md-3">
                                 {% if sim.is_uploaded %}
                                     <a href="{% url 'home.mapview' model_id=sim.sim_model.id sim_id=sim.id %}">
@@ -27,7 +25,7 @@
                                     </a>
                                 {% else %}{% endif %}
                             </td>
-                            <td class="col-md-3">{{ sim.date_output_generated }}</td>
+{#                            <td class="col-md-3">{{ sim.date_output_generated }}</td>#}
                             <td class="col-md-3">{{ sim.creation_timestamp }}</td>
                             <td>
                                 {% if sim.is_uploaded %}
