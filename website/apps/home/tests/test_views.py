@@ -194,9 +194,7 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.post(reverse('simulation.upload'), data={'output_file': io.StringIO("")})
         # Missing parameter: "'name'"
-        self.assertEqual(response.status_code, 200)
-        # self.assertIn("Missing parameter", str(response.content))
-        # self.assertIn("name", str(response.content))
+        self.assertEqual(response.status_code, 302)
 
     def test_upload_view_post_no_historical(self):
         # If "Historical" checkbox is not selected, no "historical" parameter is sent by browser
@@ -228,7 +226,7 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
-            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'no', 'is_test': 'yes'}
+            data={'name': 'test', 'output_file': io.StringIO('test'), 'historical': 'no', 'is_test': 'yes'}
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('simulation.upload'))
