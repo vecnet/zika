@@ -6,11 +6,9 @@
         <link rel="stylesheet" type="text/css" href="{% static 'spin.css' %}"/>
     {% endblock extra_css %}
     {% block extra_js %}
-        {#        <script type="text/javascript" src="/static/examples/d3.v3.js"></script>#}
-        {#        <script type="text/javascript" src="{% static 'js/map.js' %}"></script>#}
         <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
-        <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+        <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+        <script src="{% static 'leaflet/leaflet.js' %}"></script>
     {% endblock extra_js %}
 </head>
 
@@ -73,7 +71,7 @@
     </div>
     </body>
 
-    <script type="text/javascript" src="{% static '/examples/col_adm3.js' %}"></script>
+    <script type="text/javascript" src="{% static '/colombia-geojson/col_adm3.js' %}"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {
