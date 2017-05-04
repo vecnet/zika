@@ -181,7 +181,7 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.get(reverse('simulation.upload'))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('simulationNameInput', str(response.content))
+        # self.assertIn('simulationNameInput', str(response.content))
 
     def test_upload_view_post_no_output_file(self):
         self.client.login(username='admin', password='1')
