@@ -105,14 +105,15 @@
 
     <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked">
-            <li {% if request.resolver_match.url_name == 'home.display_simulations'%}class="active" {% endif %}><a href="{% url 'home.display_simulations' %}">{% bootstrap_icon 'th-list' %} Browse Map</a></li>
+            <li {% if request.resolver_match.url_name == 'home.display_simulations'%}class="active" {% endif %}><a href="{% url 'home.display_simulations' %}">{% bootstrap_icon 'th-list' %} Browse Models</a></li>
+            <li {% if request.resolver_match.url_name == 'home.display_historical'%}class="active" {% endif %}><a href="{% url 'home.display_historical' %}">{% bootstrap_icon 'th-list' %} View Historical Data</a></li>
             {% if user.is_superuser %}
                 <li {% if request.resolver_match.url_name == 'simulation.upload'%}class="active" {% endif %}><a href="{% url 'simulation.upload' %}">{% bootstrap_icon 'upload' %} Upload Simulation</a></li>
             {% endif %}
             {% if user.is_superuser and user.is_staff %}
                 <li><a href="/admin/">{% bootstrap_icon 'user' %} Admin</a></li>
             {% endif %}
-            <li {% if request.resolver_match.url_name == 'home.display_historical'%}class="active" {% endif %}><a href="{% url 'home.display_historical' %}">{% bootstrap_icon 'th-list' %} View Historical Data</a></li>
+
             <li {% if request.resolver_match.url_name == 'about'%}class="active" {% endif %}><a href="{% url 'about'%}">{% bootstrap_icon 'question-sign' %} About</a></li>
         </ul>
     </div>
@@ -125,7 +126,7 @@
         <img style="margin: 0 10px 0 0; float: right;" src="{{ STATIC_URL }}img/nsf-logo.jpg" alt="NSF Logo" width="35" />
         <img style="margin: 0 10px 0 0; float: right;" src="{{ STATIC_URL }}img/vecnet-logo.jpg" alt="VecNet Logo" width="35" />
         <p class="text-center"> <a href="https://www.vecnet.org/index.php/contact-us/">Contact us</a> | <a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a> | <a href="https://www.vecnet.org/index.php/user-privacy-policy">User Privacy Policy</a> | <a href="https://www.vecnet.org/index.php/terms-of-use">Terms of Use</a></p>
-        <p class="fine-print text-center"> Copyright &copy; 2013-2016 <a href="https://www.vecnet.org/">Vector-Borne Disease Network (VecNet)</a></p>
+        <p class="fine-print text-center"> Copyright &copy; 2013-2017 <a href="https://www.vecnet.org/">Vector-Borne Disease Network (VecNet)</a></p>
     </footer>
 
 </body>

@@ -62,6 +62,7 @@
     <div class="col-md-10">
         <div class="row" style="padding-top:50px">
             <div class="col-md-5">
+                <div><p id="admin3_label"></p></div>
                 <div id="map" style="width: 400px; height: 500px; padding-top:20px"><span id="spinner" class="glyphicon glyphicon-refresh ts-om-spin" style="color:#ffa500;"></span></div>
             </div> <!--width="55%" height="600" -->
             <div class="col-md-5">
@@ -137,12 +138,10 @@
             }
         });
 
+        // Mouseover on map will display the department and municipality names above the map instead of using popup
         geojson.on('mouseover', function (e) {
-            //open popup;
-            var popup = L.popup({autoPan: false})
-                .setLatLng(e.latlng)
-                .setContent(e['layer']['feature']['properties']['NOM_DEPART'] + ' ' + e['layer']['feature']['properties']['NOM_MUNICI'])
-                .openOn(map);
+            document.getElementById('admin3_label').innerHTML = e['layer']['feature']['properties']['NOM_DEPART'] + ' '
+                    + e['layer']['feature']['properties']['NOM_MUNICI'];
         });
     })
     </script>
