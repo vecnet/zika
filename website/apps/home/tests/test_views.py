@@ -210,13 +210,14 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
-            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'on', 'is_test': 'yes'}
+            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'on','is_test': 'yes'}
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('simulation.upload'))
         time.sleep(0.1)
         self.assertEqual(UploadJob.objects.count(), upload_jobs_count + 1)
-        upload_job = UploadJob.objects.get(name='test')
+        print(UploadJob.objects.get())
+        upload_job = UploadJob.objects.get(name='output_file')
         self.assertEqual(upload_job.historical, True)
         # Note due to "transactional" nature of Django unit tests, it is impossible to test
         # data loading code here
@@ -226,13 +227,13 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
-            data={'name': 'test', 'output_file': io.StringIO('test'), 'historical': 'no', 'is_test': 'yes'}
+            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'no', 'is_test': 'yes'}
         )
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('simulation.upload'))
         time.sleep(0.1)
         self.assertEqual(UploadJob.objects.count(), upload_jobs_count + 1)
-        upload_job = UploadJob.objects.get(name='test')
+        upload_job = UploadJob.objects.get(name='output_file')
         self.assertEqual(upload_job.historical, False)
         # Note due to "transactional" nature of Django unit tests, it is impossible to test
         # data loading code here
