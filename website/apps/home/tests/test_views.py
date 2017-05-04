@@ -181,7 +181,6 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.get(reverse('simulation.upload'))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('simulationNameInput', str(response.content))
 
     def test_upload_view_post_no_output_file(self):
         self.client.login(username='admin', password='1')
@@ -195,9 +194,7 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.post(reverse('simulation.upload'), data={'output_file': io.StringIO("")})
         # Missing parameter: "'name'"
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("Missing parameter", str(response.content))
-        self.assertIn("name", str(response.content))
+        self.assertEqual(response.status_code, 302)
 
     def test_upload_view_post_no_historical(self):
         # If "Historical" checkbox is not selected, no "historical" parameter is sent by browser
@@ -213,13 +210,14 @@ class Home(TestCase):
         self.client.login(username='admin', password='1')
         response = self.client.post(
             reverse('simulation.upload'),
-            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'on', 'is_test': 'yes'}
+            data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'on','is_test': 'yes'}
         )
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse('home.display_historical'))
+        self.assertEqual(response.url, reverse('simulation.upload'))
         time.sleep(0.1)
         self.assertEqual(UploadJob.objects.count(), upload_jobs_count + 1)
-        upload_job = UploadJob.objects.get(name='test')
+        print(UploadJob.objects.get())
+        upload_job = UploadJob.objects.get(name='output_file')
         self.assertEqual(upload_job.historical, True)
         # Note due to "transactional" nature of Django unit tests, it is impossible to test
         # data loading code here
@@ -232,10 +230,10 @@ class Home(TestCase):
             data={'name': 'test', 'output_file': io.StringIO(''), 'historical': 'no', 'is_test': 'yes'}
         )
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse('home.display_simulations'))
+        self.assertEqual(response.url, reverse('simulation.upload'))
         time.sleep(0.1)
         self.assertEqual(UploadJob.objects.count(), upload_jobs_count + 1)
-        upload_job = UploadJob.objects.get(name='test')
+        upload_job = UploadJob.objects.get(name='output_file')
         self.assertEqual(upload_job.historical, False)
         # Note due to "transactional" nature of Django unit tests, it is impossible to test
         # data loading code here

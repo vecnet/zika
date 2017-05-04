@@ -7,62 +7,58 @@
         <div class="col-md-10">
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <div class="form-group">
-                    <label for="simulationNameInput"><strong>Simulation Name</strong></label>
-                    <input type="text" class="form-control" id="simulationNameInput" name="name"
-                           placeholder="Simulation Name">
-                </div>
-
-                <div class="form-group">
                     <label for="simulationInputFile"><strong>Simulation File Input</strong></label>
                     <input type="file" id="simulationInputFile" name="output_file">
                 </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="historical"><strong>Historical Data</strong>
-                            </label>
-                        </div>
-                    <input type="submit" class="btn btn-primary" value="Upload"/>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="historical"><strong>Historical Data</strong>
+                    </label>
+                </div>
+                <br/>
+                <input type="submit" class="btn btn-primary" value="Upload"/>
             </form>
         </div>
-    <div class="col-md-10">
-        <h3>List of uploads <a class="btn btn-success" href="">{% bootstrap_icon 'refresh' %} Refresh</a> </h3>
-        <table class="table table-hover">
-        <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Progress</th>
-            <th>Started</th>
-            <th>Duration</th>
-            <th>Error message</th>
-            <th>PID</th>
-        </tr>
-        {% for job in jobs %}
-            <tr>
-                <td>{{ job.name }}</td>
-                <td>
-                    {% if job.status == 'Failed' %}
-                    <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span></span>
-                    {% elif job.status == 'Completed' %}
-                    {% bootstrap_icon 'ok' %}
-                    {% endif %}
-                    {{ job.status }}
-                </td>
-                <td>
-                    {% if job.status == "In Progress" %}
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ job.progress }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ job.progress }}%">
-                            <span>{{ job.progress }}% Complete</span>
-                        </div>
-                    </div>
-                    {% endif %}
-                </td>
-                <td>{{ job.upload_start_timestamp|default:'' }}</td>
-                <td>{{ job.duration|default:'' }}</td>
-                <td>{{ job.last_error_message|default:'' }}</td>
-                <td>{{ job.pid|default:'' }}</td>
-            </tr>
-        {% endfor %}
-        </table>
-    </div>
+        <div class="col-md-10">
+            <h3>List of uploads <a class="btn btn-success" href="">{% bootstrap_icon 'refresh' %} Refresh</a></h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                    <th>Started</th>
+                    <th>Duration</th>
+                    <th>Error message</th>
+                    <th>PID</th>
+                </tr>
+                {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.name }}</td>
+                        <td>
+                            {% if job.status == 'Failed' %}
+                                <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span></span>
+                            {% elif job.status == 'Completed' %}
+                                {% bootstrap_icon 'ok' %}
+                            {% endif %}
+                            {{ job.status }}
+                        </td>
+                        <td>
+                            {% if job.status == "In Progress" %}
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ job.progress }}"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{ job.progress }}%">
+                                        <span>{{ job.progress }}% Complete</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>{{ job.upload_start_timestamp|default:'' }}</td>
+                        <td>{{ job.duration|default:'' }}</td>
+                        <td>{{ job.last_error_message|default:'' }}</td>
+                        <td>{{ job.pid|default:'' }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 {% endblock %}
