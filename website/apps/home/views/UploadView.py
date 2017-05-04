@@ -40,7 +40,6 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def post(self, request):
         try:
             data_file = request.FILES['output_file']
-            sim_name = request.POST['name']
             is_historical = request.POST.get('historical', "")
             is_test = request.POST.get('is_test', None)
         except KeyError as e:
@@ -52,7 +51,8 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             is_historical = False
 
         job = UploadJob.objects.create(
-            name=sim_name, data_file=data_file, historical=is_historical, created_by=request.user
+            name=str(data_file),
+            data_file=data_file, historical=is_historical, created_by=request.user
         )
 
         if not is_test:
@@ -81,8 +81,5 @@ class UploadView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             job.save(update_fields=['pid'])
             logger.debug("PID %s started for loading simulation data in background" % p.pid)
 
-        # Redirect to appropriate page whether uploading simulation or historical
-        if is_historical != True:
-            return HttpResponseRedirect(reverse('home.display_simulations'))
-        else:
-            return HttpResponseRedirect(reverse('home.display_historical'))
+        # Redirect to the simulation page
+        return HttpResponseRedirect(reverse('simulation.upload'))
