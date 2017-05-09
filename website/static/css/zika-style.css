@@ -1,0 +1,164 @@
+/* Bootstrap style overrides for Zika Portal
+-------------------------------------------------- */
+
+body {
+}
+
+.emphasis {
+  font-size: 1.2em;
+}
+
+/* 
+ * Navigation
+ */
+
+
+/* Slimmer navbar, matching other VecNet pages */
+.navbar {
+  min-height: 40px;
+}
+.navbar-brand {
+  height: auto;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+
+/*
+ * Main content
+ */
+
+.jumbotron.subhead.zika-jt {
+  background-color: #38b1cb;
+  color: #fff;
+  text-shadow: 0 0 1px rgba(0,0,0,0.5);
+  padding-top: 50px;
+  padding-bottom: 15px;
+}
+
+.jumbotron.subhead.zika-jt h1 {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.jumbotron.subhead.zika-jt p {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 15px;
+}
+
+.jumbotron.subhead.zika-jt .container {
+  padding-right: 0;
+}
+
+.jumbotron-icon img {
+  display: none;
+}
+
+.nsf-fine-print {
+  font-size: 0.8em;
+  margin-top: 20px;
+}
+.nsf-logo {
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+.well {
+  border: none;
+  border-top: solid 3px #d3d3d3;
+  background: #f5f5f5;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.zika-selector {
+  background: #ebf7fa;
+  margin: -30px 0 20px;
+  padding: 20px;
+}
+
+.selector-nav {
+  float: none;
+  margin-top: 0;
+  margin-bottom: 15px;
+  display: block;
+}
+.selector {
+  margin: 5px 0;
+}
+
+/* 
+ * Footer
+ */
+
+.footer {
+  margin-top: 50px;
+  text-align: center;
+  color: #666;
+}
+.footer a:link,
+.footer a:visited {
+  color: #666;
+}
+.footer .fine-print {
+  font-size: 0.8em;
+  margin: 0;
+  padding: 0;
+}
+
+
+@media (min-width: 480px) {
+
+  .jumbotron.subhead.zika-jt .container {
+    padding-right: 150px;
+  }
+
+  .jumbotron-icon img {
+    display: block;
+    float: right;
+    height: 120px;
+    margin-right: 0px;
+    margin-top: -130px;
+  }
+  .selector {
+    display: inline-block;
+    padding-right: 20px;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .navbar-brand,
+  .navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .jumbotron.subhead.zika-jt {
+     padding-top: 40px;
+     padding-bottom: 15px;
+  }
+
+  .jumbotron-icon img {
+    margin-right: -10px;
+  }
+
+  .nsf-logo {
+    margin: 0 10px 30px 0;
+  }
+
+  .selector-nav {
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+}

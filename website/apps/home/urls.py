@@ -13,7 +13,7 @@
 from django.conf.urls import url
 
 from website.apps.home.views.upload_job_view import upload_job_view
-from website.apps.home.views.BrowseView import BrowseView
+from website.apps.home.views.BrowseView import ListModelView
 from website.apps.home.views.ChartView import ChartView, CountryTotalChartView
 from website.apps.home.views.MapView import MapView, csv_for_map_view
 from website.apps.home.views.UploadView import UploadView
@@ -21,8 +21,8 @@ from website.apps.home.views.delete_simulation_view import delete_simulation_vie
 
 urlpatterns = [
     # the list of simulations
-    url(r'^$', BrowseView.as_view(), name='home.display_simulations'),
-    url(r'^historical/$', BrowseView.as_view(), kwargs={"is_historical":True}, name='home.display_historical'),
+    url(r'^list/$', ListModelView.as_view(), name='home.list_view'),
+    url(r'^historical/$', ListModelView.as_view(), kwargs={"is_historical":True}, name='home.display_historical'),
 
     # upload simulation/historical data view
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),

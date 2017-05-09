@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load staticfiles bootstrap3 analytics_tags %}
+
+{% block before_main_container %}
+    <div class="zika-selector">
+        <div class="container">
+
+            <div class="selector-nav"><a href="map-view.html">Map view</a></div>
+
+            <div class="selector">
+                Select model:
+                <div class="btn-group">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button class="btn btn-default" type="button">Model #1 <span class="caret"></span></button>
+                    <button class="btn btn-default" type="button"><span
+                            class="glyphicon glyphicon-chevron-right"></span></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock before_main_container %}
+
+{% block main_content %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Model Name</th>
+                <th>Date Uploaded</th>
+                <th>Upload Complete</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sim in object_list %}
+                <tr>
+                    <td> {{ sim.id }} </td>
+                    <td class="col-md-3">
+                        {% if sim.is_uploaded %}
+                            <a href="{% url 'home.mapview' model_id=sim.sim_model.id sim_id=sim.id %}">
+                                {{ sim.sim_model.model_name }}
+                            </a>
+                        {% else %}{% endif %}
+                    </td>
+                    <td class="col-md-3">{{ sim.creation_timestamp }}</td>
+                    <td>
+                        {% if sim.is_uploaded %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                    <td class="col-md-3">
+                        {% if user.is_superuser and user.is_staff %}
+                            <a href="{% url 'admin:home_simulation_change' sim.id %}" class="btn btn-success">Edit</a>
+                            <a href="{% url 'simulation.delete' simulation_id=sim.id %}"
+                               class="btn btn-danger">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock main_content %}

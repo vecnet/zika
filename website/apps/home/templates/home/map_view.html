@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load staticfiles bootstrap3 analytics_tags %}
+
+{% block before_main_container %}
+    <div class="zika-selector">
+      <div class="container-fluid">
+
+          <div class="selector-nav"><a href="list-view.html">Browse full simulation list</a></div>
+
+          <div class="selector">
+            Select model:
+            <div class="btn-group">
+              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+              <button class="btn btn-default" type="button">Model #1 <span class="caret"></span></button>
+              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            </div>
+          </div>
+          <div class="selector">
+            simulated on:
+            <div class="btn-group">
+              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+              <button class="btn btn-default" type="button">Feb. 23, 2016 <span class="caret"></span></button>
+              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            </div>
+          </div>
+
+      </div>
+    </div>
+{% endblock before_main_container%}
+{% block main_content %}
+{% endblock main_content %}
