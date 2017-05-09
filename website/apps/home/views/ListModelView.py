@@ -14,9 +14,9 @@ from django.views.generic.list import ListView
 from website.apps.home.models import Simulation
 
 
-class BrowseView(ListView):
+class ListModelView(ListView):
     """ List of simulations. Using the same template for historical and simulated data """
-    template_name = "home/browse.html"
+    template_name = "home/list_view.html"
 
     def get_queryset(self):
         if self.kwargs.get("is_historical", False):
