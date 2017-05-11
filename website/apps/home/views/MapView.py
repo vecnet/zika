@@ -16,17 +16,23 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.generic.base import TemplateView
 
-from website.apps.home.models import Data, Simulation
+from website.apps.home.models import Data, Simulation, SimulationModel
 
 
 class MapView(TemplateView):
-    template_name = "home/map_leaflet.html"
+    template_name = 'home/map_view.html' #"home/map_leaflet.html"
 
     def get_context_data(self, **kwargs):
-
-        sim_id = kwargs.get('sim_id')
-        model_id = kwargs.get('model_id')
-        municipality_code = kwargs.get('municipality_code')
+        # If no kwargs are provided, show the most recent simulation
+        if len(kwargs) > 0:
+            sim_id = kwargs.get('sim_id')
+            model_id = kwargs.get('model_id')
+            municipality_code = kwargs.get('municipality_code')
+        else:
+            latest_simulation = Simulation.objects.exclude(historical=True).latest('creation_timestamp')
+            sim_id = latest_simulation.id
+            model_id = latest_simulation.sim_model.id
+            municipality_code = None
 
         data_items = Data.objects.filter(simulation_id=sim_id).values('date').distinct()
 
@@ -80,16 +86,30 @@ class MapView(TemplateView):
             key = item["location__municipality_code"]
             map_data_dict[key] = item
 
+        # Get a list of all the models in the system
+        model_list_queryset = SimulationModel.objects.filter()
+        model_list = []
+        for model in model_list_queryset:
+            model_list.append(model)
+
+        simulation_generated_date_queryset = Simulation.objects.filter(sim_model_id=current_simulation.sim_model_id)
+        print(simulation_generated_date_queryset)
+        print(all_sim_with_model)
+        print("ALL SIM LIST: ", all_sim_list)
         context = {
             "date_arg": date_arg,
             "all_sim_with_model": all_sim_with_model,  # allows us to use datetime objects
             "current_sim": current_simulation,
+            "current_sim_metadata": {
+                "file_name": current_simulation.name[:-11]
+            },
             "all_sim_with_model_list": all_sim_list,  # dates are a string for passing into JS function,
             "current_index": current_sim_index,
             "length_all_sim_with_model_list": len(all_sim_list)-1,
             "municipality_code": municipality_code,
             "iframe_src": iframe_src,
-            'map_data': map_data_dict
+            'map_data': map_data_dict,
+            'model_list': model_list,
         }
 
         return context

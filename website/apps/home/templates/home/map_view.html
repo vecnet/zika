@@ -1,18 +1,51 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 analytics_tags %}
+<head>
+    {% block extra_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'spin.css' %}"/>
+        <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}"/>
+    {% endblock extra_css %}
+</head>
 
 {% block before_main_container %}
     <div class="zika-selector">
-      <div class="container-fluid">
+        <div class="container-fluid">
 
-          <div class="selector-nav"><a href="list-view.html">Browse full simulation list</a></div>
+          <div class="selector-nav">
+            <a href="{% url 'home.list_view' %}" style="margin-right: 20px">Browse full simulation list</a>
+              {% if user.is_staff %}
+                  <div class="dropdown" style="float:right">
+                      <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          Admin options
+                          <span class="caret"></span>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                          <li><a href="{% url 'simulation.upload' %}">Upload simulation</a></li>
+                          <li><a href="/admin/">Site administration</a></li>
+                      </ul>
+                  </div>
+              {% endif %}
+          </div>
 
           <div class="selector">
             Select model:
             <div class="btn-group">
-              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
-              <button class="btn btn-default" type="button">Model #1 <span class="caret"></span></button>
-              <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+              <button class="btn btn-default" type="button">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+              </button>
+            <div class="btn-group" role="group">
+              <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" type="button">{{ current_sim.sim_model.model_name }}<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    {% for model in model_list %}
+                        <li><a href="">{{ model.model_name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+              <button class="btn btn-default" type="button">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+              </button>
             </div>
           </div>
           <div class="selector">
@@ -24,8 +57,139 @@
             </div>
           </div>
 
-      </div>
+        </div>
     </div>
-{% endblock before_main_container%}
+{% endblock before_main_container %}
+
 {% block main_content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div><p id="admin3_label"></p></div>
+                <div id="map" class="map-div img-responsive">
+                    <span id="spinner" class="glyphicon glyphicon-refresh ts-om-spin" style="color:#ffa500;"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <iframe id="iframe2" class="chart-iframe img-responsive" frameborder="none"
+                        src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ iframe_src }}">{{ request }}</iframe>
+                <div class="well">
+                    <p>
+                        Model: {{ current_sim.sim_model.model_name }}<br/>
+                        Generated: {{ current_sim.date_output_generated }}<br/>
+                        File: {{ current_sim_metadata.file_name }}
+
+                    </p>
+                </div>
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container-fluid -->
 {% endblock main_content %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/map_page.js' %}"></script>
+
+    <script src="{% static 'leaflet/leaflet.js' %}"></script>
+
+    <script type="text/javascript" src="{% static '/colombia-geojson/col_adm3_25per_dp.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#spinner").hide();
+            var map = L.map('map').setView([4.214943, -73.256836], 5);
+
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                id: 'mapbox.light'
+            }).addTo(map);
+
+            // get color depending on simulated cases (value_mid)
+            function getColor(d) {
+                return d > 20.0 ? '#023858' :
+                        d > 10.0 ? '#045a8d' :
+                                d > 1.0 ? '#0570b0' :
+                                        d > 0.75 ? '#3690c0' :
+                                                d > 0.5 ? '#74a9cf' :
+                                                        d > 0.25 ? '#a6bddb' :
+                                                                d > 0 ? '#d0d1e6' :
+                                                                        '#ece7f2';
+            }
+
+            function style(feature) {
+                var mapData = {{ map_data|safe}};
+                if (feature.properties.ID_ESPACIA.length == 4) {
+                    feature.properties.ID_ESPACIA = '0' + feature.properties.ID_ESPACIA.toString();
+                }
+                else {
+                    feature.properties.ID_ESPACIA = feature.properties.ID_ESPACIA.toString()
+                }
+
+                var color_value = 0;
+                try {
+                    color_value = mapData[feature.properties.ID_ESPACIA]['value_mid'];
+                } catch (err) {
+                }
+                return {
+                    fillColor: getColor(color_value),
+                    weight: 0,
+                    opacity: 1,
+                    color: 'gray',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+            }
+
+            // Item will be surrounded by a border on mouseover to indicate which municipality is being looked at
+            function highlightFeature(e) {
+                var layer = e.target;
+
+                layer.setStyle({
+                    weight: 3,
+                    color: '#666',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                });
+
+                if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                    layer.bringToFront();
+                }
+            }
+
+            function resetHighlight(e) {
+                geojson.resetStyle(e.target);
+                document.getElementById('admin3_label').innerHTML = "";
+            }
+
+            function onEachFeature(feature, layer) {
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight
+                });
+            }
+
+            var geojson = L.geoJson(colombiaData, {
+                style: style,
+                onEachFeature: onEachFeature
+            }).addTo(map);
+
+            geojson.on('click', function (e) {
+                var segments = window.location.pathname.toString().split("/");
+                if (segments[segments.length - 2].match(/\d{4,5}/g)) {
+                    segments[segments.length - 2] = e['layer']['feature']['properties']['ID_ESPACIA'].toString();
+                    window.location = segments.join("/");
+                } else {
+                    window.location = e['layer']['feature']['properties']['ID_ESPACIA'].toString() + "/";
+                }
+            });
+
+            // Mouseover on map will display the department and municipality names above the map instead of using popup
+            geojson.on('mouseover', function (e) {
+                document.getElementById('admin3_label').innerHTML = e['layer']['feature']['properties']['NOM_DEPART'] + ' '
+                        + e['layer']['feature']['properties']['NOM_MUNICI'];
+            });
+        })
+    </script>
+{% endblock extra_js %}

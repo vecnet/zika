@@ -1,3 +1,10 @@
-.date-dropdown {
-    width: 20%;
+.map-div {
+    width: 700px;
+    height: 600px;
+    padding-top: 50px;
+}
+
+.chart-iframe {
+    width: 700px;
+    height: 425px;
 }

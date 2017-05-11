@@ -32,6 +32,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+  {% block javascript_at_top %} {% endblock javascript_at_top %}
+
 </head>
 <body>
 <!-- Fixed navbar -->
@@ -90,7 +92,7 @@
         </div>  <!-- container -->
     </div>  <!-- jumbotron -->
 </a>
-<a href="index.html" style="text-decoration: none">
+<a href="{% url 'home' %}" style="text-decoration: none">
     <div class="container jumbotron-icon">
         <img src="{% static 'img/icon_zika.png' %}">
     </div>  <!-- container -->
@@ -98,9 +100,7 @@
 
 {% block before_main_container %} {% endblock before_main_container %}
 
-<div class="container">
-    {% block main_content %} {% endblock main_content %}
-</div> <!-- /container -->
+{% block main_content %} {% endblock main_content %}
 
 
 <div class="container">

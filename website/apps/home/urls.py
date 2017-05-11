@@ -13,7 +13,7 @@
 from django.conf.urls import url
 
 from website.apps.home.views.upload_job_view import upload_job_view
-from website.apps.home.views.BrowseView import ListModelView
+from website.apps.home.views.ListModelView import ListModelView
 from website.apps.home.views.ChartView import ChartView, CountryTotalChartView
 from website.apps.home.views.MapView import MapView, csv_for_map_view
 from website.apps.home.views.UploadView import UploadView
@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
     url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/(?P<municipality_code>\d+)/$',
         MapView.as_view(), name='home.mapview'),
+    url(r'^map/$', MapView.as_view(), name='home.mapview'),
 
     # API
     url(r'^api/upload_job/(?P<pk>\d+)/$', upload_job_view, name="api.upload_job"),

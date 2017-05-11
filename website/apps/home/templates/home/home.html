@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles bootstrap3 analytics_tags %}
 {% block main_content %}
+    <div class="container">
       <div class="row">
 	<div class="col-sm-8">
           <p class="emphasis">The VecNet Zika Portal project is developing new modeling tools and data on mosquito locations that will be used to improve Zika transmission forecasting.</p>
@@ -15,8 +16,9 @@
             <p class="emphasis">Explore the results of Zika virus transmission simulations created with a variety of different models, and compare to historical case data.</p>
             <p class="emphasis" style="margin-bottom: 20px">Begin by browsing models and simulations in list form, or go straight to the map dashboard.</p>
             <a href="{% url 'home.list_view' %}" type="button" class="btn btn-primary btn-lg btn-block">List View</a>
-            <a href="map-view.html" type="button" class="btn btn-primary btn-lg btn-block">Map View</a>
+            <a href="{% url 'home.mapview' %}" type="button" class="btn btn-primary btn-lg btn-block">Map View</a>
           </div>
 	</div>
       </div> <!-- row -->
+    </div>
 {% endblock main_content %}
