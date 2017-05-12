@@ -11,14 +11,29 @@
 
 from django.views.generic.list import ListView
 
-from website.apps.home.models import Simulation
+from website.apps.home.models import Simulation, SimulationModel
 
 
 class ListModelView(ListView):
     """ List of simulations. Using the same template for historical and simulated data """
     template_name = "home/list_view.html"
+    model = Simulation
 
-    def get_queryset(self):
-        if self.kwargs.get("is_historical", False):
-            return Simulation.objects.filter(historical=True).order_by("-creation_timestamp")
-        return Simulation.objects.filter(historical=False).order_by("-creation_timestamp")
+    def get_context_data(self, **kwargs):
+        # Get a list of all the models in the system
+        model_list_queryset = SimulationModel.objects.filter()
+        model_list = []
+        for model in model_list_queryset:
+            model_list.append(model)
+
+        # Get the historical and simulated objects
+        historical_simulation_list = Simulation.objects.filter(historical=True).order_by("-creation_timestamp")
+        simulation_list = Simulation.objects.filter(historical=False).order_by("-creation_timestamp")
+
+        context = {
+            "model_list": model_list,
+            "simulation_list": simulation_list,
+            "historical_simulation_list": historical_simulation_list,
+        }
+
+        return context

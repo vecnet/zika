@@ -8,3 +8,7 @@
     width: 700px;
     height: 425px;
 }
+
+.map-page-selects {
+    border-radius: 0 !important;
+}

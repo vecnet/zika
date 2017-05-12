@@ -92,10 +92,8 @@ class MapView(TemplateView):
         for model in model_list_queryset:
             model_list.append(model)
 
-        simulation_generated_date_queryset = Simulation.objects.filter(sim_model_id=current_simulation.sim_model_id)
-        print(simulation_generated_date_queryset)
-        print(all_sim_with_model)
-        print("ALL SIM LIST: ", all_sim_list)
+        full_simulation_list = Simulation.objects.filter()
+
         context = {
             "date_arg": date_arg,
             "all_sim_with_model": all_sim_with_model,  # allows us to use datetime objects
@@ -110,6 +108,7 @@ class MapView(TemplateView):
             "iframe_src": iframe_src,
             'map_data': map_data_dict,
             'model_list': model_list,
+            'full_simulation_list': full_simulation_list
         }
 
         return context
