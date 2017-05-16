@@ -18,22 +18,25 @@ class ListModelView(ListView):
     """ List of simulations. Using the same template for historical and simulated data """
     template_name = "home/list_view.html"
     model = Simulation
+    context_object_name = 'simulations'
+
+    def get_queryset(self):
+        queryset = super(ListModelView, self).get_queryset()
+        queryset = queryset.filter(historical=False).order_by("-creation_timestamp")
+        if self.request.GET.get('filter'):
+            queryset = queryset.filter(sim_model=self.request.GET.get('filter'), historical=False).order_by("-creation_timestamp")
+        return queryset
 
     def get_context_data(self, **kwargs):
+        context = super(ListModelView, self).get_context_data(**kwargs)
         # Get a list of all the models in the system
-        model_list_queryset = SimulationModel.objects.filter()
-        model_list = []
-        for model in model_list_queryset:
-            model_list.append(model)
+        model_list_queryset = SimulationModel.objects.all()
 
         # Get the historical and simulated objects
         historical_simulation_list = Simulation.objects.filter(historical=True).order_by("-creation_timestamp")
-        simulation_list = Simulation.objects.filter(historical=False).order_by("-creation_timestamp")
 
-        context = {
-            "model_list": model_list,
-            "simulation_list": simulation_list,
-            "historical_simulation_list": historical_simulation_list,
-        }
+        context["model_list"] = model_list_queryset
+        context["historical_simulation_list"] = historical_simulation_list
+        context["model_filter"] = self.request.GET.get('filter')
 
         return context

@@ -21,20 +21,24 @@
                 {% endif %}
             </div>
 
+
             <div class="selector">
                 Select model:
                 <div class="btn-group">
-                    <select class="form-control map-page-selects" id="model-select">
+                    <select class="form-control map-page-selects" id="model-filter">
+                        <option value="" {% if not model_filter %}selected{% endif %}>All models</option>
                         {% for model in model_list %}
-                            <option value="{{ model.id }}"
+                            <option value="{{ model.id }} {% if model_filter == model.id %}selected{% endif %}"
                                     {% if model.id == current_sim.sim_model_id %}selected{% endif %}>
                                 {{ model.model_name }}
                             </option>
                         {% endfor %}
                     </select>
                 </div>
-            </div>
 
+                <button class="btn btn-default filter-sim-btn" type="button">Go</button>
+
+            </div>
         </div>
     </div>
 {% endblock before_main_container %}
@@ -54,7 +58,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for sim in simulation_list %}
+                {% for sim in simulations %}
                     <tr>
                         <td> {{ sim.id }} </td>
                         <td class="col-md-3">
@@ -133,3 +137,15 @@
         </div>
     </div>
 {% endblock main_content %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        // When the user changes the model they want to view in the table
+        $(".filter-sim-btn").click(function () {
+            var current_url = window.location.href;
+            var new_model_id = $("#model-filter").val();
+            var filterIndex = current_url.indexOf("?filter=");
+            window.location.href = current_url.substr(0, filterIndex-1) + "?filter=" + new_model_id;
+        });
+    </script>
+{% endblock extra_js %}

@@ -22,7 +22,7 @@ from website.apps.home.views.delete_simulation_view import delete_simulation_vie
 urlpatterns = [
     # the list of simulations
     url(r'^list/$', ListModelView.as_view(), name='home.list_view'),
-    url(r'^historical/$', ListModelView.as_view(), kwargs={"is_historical":True}, name='home.display_historical'),
+    url(r'^historical/$', ListModelView.as_view(), kwargs={"is_historical": True}, name='home.display_historical'),
 
     # upload simulation/historical data view
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
