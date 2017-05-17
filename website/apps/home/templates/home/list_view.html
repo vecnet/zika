@@ -25,11 +25,10 @@
             <div class="selector">
                 Select model:
                 <div class="btn-group">
-                    <select class="form-control map-page-selects" id="model-filter">
-                        <option value="" {% if not model_filter %}selected{% endif %}>All models</option>
+                    <select class="form-control model-filter" id="model-filter">
+                        <option value="">All models</option>
                         {% for model in model_list %}
-                            <option value="{{ model.id }} {% if model_filter == model.id %}selected{% endif %}"
-                                    {% if model.id == current_sim.sim_model_id %}selected{% endif %}>
+                            <option value="{{ model.id }}">
                                 {{ model.model_name }}
                             </option>
                         {% endfor %}
@@ -57,6 +56,7 @@
                     <th></th>
                 </tr>
                 </thead>
+
                 <tbody>
                 {% for sim in simulations %}
                     <tr>
@@ -88,6 +88,8 @@
                     </tr>
                 {% endfor %}
                 </tbody>
+
+
             </table>
         </div>
 
@@ -140,12 +142,20 @@
 
 {% block extra_js %}
     <script type="text/javascript">
+        $(document).ready(function () {
+            var filterIndex = window.location.href.indexOf("?filter=");
+            if(filterIndex > 0) {
+                var model_selected = window.location.href.substr(filterIndex + 8);
+                $(".model-filter").val(model_selected);
+            }
+        });
+
         // When the user changes the model they want to view in the table
         $(".filter-sim-btn").click(function () {
-            var current_url = window.location.href;
-            var new_model_id = $("#model-filter").val();
-            var filterIndex = current_url.indexOf("?filter=");
-            window.location.href = current_url.substr(0, filterIndex-1) + "?filter=" + new_model_id;
+            var new_model_id = $(".model-filter").val();
+            var filterIndex = window.location.href.indexOf("?filter=");
+            window.location.href = window.location.href.substr(0, filterIndex-1) + "?filter=" + new_model_id;
+            $(".model-filter").val(new_model_id);
         });
     </script>
 {% endblock extra_js %}
