@@ -2,6 +2,30 @@
 
 {% load bootstrap3 %}
 
+{% block before_main_container %}
+    <div class="zika-selector">
+        <div class="container-fluid">
+
+            <div class="selector-nav">
+                <a href="{% url 'home.list_view' %}" style="margin-right: 20px">List view</a>
+                <a href="{% url 'home.mapview' %}" style="margin-right: 20px">Map view</a>
+                {% if user.is_staff %}
+                    <div class="dropdown" style="float:right">
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Admin options
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminOptionsDropdown">
+                            <li><a href="{% url 'simulation.upload' %}">Upload simulation</a></li>
+                            <li><a href="/admin/">Site administration</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock before_main_container %}
+
 {% block main_content %}
     <div class="container">
         <div class="col-md-10">

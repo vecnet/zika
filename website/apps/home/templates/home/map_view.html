@@ -43,14 +43,17 @@
                 <div class="selector">
                     simulated on:
                     <div class="btn-group">
-                        <button class="btn btn-default" type="button"><span
-                                class="glyphicon glyphicon-chevron-left"></span></button>
-
+                        <button id="prevSimBtn" type="button" class="btn btn-default" data-toggle="tooltip"
+                                data-placement="bottom" title="Older simulation"
+                                onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 0)"
+                                {% if current_index == length_all_sim_with_model_list %} disabled {% endif %}>
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button>
                         <div class="btn-group" role="group">
                             {% for model in model_list %}
                                 <select class="form-control map-page-selects simulated-date-select"
                                         data-id="{{ model.id }}" id="model-{{ model.id }}-select" style="display: none">
-                                    {% for simulation in full_simulation_list %}
+                                    {% for simulation in full_simulation_list_nonhistorical %}
                                         {% if model.id == simulation.sim_model.id %}
                                             <option value="{{ simulation.id }}"
                                                     {% if simulation.id == current_sim.id %} selected {% endif %}>
@@ -61,8 +64,12 @@
                                 </select>
                             {% endfor %}
                         </div>
-                        <button class="btn btn-default" type="button"><span
-                                class="glyphicon glyphicon-chevron-right"></span></button>
+                        <button id="nextSimBtn" type="button" class="btn btn-default" data-toggle="tooltip"
+                            data-placement="top" title="Newer simulation"
+                            onclick="prevNextSimBtnClick({{ all_sim_with_model_list }}, {{ current_index }}, 1)"
+                            {% if current_index == 0 %} disabled {% endif %}>
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </button>
                     </div>
                 </div>
 
@@ -87,6 +94,14 @@
                         src="{% if request.is_secure %}https://{% else %}http://{% endif %}{{ request.get_host }}{{ iframe_src }}">{{ request }}</iframe>
                 <div class="well">
                     <p>
+                        Location:
+                        {% if current_sim_metadata.location.department %}
+                            {{ current_sim_metadata.location.department }},
+                        {% endif %}
+                        {% if current_sim_metadata.location.municipality %}
+                            {{ current_sim_metadata.location.municipality }},
+                        {% endif %}
+                        COLOMBIA <br/>
                         Model: {{ current_sim.sim_model.model_name }}<br/>
                         Generated: {{ current_sim.date_output_generated }}<br/>
                         File: {{ current_sim_metadata.file_name }}
