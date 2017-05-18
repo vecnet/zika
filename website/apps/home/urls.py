@@ -22,7 +22,6 @@ from website.apps.home.views.delete_simulation_view import delete_simulation_vie
 urlpatterns = [
     # the list of simulations
     url(r'^list/$', ListModelView.as_view(), name='home.list_view'),
-    url(r'^historical/$', ListModelView.as_view(), kwargs={"is_historical": True}, name='home.display_historical'),
 
     # upload simulation/historical data view
     url(r'^upload/', UploadView.as_view(), name="simulation.upload"),
@@ -41,7 +40,6 @@ urlpatterns = [
     url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/$', MapView.as_view(), name='home.mapview'),
     url(r'^map/(?P<model_id>[0-9]+)/(?P<sim_id>[0-9]+)/(?P<municipality_code>\d+)/$',
         MapView.as_view(), name='home.mapview'),
-    url(r'^map/$', MapView.as_view(), name='home.mapview'),
 
     # API
     url(r'^api/upload_job/(?P<pk>\d+)/$', upload_job_view, name="api.upload_job"),

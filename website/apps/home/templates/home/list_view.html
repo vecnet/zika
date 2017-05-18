@@ -6,7 +6,7 @@
         <div class="container-fluid">
 
             <div class="selector-nav">
-                <a href="{% url 'home.mapview' %}" style="margin-right: 20px">Map view</a>
+                <a href="{% url 'home.mapview' model_id=most_recent_model_id sim_id=most_recent_sim_id %}" style="margin-right: 20px">Map view</a>
                 {% if user.is_staff %}
                     <div class="dropdown" style="float:right">
                         <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

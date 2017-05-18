@@ -12,6 +12,21 @@
 
 from django.views.generic.base import TemplateView
 
+from website.apps.home.models import Simulation
+
 
 class HomeView(TemplateView):
     template_name = "home/home.html"
+
+    def get_context_data(self, **kwargs):
+        # Get the most recent simulation so that clicking the Map View button will go to the appropriate page
+        latest_simulation = Simulation.objects.exclude(historical=True).latest('creation_timestamp')
+        sim_id = latest_simulation.id
+        model_id = latest_simulation.sim_model.id
+
+        context = {
+            "most_recent_sim_id": sim_id,
+            "most_recent_model_id": model_id,
+        }
+
+        return context

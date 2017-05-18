@@ -20,7 +20,7 @@ from website.apps.home.models import Data, Simulation, SimulationModel, Location
 
 
 class MapView(TemplateView):
-    template_name = 'home/map_view.html' #"home/map_leaflet.html"
+    template_name = 'home/map_view.html'
 
     def get_context_data(self, **kwargs):
         # If no kwargs are provided, show the most recent simulation

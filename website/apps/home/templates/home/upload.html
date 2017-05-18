@@ -7,8 +7,7 @@
         <div class="container-fluid">
 
             <div class="selector-nav">
-                <a href="{% url 'home.list_view' %}" style="margin-right: 20px">List view</a>
-                <a href="{% url 'home.mapview' %}" style="margin-right: 20px">Map view</a>
+                <a href="{% url 'home' %}" style="margin-right: 20px">Home</a>
                 {% if user.is_staff %}
                     <div class="dropdown" style="float:right">
                         <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
