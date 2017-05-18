@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load staticfiles bootstrap3 analytics_tags %}
+
+{% block before_main_container %}
+    <div class="zika-selector">
+        <div class="container-fluid">
+
+            <div class="selector-nav">
+                <a href="{% url 'home.mapview' model_id=most_recent_model_id sim_id=most_recent_sim_id %}" style="margin-right: 20px">Map view</a>
+                {% if user.is_staff %}
+                    <div class="dropdown" style="float:right">
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Admin options
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminOptionsDropdown">
+                            <li><a href="{% url 'simulation.upload' %}">Upload simulation</a></li>
+                            <li><a href="/admin/">Site administration</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <div class="selector">
+                Select model:
+                <div class="btn-group">
+                    <select class="form-control model-filter" id="model-filter">
+                        <option value="">All models</option>
+                        {% for model in model_list %}
+                            <option value="{{ model.id }}">
+                                {{ model.model_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button class="btn btn-default filter-sim-btn" type="button">Go</button>
+
+            </div>
+        </div>
+    </div>
+{% endblock before_main_container %}
+
+{% block main_content %}
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model Name</th>
+                    <th>Date Generated</th>
+                    <th>Date Uploaded</th>
+                    <th style="text-align: center;">Upload Complete</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for sim in simulations %}
+                    <tr>
+                        <td> {{ sim.id }} </td>
+                        <td class="col-md-3">
+                            {% if sim.is_uploaded %}
+                                <a href="{% url 'home.mapview' model_id=sim.sim_model.id sim_id=sim.id %}">
+                                    {{ sim.sim_model.model_name }}
+                                </a>
+                            {% else %}{% endif %}
+                        </td>
+                        <td class="col-md-2">{{ sim.date_output_generated }}</td>
+                        <td class="col-md-2">{{ sim.creation_timestamp }}</td>
+                        <td style="text-align: center; ">
+                            {% if sim.is_uploaded %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right;">
+                            {% if user.is_superuser and user.is_staff %}
+                                <a href="{% url 'admin:home_simulation_change' sim.id %}"
+                                   class="btn btn-success">Edit</a>
+                                <a href="{% url 'simulation.delete' simulation_id=sim.id %}"
+                                   class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <h3>Historical Data</h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model Name</th>
+                    <th>Date Uploaded</th>
+                    <th style="text-align: center;">Upload Complete</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for sim in historical_simulation_list %}
+                    <tr>
+                        <td> {{ sim.id }} </td>
+                        <td class="col-md-5">
+                            {% if sim.is_uploaded %}
+                                <a href="{% url 'home.mapview' model_id=sim.sim_model.id sim_id=sim.id %}">
+                                    {{ sim.sim_model.model_name }}
+                                </a>
+                            {% else %}{% endif %}
+                        </td>
+                        <td class="col-md-2">{{ sim.creation_timestamp }}</td>
+                        <td style="text-align: center;">
+                            {% if sim.is_uploaded %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right;">
+                            {% if user.is_superuser and user.is_staff %}
+                                <a href="{% url 'admin:home_simulation_change' sim.id %}"
+                                   class="btn btn-success">Edit</a>
+                                <a href="{% url 'simulation.delete' simulation_id=sim.id %}"
+                                   class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var filterIndex = window.location.href.indexOf("?filter=");
+            if(filterIndex > 0) {
+                var model_selected = window.location.href.substr(filterIndex + 8);
+                $(".model-filter").val(model_selected);
+            }
+        });
+
+        // When the user changes the model they want to view in the table
+        $(".filter-sim-btn").click(function () {
+            var new_model_id = $(".model-filter").val();
+            var filterIndex = window.location.href.indexOf("?filter=");
+            window.location.href = window.location.href.substr(0, filterIndex-1) + "?filter=" + new_model_id;
+            $(".model-filter").val(new_model_id);
+        });
+    </script>
+{% endblock extra_js %}

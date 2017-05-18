@@ -2,6 +2,29 @@
 
 {% load bootstrap3 %}
 
+{% block before_main_container %}
+    <div class="zika-selector">
+        <div class="container-fluid">
+
+            <div class="selector-nav">
+                <a href="{% url 'home' %}" style="margin-right: 20px">Home</a>
+                {% if user.is_staff %}
+                    <div class="dropdown" style="float:right">
+                        <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Admin options
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminOptionsDropdown">
+                            <li><a href="{% url 'simulation.upload' %}">Upload simulation</a></li>
+                            <li><a href="/admin/">Site administration</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock before_main_container %}
+
 {% block main_content %}
     <div class="container">
         <div class="col-md-10">
@@ -16,12 +39,12 @@
                     </label>
                 </div>
                 <br/>
-                <input type="submit" class="btn btn-primary" value="Upload"/>
+                <input type="submit" class="btn btn-primary" value="Upload"/><br/><br/>
             </form>
         </div>
         <div class="col-md-10">
             <h3>List of uploads <a class="btn btn-success" href="">{% bootstrap_icon 'refresh' %} Refresh</a></h3>
-            <table class="table table-hover">
+            <table class="table table-responsive table-hover">
                 <tr>
                     <th>Name</th>
                     <th>Status</th>

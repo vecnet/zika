@@ -47,7 +47,7 @@ class Home(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['current_sim'].id, 2)
         # self.assertEqual(response.context['generatefilepath'], '/home/csv_for_map/2/2015-08-06/')
-        self.assertEqual(response.context['iframe_src'], '/home/chart/2/total/')
+        self.assertEqual(response.context['iframe_src'], '/zika/chart/2/total/')
 
     def test_mapview_with_municipality_pass(self):
         model_id = 2
@@ -64,7 +64,7 @@ class Home(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['current_sim'].id, 2)
         # self.assertEqual(response.context['generatefilepath'], '/home/csv_for_map/2/2015-08-06/')
-        self.assertEqual(response.context['iframe_src'], '/home/chart/2/99524/')
+        self.assertEqual(response.context['iframe_src'], '/zika/chart/2/99524/')
 
     def test_csv_for_map_view_pass(self):
         inquery_date = date(2015, 8, 6)
@@ -95,23 +95,12 @@ class Home(TestCase):
     def test_display_simulations(self):
 
         url = reverse(
-            "home.display_simulations"
+            "home.list_view"
         )
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['object_list'][0].name, 'test data 1')
-
-    def test_display_historical(self):
-
-        url = reverse(
-            "home.display_historical"
-        )
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['object_list'][0].name, 'historical data cases combo')
-        self.assertEqual(response.context['object_list'][0].id, 1)
 
     def test_country_total_chart_view(self):
         sim_id = 2

@@ -26,4 +26,4 @@ def delete_simulation_view(request, simulation_id):
     simulation = get_object_or_404(Simulation, pk=simulation_id)
     simulation.delete()
     set_notification(request, "Successfully deleted simulation", SUCCESS)
-    return HttpResponseRedirect(reverse("home.display_simulations"))
+    return HttpResponseRedirect(reverse("home.list_view"))

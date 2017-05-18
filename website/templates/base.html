@@ -2,132 +2,131 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- The above first 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>{% block page_title %}Using mathematical models to fight the Zika virus{% endblock %}</title>
-    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+
 
     <!-- Google Analytics -->
     {% google_analytics 'UA-90339757-1' %}
 
-    <!-- Javascript -->
-    <script src="{% static 'js/jquery-2.1.4.min.js' %}" type="text/javascript"></script>
-    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
-    <script src="{% static 'bootstrap-3.3.5/js/bootstrap.min.js' %}" type="text/javascript"></script>
-    {% block extra_js %}{% endblock %}
-
     <!-- CSS -->
     <link rel="stylesheet" href="{% static "bootstrap-3.3.5/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static 'ts2.css' %}" />
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/zika-style.css' %}" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     {% block extra_css %}{% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+  {% block javascript_at_top %} {% endblock javascript_at_top %}
+
 </head>
 <body>
-    <!-- VecNet Navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            </div>
-            <div class="collapse navbar-collapse">
-                {% block navbar_inner %}{% endblock %}
-
-                <ul class="nav navbar-nav">
-                    {% block navbar_inner_right_pre %}{% endblock %}
-                    <li><a class="brand" href="https://www.vecnet.org">&nbsp;&nbsp;VecNet</a></li>
-                </ul>
-                 <ul class="nav navbar-nav navbar-right">
-                                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Our Work<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://www.vecnet.org/index.php/about-vecnet">About VecNet</a></li>
-                                <li><a href="https://www.vecnet.org/index.php/about-vecnet/collaborations">Collaborations</a></li>
-                                <li><a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a></li>
-                                <li><a href="https://www.vecnet.org/index.php/about-vecnet/vecnet-how-to">VecNet How To</a></li>
-                            </ul>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://www.vecnet.org">VecNet</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Our Work <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://www.vecnet.org/index.php/about-vecnet">About VecNet</a></li>
+                        <li><a href="https://www.vecnet.org/index.php/about-vecnet/collaborations">Collaborations</a>
                         </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="https://dl.vecnet.org/">Digital Library</a></li>
-                            <li><a href="https://dw.vecnet.org/">Data Warehouse Browser</a></li>
-                            <li><a href="https://om.vecnet.org/">OpenMalaria Portal</a></li>
-                            <li><a href="https://ci.vecnet.org/ts_emod/">EMOD Basic User Interface</a></li>
-                            <li><a href="/">Zika Portal</a></li>
+                        <li><a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a></li>
+                        <li><a href="https://www.vecnet.org/index.php/about-vecnet/vecnet-how-to">VecNet How To</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://dl.vecnet.org/">Digital Library</a></li>
+                        <li><a href="https://dw.vecnet.org/">Data Warehouse Browser</a></li>
+                        <li><a href="https://om.vecnet.org/">OpenMalaria Portal</a></li>
+                        <li><a href="https://ci.vecnet.org/ts_emod/">EMOD Basic User Interface</a></li>
+                        <li><a href="/">Zika Portal</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="https://www.vecnet.org/index.php/contact-us">Contact Us</a></li>
-
-                    {% block navbar_inner_right_post %}{% endblock %}
-
+                    </ul>
+                </li>
+                <li><a href="https://www.vecnet.org/index.php/contact-us">Contact Us</a></li>
                 {% if user.username %}
-                     <li> <a href="{{ LOGOUT_URL }}"> Logout ({{ user.username }}) </a> </li>
+                    <li><a href="{{ LOGOUT_URL }}"> Logout ({{ user.username }}) </a></li>
                 {% else %}
-                     <li> <a href="{{ LOGIN_URL }}?{{ REDIRECT_FIELD_NAME }}={{ request.build_absolute_uri }}"> Log in </a></li>
+                    <li><a href="{{ LOGIN_URL }}?{{ REDIRECT_FIELD_NAME }}={{ request.build_absolute_uri }}"> Log
+                        in </a></li> {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!-- container -->
+</nav>
 
-                {% endif %}
+<a href="{% url 'home' %}" style="text-decoration: none">
+    <div class="jumbotron subhead zika-jt">
+        <div class="container">
+            <h1>Zika Portal</h1>
+            <p class="lead">Overcoming uncertainty to enable estimation and forecasting of Zika virus transmission</p>
+        </div>  <!-- container -->
+    </div>  <!-- jumbotron -->
+</a>
+<a href="{% url 'home' %}" style="text-decoration: none">
+    <div class="container jumbotron-icon">
+        <img src="{% static 'img/icon_zika.png' %}">
+    </div>  <!-- container -->
+</a>
+
+{% block before_main_container %} {% endblock before_main_container %}
+
+{% block main_content %} {% endblock main_content %}
 
 
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Zika page -->
-    {% block jumbotron %}
-        <div class="jumbotron subhead">
-            <div class="container ">
-                {% block jumbotron_content %}
-                    <div class="media">
-                        <div class="media-left media-top">
-                            <img class="media-object" src="{% static 'logo.png' %}" style="width:200px; height:200px;">
-                        </div>
-                        <div class="media-body media-middle">
-                            <h1 class="media-heading">Zika Portal</h1>
-                            <p class="lead">Overcoming uncertainty to enable estimation and forecasting of Zika virus transmission</p>
-                        </div>
-                    </div>
-                {% endblock %}
-            </div>
-        </div>
-    {% endblock %}
-
-    <div class="col-md-2">
-        <ul class="nav nav-pills nav-stacked">
-            <li {% if request.resolver_match.url_name == 'home.display_simulations'%}class="active" {% endif %}><a href="{% url 'home.display_simulations' %}">{% bootstrap_icon 'th-list' %} Browse Models</a></li>
-            <li {% if request.resolver_match.url_name == 'home.display_historical'%}class="active" {% endif %}><a href="{% url 'home.display_historical' %}">{% bootstrap_icon 'th-list' %} View Historical Data</a></li>
-            {% if user.is_superuser %}
-                <li {% if request.resolver_match.url_name == 'simulation.upload'%}class="active" {% endif %}><a href="{% url 'simulation.upload' %}">{% bootstrap_icon 'upload' %} Upload Simulation</a></li>
-            {% endif %}
-            {% if user.is_superuser and user.is_staff %}
-                <li><a href="/admin/">{% bootstrap_icon 'user' %} Admin</a></li>
-            {% endif %}
-
-            <li {% if request.resolver_match.url_name == 'about'%}class="active" {% endif %}><a href="{% url 'about'%}">{% bootstrap_icon 'question-sign' %} About</a></li>
-        </ul>
-    </div>
-
-    {% block main_content %}
-    {% endblock %}
-
+<div class="container">
     <footer class="footer">
         <hr>
-        <img style="margin: 0 10px 0 0; float: right;" src="{{ STATIC_URL }}img/nsf-logo.jpg" alt="NSF Logo" width="35" />
-        <img style="margin: 0 10px 0 0; float: right;" src="{{ STATIC_URL }}img/vecnet-logo.jpg" alt="VecNet Logo" width="35" />
-        <p class="text-center"> <a href="https://www.vecnet.org/index.php/contact-us/">Contact us</a> | <a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a> | <a href="https://www.vecnet.org/index.php/user-privacy-policy">User Privacy Policy</a> | <a href="https://www.vecnet.org/index.php/terms-of-use">Terms of Use</a></p>
-        <p class="fine-print text-center"> Copyright &copy; 2013-2017 <a href="https://www.vecnet.org/">Vector-Borne Disease Network (VecNet)</a></p>
+        <img style="margin: 0 10px 0 0; float: right;" src="{% static 'img/vecnet-logo.jpg' %}"
+             alt="VecNet Logo" width="35"/>
+        <p><a href="https://www.vecnet.org/index.php/contact-us/">Contact us</a> |
+            <a href="https://www.vecnet.org/index.php/about-vecnet/faq">FAQ</a> |
+            <a href="https://www.vecnet.org/index.php/user-privacy-policy">User Privacy Policy</a> |
+            <a href="https://www.vecnet.org/index.php/terms-of-use">Terms of Use</a></p>
+        <p class="fine-print"> Copyright &copy; 2013-2017 <a href="https://www.vecnet.org/">
+            Vector-Borne Disease Network (VecNet)</a></p>
     </footer>
+</div> <!-- /container -->
 
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+<script src="{% static 'bootstrap-3.3.5/js/bootstrap.min.js' %}"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

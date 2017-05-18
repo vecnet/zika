@@ -21,13 +21,13 @@ class GoogleAnalyticsCodeTest(TestCase):
 
     @override_settings(DISABLE_GOOGLE_ANALYTICS=False,)
     def test_get_index(self):
-        response = self.client.get(reverse("index"))
+        response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertIn("UA-90339757-1", str(response.content))
 
     @override_settings(DISABLE_GOOGLE_ANALYTICS=True)
     def test_database_get_none(self):
-        response = self.client.get(reverse("index"))
+        response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("UA-90339757-1", str(response.content))
         self.assertNotIn("https://www.google-analytics.com/analytics.js", str(response.content))

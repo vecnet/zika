@@ -50,5 +50,5 @@ class DeleteSimulationViewTest(TestCase):
         self.assertEqual(Simulation.objects.all().count(), 1)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse("home.display_simulations"))
+        self.assertEqual(response.url, reverse("home.list_view"))
         self.assertEqual(Simulation.objects.all().count(), 0)
