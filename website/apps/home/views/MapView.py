@@ -90,7 +90,11 @@ class MapView(TemplateView):
         model_list_queryset = SimulationModel.objects.all()
         model_list = []
         for model in model_list_queryset:
-            model_list.append(model)
+            # Check that the model is not only used for historical data
+            for sim in Simulation.objects.all():
+                if sim.sim_model == model and sim.historical==False:
+                    model_list.append(model)
+        model_list = list(set(model_list))
 
         full_simulation_list_nonhistorical = Simulation.objects.filter(historical=False)
         location_info = {}
