@@ -31,6 +31,13 @@ class ListModelView(ListView):
         context = super(ListModelView, self).get_context_data(**kwargs)
         # Get a list of all the models in the system
         model_list_queryset = SimulationModel.objects.all()
+        model_list = []
+        for model in model_list_queryset:
+            # Check that the model is not only used for historical data
+            for sim in Simulation.objects.all():
+                if sim.sim_model == model and sim.historical==False:
+                    model_list.append(model)
+        model_list = list(set(model_list))
 
         # Get the historical and simulated objects
         historical_simulation_list = Simulation.objects.filter(historical=True).order_by("-creation_timestamp")
@@ -38,7 +45,7 @@ class ListModelView(ListView):
         # Get the most recent simulation for the map view link
         latest_simulation = Simulation.objects.exclude(historical=True).latest('creation_timestamp')
 
-        context["model_list"] = model_list_queryset
+        context["model_list"] = model_list
         context["historical_simulation_list"] = historical_simulation_list
         context["model_filter"] = self.request.GET.get('filter')
         context["most_recent_model_id"] = latest_simulation.sim_model.id
