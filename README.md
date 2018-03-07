@@ -22,7 +22,7 @@ This will be a valuable asset for policymakers as they continue to make decision
 
 This Django project has been tested on Windows 10 x64, MAC OS 10.7 and CentOS 7
 
-* Django 1.10
+* Django 1.11
 * Python 3.4
 * PostgreSQL 9.4
 * Apache 2.4
